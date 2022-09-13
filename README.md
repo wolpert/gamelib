@@ -6,6 +6,14 @@ without hex coordinates and/or box2d support. Of course, dagger rules.
 Originally android friendly just missing a better version of guava... and
 its now JDK17 required. So no clue on the android support anymore.
 
+## Licensed
+
+[Apache 2.0](https://opensource.org/licenses/Apache-2.0)
+
+Basically, you do do not owe me money to use this in your own project,
+and you can charge other people for stuff you do, just give credit where
+it's due. See the LICENSE file for details.
+
 ## Current status
 
 *IN PROGRESS*
