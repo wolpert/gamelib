@@ -1,0 +1,9 @@
+/*
+ * Copyright (c) 2020-2022. CodeHead Systems. All rights reserved
+ * Ned Wolpert <ned.wolpert@codeheadsystems.com>
+ */
+
+include ':codehead-test', 
+        ":gamelib-core", ":gamelib-entity", ":gamelib-box2d", ":gamelib-hex",
+        ':gamelib-net-server', ':gamelib-net-client', 'gamelib-net-common',
+        ':sample-core', ':sample-desktop'

@@ -1,0 +1,128 @@
+/*
+ * Copyright (c) 2020-2021. CodeHead Systems. All rights reserved
+ * Ned Wolpert <ned.wolpert@codeheadsystems.com>
+ */
+
+// Top-level build file where you can add configuration options common to all sub-projects/modules.
+
+buildscript {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://plugins.gradle.org/m2/" }
+        maven { url "https://maven.google.com" } // Google's Maven repository
+        gradlePluginPortal() // was jcenter() which is dying
+        google()
+    }
+    dependencies {
+        classpath 'com.android.tools.build:gradle:4.0.1'
+        classpath 'com.google.gms:google-services:4.3.3'
+        classpath 'org.gretty:gretty:3.0.2'
+    }
+}
+
+allprojects {
+    apply plugin: "java-library"
+    apply plugin: "eclipse"
+    apply plugin: 'jacoco'
+    java {
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
+    }
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        gradlePluginPortal()  // was jcenter() which is dying
+        google()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+        maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+        maven { url "https://s3-us-west-2.amazonaws.com/dynamodb-local/release/" }
+    }
+    test {
+        useJUnitPlatform() // needed for junit5
+        finalizedBy jacocoTestReport
+    }
+    jacocoTestReport {
+        dependsOn test
+        reports {
+            xml.enabled true
+            csv.enabled true
+        }
+        afterEvaluate {
+            classDirectories.setFrom(files(classDirectories.files.collect {
+                fileTree(dir: it, exclude: [
+                        '**/dagger/**.class',
+                        '**/Dagger*Builder.class',
+                        '**/*Exception.class',
+                        '**/*Module.class',
+                        '**/*_Factory.class',
+                        '**/*_Factory.*class',
+                        '**/*InstanceHolder.class',
+                        '**/*_Factory$InstanceHolder.class'
+                ])
+            }))
+        }
+    }
+    def excludeFiles = [
+            '**.dagger.**',
+            '**.Dagger*Builder',
+            '**.*Exception',
+            '**.*Module',
+            '**.*_Factory',
+            '**.*_Factory*',
+            '**.InstanceHolder',
+            '**.*_Factory$InstanceHolder'
+    ]
+
+// If you want to override, use this in your package and set. This is the low bar.
+    jacocoTestCoverageVerification {
+        dependsOn jacocoTestReport
+        violationRules {
+            rule {
+                excludes = excludeFiles
+                element = 'CLASS'
+                limit {
+                    counter = 'LINE'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.8
+                }
+            }
+            rule {
+                excludes = excludeFiles
+                element = 'CLASS'
+                limit {
+                    counter = 'BRANCH'
+                    value = 'COVEREDRATIO'
+                    minimum = 0.7
+                }
+            }
+        }
+    }
+}
+
+group 'com.codeheadsystems.terrapin'
+version '1.0-SNAPSHOT'
+
+ext {
+    aiVersion = '1.8.2' // https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx-ai
+    ashleyVersion = '1.7.4' // https://mvnrepository.com/artifact/com.badlogicgames.ashley/ashley
+    assertjVersion = '3.23.1' // https://mvnrepository.com/artifact/org.assertj/assertj-core
+    bouncyVersion = '1.70' // https://mvnrepository.com/artifact/org.bouncycastle/bcprov-jdk15on
+    box2DLightsVersion = '1.5' // https://mvnrepository.com/artifact/com.badlogicgames.box2dlights/box2dlights
+    commonsIoVersion = '2.11.0' // https://mvnrepository.com/artifact/commons-io/commons-io
+    daggerVersion = '2.43.2' // https://mvnrepository.com/artifact/com.google.dagger/dagger
+    gdxVersion = '1.11.0' // https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx
+    guavaVersion = '31.1-jre' // https://mvnrepository.com/artifact/com.google.guava/guava
+    immutablesVersion = '2.9.1' // https://mvnrepository.com/artifact/org.immutables/value
+    jacksonVersion = '2.13.3' // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
+    jacksonDatabindVersion = '2.13.3' // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    javaxInjectVersion = '1'
+    jupiterVersion = '5.9.0' // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
+    log4jVersion = '2.18.0' //  https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
+    logbackVersion = '1.4.0' // https://mvnrepository.com/artifact/ch.qos.logback/logback-core
+    nettyVersion = '4.1.80.Final' //  https://mvnrepository.com/artifact/io.netty/netty-all
+    mockitoVersion = '4.7.0' // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    slf4jVersion = '2.0.0' // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
+}
+

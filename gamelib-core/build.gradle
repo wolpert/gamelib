@@ -1,0 +1,40 @@
+/*
+ * Copyright (c) 2020-2021. CodeHead Systems. All rights reserved
+ * Ned Wolpert <ned.wolpert@codeheadsystems.com>
+ */
+
+ext {
+    appName = "gamelib-core"
+}
+
+configurations {
+    project.archivesBaseName = "${appName}"
+    jar.baseName = "${appName}"
+}
+
+//jacocoTestReport.finalizedBy jacocoTestCoverageVerification
+
+dependencies {
+    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+    api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    api("commons-io:commons-io:${commonsIoVersion}")
+
+    // Dagger
+    implementation "com.google.dagger:dagger:${daggerVersion}" // Common files for runtime
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+
+    // Immutables
+    implementation("org.immutables:value-annotations:${immutablesVersion}")
+    annotationProcessor("org.immutables:value:${immutablesVersion}")
+
+    testImplementation("org.assertj:assertj-core:${assertjVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-api:${jupiterVersion}")
+    testImplementation("org.junit.jupiter:junit-jupiter-params:${jupiterVersion}")
+    testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
+    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
+    testImplementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion")
+    testImplementation("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
+    testImplementation("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
+    testImplementation("commons-io:commons-io:${commonsIoVersion}")
+}

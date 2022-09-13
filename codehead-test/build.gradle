@@ -1,0 +1,56 @@
+/*
+ * Copyright (c) 2020 CodeHead Systems. All rights reserved
+ */
+
+apply plugin: 'idea'
+
+ext {
+    appName = "codehead-test"
+    version = "0.9"
+}
+
+configurations {
+    project.archivesBaseName = "${appName}"
+    jar.baseName = "${appName}"
+}
+
+jacocoTestReport.finalizedBy jacocoTestCoverageVerification
+
+// Create the pom configuration:
+def pomConfig = {
+    licenses {
+        license {
+            name "The Apache Software License, Version 2.0"
+            url "http://www.apache.org/licenses/LICENSE-2.0.txt"
+            distribution "repo"
+        }
+    }
+    developers {
+        developer {
+            id "wolpert"
+            name "Ned Wolpert"
+            email "ned.wolpert@codeheadsystems.com"
+        }
+    }
+
+    scm {
+        url "https://github.com/wolpert/terrapin"
+    }
+}
+
+dependencies {
+    implementation("com.google.guava:guava:${guavaVersion}")
+    implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
+    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}")
+    implementation("org.junit.jupiter:junit-jupiter-api:${jupiterVersion}")
+    implementation("org.assertj:assertj-core:${assertjVersion}")
+    implementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
+    implementation("org.mockito:mockito-core:${mockitoVersion}")
+
+    // Use JUnit Jupiter Engine for testing.
+    testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}")
+    testImplementation("org.immutables:value-annotations:${immutablesVersion}")
+    testImplementation("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
+    testImplementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
+    testAnnotationProcessor("org.immutables:value:${immutablesVersion}")
+}

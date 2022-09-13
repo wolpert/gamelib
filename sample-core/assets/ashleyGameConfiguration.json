@@ -1,0 +1,6 @@
+{
+  "entityPoolInitialSize": 10,
+  "entityPoolMaxSize": 200,
+  "componentPoolInitialSize": 10,
+  "componentPoolMaxSize": 200
+}

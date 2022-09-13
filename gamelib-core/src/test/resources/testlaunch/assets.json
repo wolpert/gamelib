@@ -1,0 +1,7 @@
+{
+  "assetsToLoad": {
+    "com.badlogic.gdx.graphics.Texture": [
+      "testlaunch/badlogic.jpg"
+    ]
+  }
+}

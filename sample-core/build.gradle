@@ -1,0 +1,42 @@
+/*
+ * Copyright (c) 2020-2021. CodeHead Systems. All rights reserved
+ * Ned Wolpert <ned.wolpert@codeheadsystems.com>
+ */
+
+apply plugin: "java-library"
+apply plugin: "eclipse"
+
+ext {
+    appName = "sample-core"
+}
+
+configurations {
+    project.archivesBaseName = "${appName}"
+    jar.baseName = "${appName}"
+}
+
+repositories {
+    mavenLocal()
+    mavenCentral()
+    gradlePluginPortal()
+    google()
+    maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    maven { url "https://oss.sonatype.org/content/repositories/releases/" }
+}
+
+dependencies {
+    implementation project(":gamelib-core")
+    implementation project(":gamelib-entity")
+    implementation project(":gamelib-box2d")
+    implementation project(":gamelib-hex")
+    api "com.badlogicgames.gdx:gdx:$gdxVersion"
+    api "com.badlogicgames.gdx:gdx-box2d:$gdxVersion"
+    api "com.badlogicgames.gdx:gdx-freetype:$gdxVersion"
+    api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+    api "com.badlogicgames.box2dlights:box2dlights:$box2DLightsVersion"
+    api "com.badlogicgames.gdx:gdx-bullet:$gdxVersion"
+
+    // Dagger
+    implementation "com.google.dagger:dagger:${daggerVersion}" // Common files for runtime
+    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+}
