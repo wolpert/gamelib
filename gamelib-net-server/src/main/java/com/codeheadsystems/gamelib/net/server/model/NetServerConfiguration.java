@@ -53,4 +53,27 @@ public interface NetServerConfiguration {
     return 8992;
   }
 
+  /**
+   * Default pool size fot the timer executor.
+   *
+   * @return poolsize.
+   */
+  @JsonProperty
+  @Value.Default
+  default int timerExecutorPoolSize() {
+    return 5;
+  }
+
+  /**
+   * How many milliseconds to wait for a response from the
+   * client before closing the connection.
+   *
+   * @return default is five seconds worth.
+   */
+  @JsonProperty
+  @Value.Default
+  default long authTimeoutMilliseconds() {
+    return 5000L;
+  }
+
 }

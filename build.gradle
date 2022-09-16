@@ -101,7 +101,7 @@ allprojects {
     }
 }
 
-group 'com.codeheadsystems.terrapin'
+group 'com.codeheadsystems.gamelib'
 version '1.0-SNAPSHOT'
 
 ext {

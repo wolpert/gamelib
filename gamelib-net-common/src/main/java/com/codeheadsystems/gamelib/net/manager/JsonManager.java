@@ -17,6 +17,8 @@
 
 package com.codeheadsystems.gamelib.net.manager;
 
+import com.codeheadsystems.gamelib.net.exception.JsonException;
+import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
@@ -44,7 +46,8 @@ public class JsonManager {
       final String result = objectMapper.writeValueAsString(object);
       return (withNewLine ? result + "\n" : result);
     } catch (JsonProcessingException e) {
-      throw new IllegalArgumentException("Unable to convert to json: " + object, e);
+      throw new JsonException("Unable to convert to json: " + object, e) {
+      };
     }
   }
 
@@ -52,7 +55,7 @@ public class JsonManager {
     try {
       return objectMapper.readValue(json, clazz);
     } catch (JsonProcessingException e) {
-      throw new IllegalArgumentException("Unable to convert from json: " + clazz, e);
+      throw new JsonException("Unable to convert from json: " + clazz, e);
     }
   }
 

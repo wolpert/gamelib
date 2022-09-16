@@ -17,23 +17,84 @@
 
 package com.codeheadsystems.gamelib.net.server.manager;
 
+import com.codeheadsystems.gamelib.net.exception.JsonException;
+import com.codeheadsystems.gamelib.net.manager.JsonManager;
+import com.codeheadsystems.gamelib.net.model.Identity;
 import com.codeheadsystems.gamelib.net.server.Authenticator;
-import javax.inject.Inject;
-import javax.inject.Singleton;
+import com.codeheadsystems.gamelib.net.server.NetClientHandler;
+import dagger.assisted.Assisted;
+import dagger.assisted.AssistedInject;
+import java.util.concurrent.Future;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-@Singleton
+/**
+ * Class handles the authentication for an individual connection.
+ */
 public class AuthenticationManager {
 
+  public static final String AUTH_FAIL = "Auth Fail";
   private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationManager.class);
-
+  public static final String AUTH_TIMER_EXPIRED = "Auth timer expired";
   private final Authenticator authenticator;
+  private final TimerManager timerManager;
+  private final JsonManager jsonManager;
+  private final NetClientHandler handler;
 
-  @Inject
-  public AuthenticationManager(final Authenticator authenticator) {
-    LOGGER.info("AuthenticationManager({})", authenticator);
+  private final AtomicBoolean timerExpired = new AtomicBoolean(false);
+
+  private Future authTimer;
+
+  @AssistedInject
+  public AuthenticationManager(final Authenticator authenticator,
+                               final TimerManager timerManager,
+                               final JsonManager jsonManager,
+                               @Assisted final NetClientHandler handler) {
+    LOGGER.info("AuthenticationManager({},{})", authenticator, handler);
     this.authenticator = authenticator;
+    this.timerManager = timerManager;
+    this.handler = handler;
+    this.jsonManager = jsonManager;
   }
 
+  public void timerExpired() {
+    if (timerExpired.compareAndSet(false, true)) { // if it was false and now true, shutdown.
+      handler.shutdown(AUTH_TIMER_EXPIRED);
+      LOGGER.info("Timer expired on {}", handler);
+    } else {
+      LOGGER.info("Timer expired and we already managed it on {}", handler);
+    }
+  }
+
+  public void authenticate(final String message) {
+    if (timerExpired.compareAndSet(true, true)) {
+      // Timer has expired and we did not beat it out. So we are expecting everything to shutdown.
+      LOGGER.info("Authenticate came too late: {}", handler);
+      return;
+    }
+    authTimer.cancel(false);
+    // anything goes wrong we shut everything down.
+    try {
+      final Identity identity = jsonManager.fromJson(message, Identity.class);
+      if (authenticator.isAuthenticated(identity)) {
+        handler.authenticated();
+      } else {
+        handler.shutdown(AUTH_FAIL);
+      }
+    } catch (JsonException j) {
+      LOGGER.error("Auth Fail: {}", j.getMessage());
+      handler.shutdown(AUTH_FAIL); // don't get a different message to the client.
+    } catch (Throwable t) {
+      LOGGER.error("Auth Fail: {}", t.getMessage(), t);
+      handler.shutdown(AUTH_FAIL); // don't get a different message to the client.
+    }
+  }
+
+  /**
+   * Indicates the handler has been initialized.
+   */
+  public void initialized() {
+    authTimer = timerManager.enabledAuthTimeoutHandler(this);
+  }
 }

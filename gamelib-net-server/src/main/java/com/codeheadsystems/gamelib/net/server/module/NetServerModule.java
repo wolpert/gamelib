@@ -18,6 +18,7 @@
 package com.codeheadsystems.gamelib.net.server.module;
 
 import com.codeheadsystems.gamelib.net.module.NetCommonModule;
+import com.codeheadsystems.gamelib.net.server.Authenticator;
 import com.codeheadsystems.gamelib.net.server.ChannelPipelineInitializer;
 import com.codeheadsystems.gamelib.net.server.model.ImmutableNetServerConfiguration;
 import com.codeheadsystems.gamelib.net.server.model.NetServerConfiguration;
@@ -38,6 +39,7 @@ import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.GlobalEventExecutor;
 import java.security.cert.CertificateException;
 import java.util.List;
+import java.util.concurrent.ScheduledThreadPoolExecutor;
 import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.net.ssl.SSLException;
@@ -47,14 +49,18 @@ public class NetServerModule {
 
   public static final String WORKER_GROUP = "workerGroup";
   public static final String BOSS_GROUP = "bossGroup";
+  public static final String TIMER_EXECUTOR_SERVICE = "TimerExecutorService";
   private final NetServerConfiguration netServerConfiguration;
+  private final Authenticator authenticator;
 
-  public NetServerModule() {
-    this(ImmutableNetServerConfiguration.builder().build());
+  public NetServerModule(final Authenticator authenticator) {
+    this(ImmutableNetServerConfiguration.builder().build(), authenticator);
   }
 
-  public NetServerModule(final ImmutableNetServerConfiguration netServerConfiguration) {
+  public NetServerModule(final ImmutableNetServerConfiguration netServerConfiguration,
+                         final Authenticator authenticator) {
     this.netServerConfiguration = netServerConfiguration;
+    this.authenticator = authenticator;
   }
 
   @Provides
@@ -74,6 +80,12 @@ public class NetServerModule {
   public EventExecutor eventExecutor() {
     // TODO: Get a real event executor
     return GlobalEventExecutor.INSTANCE;
+  }
+
+  @Provides
+  @Singleton
+  public Authenticator authenticator() {
+    return authenticator;
   }
 
   @Provides
@@ -124,6 +136,13 @@ public class NetServerModule {
         .handler(new LoggingHandler(LogLevel.DEBUG))
         .childHandler(initializer);
     return b;
+  }
+
+  @Provides
+  @Singleton
+  @Named(TIMER_EXECUTOR_SERVICE)
+  public ScheduledThreadPoolExecutor timerExecutorService(final NetServerConfiguration configuration){
+    return new ScheduledThreadPoolExecutor(configuration.timerExecutorPoolSize());
   }
 
 }

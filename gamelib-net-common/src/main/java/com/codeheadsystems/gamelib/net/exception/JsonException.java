@@ -15,21 +15,27 @@
  *
  */
 
-package com.codeheadsystems.gamelib.net.server;
+package com.codeheadsystems.gamelib.net.exception;
 
-import com.codeheadsystems.gamelib.net.server.component.DaggerServerComponent;
-import com.codeheadsystems.gamelib.net.server.component.ServerComponent;
-import com.codeheadsystems.gamelib.net.server.module.NetServerModule;
+public class JsonException extends RuntimeException {
 
-public class Server {
+  public JsonException() {
+    super();
+  }
 
-  public static void main(String[] args) throws Exception {
-    // TODO: make authenticators plugable
-    final Authenticator authenticator = (i) ->Boolean.TRUE;
+  public JsonException(final String message) {
+    super(message);
+  }
 
-    final ServerComponent component = DaggerServerComponent.builder()
-        .netServerModule(new NetServerModule(authenticator))
-        .build();
-    component.serverManager().executeServer();
+  public JsonException(final String message, final Throwable cause) {
+    super(message, cause);
+  }
+
+  public JsonException(final Throwable cause) {
+    super(cause);
+  }
+
+  protected JsonException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
+    super(message, cause, enableSuppression, writableStackTrace);
   }
 }
