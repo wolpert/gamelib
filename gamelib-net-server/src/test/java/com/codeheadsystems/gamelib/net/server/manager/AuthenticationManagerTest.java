@@ -17,13 +17,18 @@
 
 package com.codeheadsystems.gamelib.net.server.manager;
 
+import static com.codeheadsystems.gamelib.net.server.manager.AuthenticationManager.AUTH_FAIL;
 import static com.codeheadsystems.gamelib.net.server.manager.AuthenticationManager.AUTH_TIMER_EXPIRED;
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
+import com.codeheadsystems.gamelib.net.exception.JsonException;
 import com.codeheadsystems.gamelib.net.manager.JsonManager;
+import com.codeheadsystems.gamelib.net.model.Identity;
 import com.codeheadsystems.gamelib.net.server.Authenticator;
 import com.codeheadsystems.gamelib.net.server.NetClientHandler;
 import java.util.concurrent.Future;
@@ -35,6 +40,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class AuthenticationManagerTest {
+  private static final String MESSAGE = "this is a message";
 
   @Mock private Authenticator authenticator;
   @Mock private TimerManager timerManager;
@@ -42,6 +48,7 @@ class AuthenticationManagerTest {
   @Mock private NetClientHandler handler;
 
   @Mock private Future future;
+  @Mock private Identity identity;
 
   @InjectMocks private AuthenticationManager authenticationManager;
 
@@ -52,6 +59,77 @@ class AuthenticationManagerTest {
     authenticationManager.timerExpired();
     verifyNoMoreInteractions(handler);
   }
+
+  @Test
+  void authenticate_timerExpired(){
+    when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
+
+    authenticationManager.initialized();
+    authenticationManager.timerExpired();
+    authenticationManager.authenticate(MESSAGE);
+    verifyNoInteractions(future);
+    verify(timerManager).enabledAuthTimeoutHandler(authenticationManager);
+  }
+
+  @Test
+  void authenticate_identityValid(){
+    when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
+    when(jsonManager.fromJson(MESSAGE, Identity.class)).thenReturn(identity);
+    when(authenticator.isAuthenticated(identity)).thenReturn(true);
+
+    authenticationManager.initialized();
+    authenticationManager.authenticate(MESSAGE);
+
+    verify(timerManager).enabledAuthTimeoutHandler(authenticationManager);
+    verify(future).cancel(false);
+    verify(handler).authenticated();
+  }
+
+  @Test
+  void authenticate_identityInvalid(){
+    when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
+    when(jsonManager.fromJson(MESSAGE, Identity.class)).thenReturn(identity);
+    when(authenticator.isAuthenticated(identity)).thenReturn(false);
+
+    authenticationManager.initialized();
+    authenticationManager.authenticate(MESSAGE);
+
+    verify(timerManager).enabledAuthTimeoutHandler(authenticationManager);
+    verify(future).cancel(false);
+    verify(handler, never()).authenticated();
+    verify(handler).shutdown(AUTH_FAIL);
+  }
+
+  @Test
+  void authenticate_identityAuthException(){
+    when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
+    when(jsonManager.fromJson(MESSAGE, Identity.class)).thenReturn(identity);
+    when(authenticator.isAuthenticated(identity)).thenThrow(new IllegalArgumentException());
+
+    authenticationManager.initialized();
+    authenticationManager.authenticate(MESSAGE);
+
+    verify(timerManager).enabledAuthTimeoutHandler(authenticationManager);
+    verify(future).cancel(false);
+    verify(handler, never()).authenticated();
+    verify(handler).shutdown(AUTH_FAIL);
+  }
+
+  @Test
+  void authenticate_badJson(){
+    when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
+    when(jsonManager.fromJson(MESSAGE, Identity.class)).thenThrow(new JsonException());
+
+    authenticationManager.initialized();
+    authenticationManager.authenticate(MESSAGE);
+
+    verify(timerManager).enabledAuthTimeoutHandler(authenticationManager);
+    verify(future).cancel(false);
+    verify(handler, never()).authenticated();
+    verify(handler).shutdown(AUTH_FAIL);
+  }
+
+
 
   @Test
   void initialized(){
