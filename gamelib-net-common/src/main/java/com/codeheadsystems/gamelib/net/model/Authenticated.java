@@ -30,4 +30,13 @@ import org.immutables.value.Value;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Value.Immutable
 public interface Authenticated extends TransferObject {
+
+  String TYPE = "auth";
+
+  @Value.Default
+  @Override
+  default String type() {
+    return TYPE;
+  }
+
 }

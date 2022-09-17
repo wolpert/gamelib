@@ -32,6 +32,14 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface Identity extends TransferObject {
 
+  String TYPE = "identity";
+
+  @Value.Default
+  @Override
+  default String type() {
+    return TYPE;
+  }
+
   @JsonProperty("id")
   String id();
 

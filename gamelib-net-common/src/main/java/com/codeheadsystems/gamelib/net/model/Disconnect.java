@@ -32,6 +32,14 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface Disconnect extends TransferObject {
 
+  String TYPE = "disconnect";
+
+  @Value.Default
+  @Override
+  default String type() {
+    return TYPE;
+  }
+
   @JsonProperty("reason")
   String reason();
 

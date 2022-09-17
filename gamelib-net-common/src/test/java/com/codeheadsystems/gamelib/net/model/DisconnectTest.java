@@ -17,25 +17,17 @@
 
 package com.codeheadsystems.gamelib.net.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.immutables.value.Value;
+import com.codeheadsystems.test.model.BaseJacksonTest;
 
-/**
- * Wrapper for the message needed for the game.
- * @param <RESOURCE> message type.
- */
-@JsonSerialize(as = ImmutableMessage.class)
-@JsonDeserialize(builder = ImmutableMessage.Builder.class)
-@JsonIgnoreProperties(ignoreUnknown = true)
-@Value.Immutable
-public interface Message<RESOURCE> extends TransferObject {
-  String TYPE = "mesg";
+class DisconnectTest extends BaseJacksonTest<Disconnect> {
 
-  @Value.Default
   @Override
-  default String type() {
-    return TYPE;
+  protected Class<Disconnect> getBaseClass() {
+    return Disconnect.class;
+  }
+
+  @Override
+  protected Disconnect getInstance() {
+    return ImmutableDisconnect.builder().reason("reason").build();
   }
 }

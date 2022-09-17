@@ -103,14 +103,14 @@ public abstract class BaseJacksonTest<T> {
     public void testRoundTrip() throws JsonProcessingException {
         // Arrange
         final T instance = getInstance();
-        final String json = objectMapper.writeValueAsString(getInstance());
-
+        final String json = objectMapper.writeValueAsString(instance);
+        System.out.println(json);
         // Act
         final T unwoundInstance = objectMapper.readValue(json, getBaseClass());
 
         // Assert
         assertThat(unwoundInstance)
-                .describedAs("Verification %s can go to json and back to an object", simpleName)
+                .describedAs("Verification %s can go to json and back to an object," + json, simpleName)
                 .isEqualTo(instance);
     }
 
@@ -124,7 +124,7 @@ public abstract class BaseJacksonTest<T> {
     public void testRoundTripWithExtraCharacters() throws JsonProcessingException {
         // Arrange
         final T instance = getInstance();
-        final String json = objectMapper.writeValueAsString(getInstance());
+        final String json = objectMapper.writeValueAsString(instance);
         final ObjectNode objectNode = objectMapper.readValue(json, ObjectNode.class);
         objectNode.put("someWierdFieldWeDontCareAbout", "whatevervalue");
         final String jsonWithExtraStuff = objectMapper.writeValueAsString(objectNode);
@@ -187,7 +187,7 @@ public abstract class BaseJacksonTest<T> {
     public void testNullableMethods() throws JsonProcessingException, InvocationTargetException, IllegalAccessException {
         // Arrange
         final T instance = getInstance();
-        final String json = objectMapper.writeValueAsString(getInstance());
+        final String json = objectMapper.writeValueAsString(instance);
 
         // Act
         for (Method method : getNullableMethods()) {

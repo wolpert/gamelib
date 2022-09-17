@@ -31,6 +31,13 @@ import org.immutables.value.Value;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Value.Immutable
 public interface ServerDetails extends TransferObject {
+  String TYPE = "server";
+
+  @Value.Default
+  @Override
+  default String type() {
+    return TYPE;
+  }
 
   @JsonProperty("name")
   String name();

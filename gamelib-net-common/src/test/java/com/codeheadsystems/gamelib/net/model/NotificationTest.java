@@ -17,25 +17,19 @@
 
 package com.codeheadsystems.gamelib.net.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
-import org.immutables.value.Value;
+import static org.junit.jupiter.api.Assertions.*;
 
-/**
- * Wrapper for the message needed for the game.
- * @param <RESOURCE> message type.
- */
-@JsonSerialize(as = ImmutableMessage.class)
-@JsonDeserialize(builder = ImmutableMessage.Builder.class)
-@JsonIgnoreProperties(ignoreUnknown = true)
-@Value.Immutable
-public interface Message<RESOURCE> extends TransferObject {
-  String TYPE = "mesg";
+import com.codeheadsystems.test.model.BaseJacksonTest;
 
-  @Value.Default
+class NotificationTest extends BaseJacksonTest<Notification> {
+
   @Override
-  default String type() {
-    return TYPE;
+  protected Class<Notification> getBaseClass() {
+    return Notification.class;
+  }
+
+  @Override
+  protected Notification getInstance() {
+    return ImmutableNotification.builder().build();
   }
 }

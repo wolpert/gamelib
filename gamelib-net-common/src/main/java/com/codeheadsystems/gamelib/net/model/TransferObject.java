@@ -18,10 +18,27 @@
 package com.codeheadsystems.gamelib.net.model;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.annotation.JsonSubTypes;
+import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.UUID;
 import org.immutables.value.Value;
-
+@JsonTypeInfo(
+    use = JsonTypeInfo.Id.NAME,
+    include = JsonTypeInfo.As.EXISTING_PROPERTY,
+    property = "type"
+)
+@JsonSubTypes({
+    @JsonSubTypes.Type(value = Authenticated.class, name = Authenticated.TYPE),
+    @JsonSubTypes.Type(value = Disconnect.class, name = Disconnect.TYPE),
+    @JsonSubTypes.Type(value = Identity.class, name = Identity.TYPE),
+    @JsonSubTypes.Type(value = Message.class, name = Message.TYPE),
+    @JsonSubTypes.Type(value = Notification.class, name = Notification.TYPE),
+    @JsonSubTypes.Type(value = ServerDetails.class, name = ServerDetails.TYPE),
+})
 public interface TransferObject {
+
+  @JsonProperty("type")
+  String type();
 
   @JsonProperty("uuid")
   @Value.Default
