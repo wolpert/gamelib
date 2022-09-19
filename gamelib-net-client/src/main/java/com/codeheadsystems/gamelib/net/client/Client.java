@@ -56,6 +56,10 @@ public class Client {
       Thread.sleep(5000);
       BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
       for (;;) {
+        if (!ch.isOpen()) {
+          System.out.println("Channel is closed");
+          break;
+        }
         String line = in.readLine();
         if (line == null) {
           continue;

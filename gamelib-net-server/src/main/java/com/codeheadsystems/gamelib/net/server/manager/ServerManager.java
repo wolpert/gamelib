@@ -22,6 +22,8 @@ import static com.codeheadsystems.gamelib.net.server.module.NetServerModule.WORK
 
 import com.codeheadsystems.gamelib.net.server.model.NetServerConfiguration;
 import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.EventLoopGroup;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -38,6 +40,9 @@ public class ServerManager {
   private final EventLoopGroup bossGroup;
   private final EventLoopGroup workerGroup;
 
+  private Channel channel;
+  private State state;
+
   @Inject
   public ServerManager(final NetServerConfiguration netServerConfiguration,
                        final ServerBootstrap serverBootstrap,
@@ -48,12 +53,18 @@ public class ServerManager {
     this.serverBootstrap = serverBootstrap;
     this.bossGroup = bossGroup;
     this.workerGroup = workerGroup;
+    setState(State.INIT);
   }
 
   public void executeServer() {
     LOGGER.info("executeServer()");
     try {
-      serverBootstrap.bind(netServerConfiguration.port()).sync().channel().closeFuture().sync();
+      setState(State.STARTING);
+      final ChannelFuture startupFuture = serverBootstrap.bind(netServerConfiguration.port());
+      startupFuture.sync();
+      setState(State.RUNNING);
+      channel = startupFuture.channel();
+      channel.closeFuture().sync(); // Lock this thread waiting to close.
     } catch (InterruptedException e) {
       LOGGER.error("Interrupted", e);
       throw new RuntimeException(e);
@@ -61,7 +72,24 @@ public class ServerManager {
       LOGGER.info("Closing");
       bossGroup.shutdownGracefully();
       workerGroup.shutdownGracefully();
+      setState(State.DEAD);
     }
   }
+
+  private void setState(final State state){
+    LOGGER.info("State change {} -> {}", this.state, state);
+    this.state = state;
+  }
+
+  /**
+   * Tell ourselves to close.
+   */
+  public void stop() {
+    LOGGER.info("stop()");
+    channel.close();
+    setState(State.STOPPING);
+  }
+
+  public enum State { INIT, STARTING, RUNNING, STOPPING, DEAD}
 
 }

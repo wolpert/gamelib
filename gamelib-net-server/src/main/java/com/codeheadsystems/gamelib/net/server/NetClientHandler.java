@@ -38,7 +38,6 @@ import org.slf4j.LoggerFactory;
 
 public class NetClientHandler extends SimpleChannelInboundHandler<String> {
 
-  public static final int TIMEOUT_MILLIS = 1000;
   private static final Logger LOGGER = LoggerFactory.getLogger(NetClientHandler.class);
   private final ChannelGroup channels;
   private final JsonManager jsonManager;
@@ -55,13 +54,18 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     this.channels = channels;
     this.jsonManager = jsonManager;
     this.authenticationManager = authenticationManagerFactory.instance(this);
-    status = Status.OFFLINE;
+    this.setStatus(Status.OFFLINE);
+  }
+
+  private void setStatus(final Status status) {
+    LOGGER.info("State change for {}, {}->{}", (channel != null ? channel.id() : "null"), this.status, status);
+    this.status = status;
   }
 
   @Override
   public void channelActive(final ChannelHandlerContext ctx) {
     LOGGER.info("channelActive({})", ctx);
-    status = Status.UNAUTH;
+    this.setStatus(Status.UNAUTH);
     // Once session is secured, send a greeting and register the channel to the global channel
     // list so the channel received the messages from others.
     ctx.pipeline().get(SslHandler.class).handshakeFuture().addListener(
@@ -76,14 +80,14 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
               .build();
           ctx.writeAndFlush(jsonManager.toJson(serverDetails));
           channels.add(channel);
-          status = Status.AUTH_REQUEST;
+          this.setStatus(Status.AUTH_REQUEST);
           authenticationManager.initialized();
         });
   }
 
   public void authenticated() {
     if (status.equals(Status.AUTH_REQUEST)) {
-      status = Status.AUTHENTICATED;
+      this.setStatus(Status.AUTHENTICATED);
     } else {
       LOGGER.warn("Request to set status to authenticated when we are {}", status);
     }
@@ -91,13 +95,14 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
 
   public void shutdown(final String reason) {
     LOGGER.info("shutdown({})", reason);
-    status = Status.STOPPING;
+    this.setStatus(Status.STOPPING);
     if (channel == null) {
       return;
     }
     final Disconnect disconnect = ImmutableDisconnect.builder().reason(reason).build();
     final String message = jsonManager.toJson(disconnect);
     channel.writeAndFlush(message).addListener(future -> {
+      this.setStatus(Status.OFFLINE);
       status = Status.STOPPED;
       channel.close();
     });
@@ -128,7 +133,7 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
     LOGGER.error(cause.getMessage() + ":" + ctx.channel().remoteAddress(), cause);
     ctx.close();
-    status = Status.STOPPED;
+    this.setStatus(Status.STOPPED);
   }
 
   public enum Status {

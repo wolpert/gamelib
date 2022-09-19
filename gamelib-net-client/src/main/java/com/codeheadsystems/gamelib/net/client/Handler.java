@@ -33,4 +33,44 @@ public class Handler extends SimpleChannelInboundHandler<String> {
     ctx.close();
   }
 
+  @Override
+  public void channelRegistered(final ChannelHandlerContext ctx) throws Exception {
+    System.err.println("channelRegistered");
+    super.channelRegistered(ctx);
+  }
+
+  @Override
+  public void channelUnregistered(final ChannelHandlerContext ctx) throws Exception {
+    System.err.println("channelUnregistered");
+  }
+
+  @Override
+  public void channelActive(final ChannelHandlerContext ctx) throws Exception {
+    System.err.println("channelActive");
+    super.channelActive(ctx);
+  }
+
+  @Override
+  public void channelInactive(final ChannelHandlerContext ctx) throws Exception {
+    System.err.println("channelInactive");
+    super.channelInactive(ctx);
+  }
+
+  @Override
+  public void channelReadComplete(final ChannelHandlerContext ctx) throws Exception {
+    System.err.println("channelReadComplete");
+    super.channelReadComplete(ctx);
+  }
+
+  @Override
+  public void userEventTriggered(final ChannelHandlerContext ctx, final Object evt) throws Exception {
+    System.err.println("userEventTriggered");
+    super.userEventTriggered(ctx, evt);
+  }
+
+  @Override
+  public void channelWritabilityChanged(final ChannelHandlerContext ctx) throws Exception {
+    System.err.println("channelWritabilityChanged");
+    super.channelWritabilityChanged(ctx);
+  }
 }
