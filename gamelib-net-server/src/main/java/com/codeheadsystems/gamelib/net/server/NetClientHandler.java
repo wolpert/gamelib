@@ -62,6 +62,10 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     this.status = status;
   }
 
+  public Status getStatus() {
+    return status;
+  }
+
   @Override
   public void channelActive(final ChannelHandlerContext ctx) {
     LOGGER.info("channelActive({})", ctx);
