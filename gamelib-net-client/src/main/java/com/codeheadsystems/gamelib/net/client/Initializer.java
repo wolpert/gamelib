@@ -26,11 +26,15 @@ import io.netty.handler.codec.json.JsonObjectDecoder;
 import io.netty.handler.codec.string.StringDecoder;
 import io.netty.handler.codec.string.StringEncoder;
 import io.netty.handler.ssl.SslContext;
+import javax.inject.Inject;
+import javax.inject.Singleton;
 
+@Singleton
 public class Initializer extends ChannelInitializer<SocketChannel> {
 
   private final SslContext sslCtx;
 
+  @Inject
   public Initializer(SslContext sslCtx) {
     this.sslCtx = sslCtx;
   }

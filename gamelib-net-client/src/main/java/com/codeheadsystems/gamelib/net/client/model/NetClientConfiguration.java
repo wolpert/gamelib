@@ -15,27 +15,13 @@
  *
  */
 
-package com.codeheadsystems.gamelib.net.module;
+package com.codeheadsystems.gamelib.net.client.model;
 
-import com.codeheadsystems.gamelib.net.factory.ObjectMapperFactory;
-import com.fasterxml.jackson.databind.ObjectMapper;
-import dagger.Module;
-import dagger.Provides;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import java.io.File;
-import java.util.List;
-import javax.inject.Named;
-import javax.inject.Singleton;
-import javax.net.ssl.SSLException;
+import org.immutables.value.Value;
 
-@Module
-public class NetCommonModule {
+@Value.Immutable
+public interface NetClientConfiguration {
 
-  @Provides
-  @Singleton
-  public ObjectMapper objectMapper(final ObjectMapperFactory factory) {
-    return factory.objectMapper();
-  }
+
 
 }

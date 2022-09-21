@@ -37,6 +37,7 @@ import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
 import io.netty.util.concurrent.EventExecutor;
 import io.netty.util.concurrent.GlobalEventExecutor;
+import java.io.File;
 import java.security.cert.CertificateException;
 import java.util.List;
 import java.util.concurrent.ScheduledThreadPoolExecutor;
@@ -47,6 +48,8 @@ import javax.net.ssl.SSLException;
 @Module(includes = NetCommonModule.class)
 public class NetServerModule {
 
+  public static final String TLS_CERTIFICATE = "TLS_CERTIFICATE";
+  public static final String TLS_PRIVATE_KEY = "TLS_PRIVATE_KEY";
   public static final String WORKER_GROUP = "workerGroup";
   public static final String BOSS_GROUP = "bossGroup";
   public static final String TIMER_EXECUTOR_SERVICE = "TimerExecutorService";
@@ -100,9 +103,24 @@ public class NetServerModule {
 
   @Provides
   @Singleton
-  public SslContext sslContext(final SelfSignedCertificate ssc) {
+  @Named(TLS_CERTIFICATE)
+  public File tlsCertificate(final SelfSignedCertificate ssc) {
+    return ssc.certificate();
+  }
+
+  @Provides
+  @Singleton
+  @Named(TLS_PRIVATE_KEY)
+  public File tlsPrivateKey(final SelfSignedCertificate ssc) {
+    return ssc.privateKey();
+  }
+
+  @Provides
+  @Singleton
+  public SslContext sslContext(@Named(TLS_CERTIFICATE) final File certificate,
+                               @Named(TLS_PRIVATE_KEY) final File privateKey) {
     try {
-      return SslContextBuilder.forServer(ssc.certificate(), ssc.privateKey())
+      return SslContextBuilder.forServer(certificate, privateKey)
           .protocols("TLSv1.3")
           .ciphers(List.of("TLS_AES_256_GCM_SHA384"))
           .build();
@@ -141,7 +159,7 @@ public class NetServerModule {
   @Provides
   @Singleton
   @Named(TIMER_EXECUTOR_SERVICE)
-  public ScheduledThreadPoolExecutor timerExecutorService(final NetServerConfiguration configuration){
+  public ScheduledThreadPoolExecutor timerExecutorService(final NetServerConfiguration configuration) {
     return new ScheduledThreadPoolExecutor(configuration.timerExecutorPoolSize());
   }
 
