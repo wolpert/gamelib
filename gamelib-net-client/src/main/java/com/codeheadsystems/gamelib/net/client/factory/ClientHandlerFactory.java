@@ -15,19 +15,14 @@
  *
  */
 
-package com.codeheadsystems.gamelib.net.client.component;
+package com.codeheadsystems.gamelib.net.client.factory;
 
-import com.codeheadsystems.gamelib.net.client.factory.ChannelFactory;
-import com.codeheadsystems.gamelib.net.client.module.NetClientModule;
-import dagger.Component;
-import io.netty.channel.EventLoopGroup;
-import javax.inject.Singleton;
+import com.codeheadsystems.gamelib.net.client.ClientHandler;
+import dagger.assisted.AssistedFactory;
 
-@Singleton
-@Component(modules = NetClientModule.class)
-public interface ClientComponent {
+@AssistedFactory
+public interface ClientHandlerFactory {
 
-  ChannelFactory channelFactory();
-  EventLoopGroup eventLoopGroup();
+  ClientHandler instance();
 
 }

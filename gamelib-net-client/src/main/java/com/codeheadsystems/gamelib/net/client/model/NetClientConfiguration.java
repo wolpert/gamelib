@@ -17,11 +17,41 @@
 
 package com.codeheadsystems.gamelib.net.client.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
+
+@JsonSerialize(as = ImmutableNetClientConfiguration.class)
+@JsonDeserialize(builder = ImmutableNetClientConfiguration.Builder.class)
+@JsonIgnoreProperties(ignoreUnknown = true)
 @Value.Immutable
 public interface NetClientConfiguration {
 
+  @JsonProperty("version")
+  @Value.Default
+  default int version() {
+    return 0;
+  }
 
+  @JsonProperty("buildNumber")
+  @Value.Default
+  default long buildNumber() {
+    return 1;
+  }
+
+  @JsonProperty("port")
+  @Value.Default
+  default int port() {
+    return 8992;
+  }
+
+  @JsonProperty("host")
+  @Value.Default
+  default String host() {
+    return "127.0.0.1";
+  }
 
 }

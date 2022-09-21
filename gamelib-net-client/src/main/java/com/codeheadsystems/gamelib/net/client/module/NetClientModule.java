@@ -18,6 +18,8 @@
 package com.codeheadsystems.gamelib.net.client.module;
 
 import com.codeheadsystems.gamelib.net.client.Initializer;
+import com.codeheadsystems.gamelib.net.client.model.ImmutableNetClientConfiguration;
+import com.codeheadsystems.gamelib.net.client.model.NetClientConfiguration;
 import com.codeheadsystems.gamelib.net.module.NetCommonModule;
 import dagger.Module;
 import dagger.Provides;
@@ -34,6 +36,22 @@ import javax.net.ssl.SSLException;
 
 @Module(includes = NetCommonModule.class)
 public class NetClientModule {
+
+  private final NetClientConfiguration netClientConfiguration;
+
+  public NetClientModule() {
+    this(ImmutableNetClientConfiguration.builder().build());
+  }
+
+  public NetClientModule(final NetClientConfiguration netClientConfiguration) {
+    this.netClientConfiguration = netClientConfiguration;
+  }
+
+  @Provides
+  @Singleton
+  public NetClientConfiguration netClientConfiguration() {
+    return netClientConfiguration;
+  }
 
   @Provides
   @Singleton

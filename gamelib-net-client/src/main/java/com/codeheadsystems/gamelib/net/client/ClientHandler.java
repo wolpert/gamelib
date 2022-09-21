@@ -17,10 +17,16 @@
 
 package com.codeheadsystems.gamelib.net.client;
 
+import dagger.assisted.AssistedInject;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 
-public class Handler extends SimpleChannelInboundHandler<String> {
+public class ClientHandler extends SimpleChannelInboundHandler<String> {
+
+  @AssistedInject
+  public ClientHandler(){
+
+  }
 
   @Override
   public void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {

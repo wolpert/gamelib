@@ -26,19 +26,15 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
 public class Client {
-  static final String HOST = System.getProperty("host", "127.0.0.1");
-  static final int PORT = Integer.parseInt(System.getProperty("port", "8992"));
 
   public static void main(String[] args) throws Exception {
 
     final ClientComponent clientComponent = DaggerClientComponent.builder()
-
         .build();
 
     try {
-      Bootstrap b = clientComponent.bootstrap();
       // Start the connection attempt.
-      Channel ch = b.connect(HOST, PORT).sync().channel();
+      Channel ch = clientComponent.channelFactory().instance();
 
       // Read commands from the stdin.
       ChannelFuture lastWriteFuture = ch.writeAndFlush("{\"value\":1}\r\n");

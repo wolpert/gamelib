@@ -17,6 +17,8 @@
 
 package com.codeheadsystems.gamelib.net.client;
 
+import com.codeheadsystems.gamelib.net.client.factory.ClientHandlerFactory;
+import com.codeheadsystems.gamelib.net.client.model.NetClientConfiguration;
 import io.netty.channel.ChannelInitializer;
 import io.netty.channel.ChannelPipeline;
 import io.netty.channel.socket.SocketChannel;
@@ -33,22 +35,28 @@ import javax.inject.Singleton;
 public class Initializer extends ChannelInitializer<SocketChannel> {
 
   private final SslContext sslCtx;
+  private final ClientHandlerFactory clientHandlerFactory;
+  private final NetClientConfiguration netClientConfiguration;
 
   @Inject
-  public Initializer(SslContext sslCtx) {
+  public Initializer(final SslContext sslCtx,
+                     final ClientHandlerFactory clientHandlerFactory,
+                     final NetClientConfiguration netClientConfiguration) {
     this.sslCtx = sslCtx;
+    this.clientHandlerFactory = clientHandlerFactory;
+    this.netClientConfiguration = netClientConfiguration;
   }
 
   @Override
-  public void initChannel(SocketChannel ch) throws Exception {
-    ChannelPipeline pipeline = ch.pipeline();
+  public void initChannel(final SocketChannel ch) throws Exception {
+    final ChannelPipeline pipeline = ch.pipeline();
 
     // Add SSL handler first to encrypt and decrypt everything.
     // In this example, we use a bogus certificate in the server side
     // and accept any invalid certificates in the client side.
     // You will need something more complicated to identify both
     // and server in the real world.
-    pipeline.addLast(sslCtx.newHandler(ch.alloc(), Client.HOST, Client.PORT));
+    pipeline.addLast(sslCtx.newHandler(ch.alloc(), netClientConfiguration.host(), netClientConfiguration.port()));
 
     // On top of the SSL handler, add the text line codec.
     pipeline.addLast(new DelimiterBasedFrameDecoder(8192, Delimiters.lineDelimiter()));
@@ -57,7 +65,7 @@ public class Initializer extends ChannelInitializer<SocketChannel> {
     pipeline.addLast(new StringEncoder());
 
     // and then business logic.
-    pipeline.addLast(new Handler());
+    pipeline.addLast(clientHandlerFactory.instance());
   }
 
 }
