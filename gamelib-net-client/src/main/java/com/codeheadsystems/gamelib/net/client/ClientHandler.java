@@ -20,63 +20,75 @@ package com.codeheadsystems.gamelib.net.client;
 import dagger.assisted.AssistedInject;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
+import java.util.concurrent.BlockingQueue;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ClientHandler extends SimpleChannelInboundHandler<String> {
 
-  @AssistedInject
-  public ClientHandler(){
+  private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
 
+  private final BlockingQueue<String> queue;
+
+  @AssistedInject
+  public ClientHandler(final BlockingQueue<String> queue) {
+    LOGGER.info("ClientHandler({})", queue);
+    this.queue = queue;
   }
 
   @Override
   public void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-    System.err.println(msg);
+    if (queue.offer(msg)) {
+      LOGGER.debug("Message: {}", msg);
+    } else {
+      LOGGER.error("Lost Message: {}", msg);
+    }
   }
 
   @Override
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
-    cause.printStackTrace();
+    LOGGER.error(cause.getMessage(), cause);
     ctx.close();
   }
 
   @Override
   public void channelRegistered(final ChannelHandlerContext ctx) throws Exception {
-    System.err.println("channelRegistered");
+    LOGGER.info("channelRegistered:{}", ctx);
     super.channelRegistered(ctx);
   }
 
   @Override
   public void channelUnregistered(final ChannelHandlerContext ctx) throws Exception {
-    System.err.println("channelUnregistered");
+    LOGGER.info("channelUnregistered: {}", ctx);
   }
 
   @Override
   public void channelActive(final ChannelHandlerContext ctx) throws Exception {
-    System.err.println("channelActive");
+    LOGGER.info("channelActive: {}", ctx);
     super.channelActive(ctx);
   }
 
   @Override
   public void channelInactive(final ChannelHandlerContext ctx) throws Exception {
-    System.err.println("channelInactive");
+    LOGGER.info("channelInactive: {}", ctx);
     super.channelInactive(ctx);
   }
 
   @Override
   public void channelReadComplete(final ChannelHandlerContext ctx) throws Exception {
-    System.err.println("channelReadComplete");
+    LOGGER.info("channelReadComplete: {}", ctx);
     super.channelReadComplete(ctx);
   }
 
   @Override
   public void userEventTriggered(final ChannelHandlerContext ctx, final Object evt) throws Exception {
-    System.err.println("userEventTriggered");
+    LOGGER.info("userEventTriggered: {},{}", ctx, evt);
     super.userEventTriggered(ctx, evt);
   }
 
   @Override
   public void channelWritabilityChanged(final ChannelHandlerContext ctx) throws Exception {
-    System.err.println("channelWritabilityChanged");
+    LOGGER.info("channelWritabilityChanged: {}", ctx);
     super.channelWritabilityChanged(ctx);
   }
 }

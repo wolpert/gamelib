@@ -21,6 +21,7 @@ import com.codeheadsystems.gamelib.net.client.factory.ChannelFactory;
 import com.codeheadsystems.gamelib.net.client.module.NetClientModule;
 import dagger.Component;
 import io.netty.channel.EventLoopGroup;
+import java.util.concurrent.BlockingQueue;
 import javax.inject.Singleton;
 
 @Singleton
@@ -29,5 +30,7 @@ public interface ClientComponent {
 
   ChannelFactory channelFactory();
   EventLoopGroup eventLoopGroup();
+
+  BlockingQueue<String> queue();
 
 }

@@ -48,8 +48,8 @@ dependencies {
     testImplementation("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
     testImplementation("commons-io:commons-io:${commonsIoVersion}")
 
-    testImplementation("ch.qos.logback:logback-classic:${logbackVersion}")
-    testImplementation("ch.qos.logback:logback-core:${logbackVersion}")
+    implementation("ch.qos.logback:logback-classic:${logbackVersion}")
+    implementation("ch.qos.logback:logback-core:${logbackVersion}")
 }
 
 run {

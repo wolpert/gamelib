@@ -24,6 +24,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.concurrent.TimeUnit;
 
 public class Client {
 
@@ -37,36 +38,13 @@ public class Client {
       Channel ch = clientComponent.channelFactory().instance();
 
       // Read commands from the stdin.
-      ChannelFuture lastWriteFuture = ch.writeAndFlush("{\"value\":1}\r\n");
-      Thread.sleep(5000);
-      BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-      for (; ; ) {
-        if (!ch.isOpen()) {
-          System.out.println("Channel is closed");
-          break;
-        }
-        String line = in.readLine();
-        if (line == null) {
-          continue;
-        }
-
-        // Sends the received line to the server.
-        lastWriteFuture = ch.writeAndFlush(line + "\r\n");
-
-        // If user typed the 'bye' command, wait until the server closes
-        // the connection.
-        if ("bye".equalsIgnoreCase(line)) {
-          ch.closeFuture().sync();
-          break;
-        }
-      }
-
-      // Wait until all messages are flushed before closing the channel.
-      if (lastWriteFuture != null) {
-        lastWriteFuture.sync();
-      }
+      ch.writeAndFlush("{\"value\":1}\r\n");
+      final String message = clientComponent.queue().take();
+      System.out.println("Message: " + message);
+      clientComponent.queue().poll(1000, TimeUnit.MILLISECONDS);
     } finally {
       // The connection is closed automatically on shutdown.
+      System.out.println("Shutting down");
       clientComponent.eventLoopGroup().shutdownGracefully();
     }
   }

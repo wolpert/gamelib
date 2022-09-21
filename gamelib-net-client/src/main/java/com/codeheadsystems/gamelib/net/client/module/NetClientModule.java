@@ -31,6 +31,8 @@ import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;
 import java.util.List;
+import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.LinkedBlockingQueue;
 import javax.inject.Singleton;
 import javax.net.ssl.SSLException;
 
@@ -45,6 +47,12 @@ public class NetClientModule {
 
   public NetClientModule(final NetClientConfiguration netClientConfiguration) {
     this.netClientConfiguration = netClientConfiguration;
+  }
+
+  @Provides
+  @Singleton
+  public BlockingQueue<String> queue() {
+    return new LinkedBlockingQueue<>();
   }
 
   @Provides
