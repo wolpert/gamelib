@@ -20,8 +20,6 @@ package com.codeheadsystems.gamelib.net.client.manager;
 import com.codeheadsystems.gamelib.net.client.factory.ClientConnectionFactory;
 import com.codeheadsystems.gamelib.net.client.model.ClientConnection;
 import com.codeheadsystems.gamelib.net.model.Identity;
-import io.netty.channel.Channel;
-import io.netty.channel.EventLoopGroup;
 import java.util.concurrent.BlockingQueue;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -58,7 +56,7 @@ public class ClientManager {
   }
 
   public boolean sendMessage(String msg) {
-    if(status.equals(Status.OFFLINE)) {
+    if (status.equals(Status.OFFLINE)) {
       return false;
     }
     client.channel().writeAndFlush(msg + "\r\n");

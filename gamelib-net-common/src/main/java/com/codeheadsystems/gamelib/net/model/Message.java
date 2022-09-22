@@ -24,6 +24,7 @@ import org.immutables.value.Value;
 
 /**
  * Wrapper for the message needed for the game.
+ *
  * @param <RESOURCE> message type.
  */
 @JsonSerialize(as = ImmutableMessage.class)

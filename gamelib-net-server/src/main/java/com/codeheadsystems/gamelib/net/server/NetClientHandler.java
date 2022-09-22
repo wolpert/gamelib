@@ -57,13 +57,13 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     this.setStatus(Status.OFFLINE);
   }
 
+  public Status getStatus() {
+    return status;
+  }
+
   private void setStatus(final Status status) {
     LOGGER.info("State change for {}, {}->{}", (channel != null ? channel.id() : "null"), this.status, status);
     this.status = status;
-  }
-
-  public Status getStatus() {
-    return status;
   }
 
   @Override

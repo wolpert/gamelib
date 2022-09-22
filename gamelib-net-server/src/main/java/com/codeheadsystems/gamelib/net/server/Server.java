@@ -23,7 +23,7 @@ import com.codeheadsystems.gamelib.net.server.module.NetServerModule;
 
 public class Server {
 
-  public static void main(String[] args) throws Exception {
+  public static void main(String[] args) {
     // TODO: make authenticators plugable
     final Authenticator authenticator = (i) -> Boolean.TRUE;
 

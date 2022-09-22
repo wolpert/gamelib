@@ -17,8 +17,6 @@
 
 package com.codeheadsystems.gamelib.net.model;
 
-import static org.junit.jupiter.api.Assertions.*;
-
 import com.codeheadsystems.test.model.BaseJacksonTest;
 
 class NotificationTest extends BaseJacksonTest<Notification> {

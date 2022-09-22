@@ -17,16 +17,11 @@
 
 package com.codeheadsystems.gamelib.net.client.module;
 
-import com.codeheadsystems.gamelib.net.client.Initializer;
 import com.codeheadsystems.gamelib.net.client.model.ImmutableNetClientConfiguration;
 import com.codeheadsystems.gamelib.net.client.model.NetClientConfiguration;
 import com.codeheadsystems.gamelib.net.module.NetCommonModule;
 import dagger.Module;
 import dagger.Provides;
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.EventLoopGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioSocketChannel;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.InsecureTrustManagerFactory;

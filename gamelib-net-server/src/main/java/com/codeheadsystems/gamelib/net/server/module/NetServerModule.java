@@ -19,19 +19,12 @@ package com.codeheadsystems.gamelib.net.server.module;
 
 import com.codeheadsystems.gamelib.net.module.NetCommonModule;
 import com.codeheadsystems.gamelib.net.server.Authenticator;
-import com.codeheadsystems.gamelib.net.server.ChannelPipelineInitializer;
 import com.codeheadsystems.gamelib.net.server.model.ImmutableNetServerConfiguration;
 import com.codeheadsystems.gamelib.net.server.model.NetServerConfiguration;
 import dagger.Module;
 import dagger.Provides;
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.EventLoopGroup;
 import io.netty.channel.group.ChannelGroup;
 import io.netty.channel.group.DefaultChannelGroup;
-import io.netty.channel.nio.NioEventLoopGroup;
-import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.logging.LogLevel;
-import io.netty.handler.logging.LoggingHandler;
 import io.netty.handler.ssl.SslContext;
 import io.netty.handler.ssl.SslContextBuilder;
 import io.netty.handler.ssl.util.SelfSignedCertificate;
@@ -50,8 +43,6 @@ public class NetServerModule {
 
   public static final String TLS_CERTIFICATE = "TLS_CERTIFICATE";
   public static final String TLS_PRIVATE_KEY = "TLS_PRIVATE_KEY";
-  public static final String WORKER_GROUP = "workerGroup";
-  public static final String BOSS_GROUP = "bossGroup";
   public static final String TIMER_EXECUTOR_SERVICE = "TimerExecutorService";
   private final NetServerConfiguration netServerConfiguration;
   private final Authenticator authenticator;

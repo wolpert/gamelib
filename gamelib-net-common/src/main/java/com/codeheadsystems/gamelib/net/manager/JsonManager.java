@@ -18,7 +18,6 @@
 package com.codeheadsystems.gamelib.net.manager;
 
 import com.codeheadsystems.gamelib.net.exception.JsonException;
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;

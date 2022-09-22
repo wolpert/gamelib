@@ -19,8 +19,6 @@ package com.codeheadsystems.gamelib.net.server.manager;
 
 import com.codeheadsystems.gamelib.net.server.factory.ServerConnectionFactory;
 import com.codeheadsystems.gamelib.net.server.model.ServerConnection;
-import io.netty.util.concurrent.Future;
-import io.netty.util.concurrent.GenericFutureListener;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.slf4j.Logger;
@@ -44,18 +42,18 @@ public class ServerManager {
   public void executeServer() {
     LOGGER.info("executeServer()");
     setState(State.STARTING);
-      serverConnection = serverConnectionFactory.instance();
-      setState(State.RUNNING);
-      serverConnection.channel().closeFuture().addListener(future -> {
-        setState(State.STOPPING);
-        serverConnection.bossGroup().shutdownGracefully();
-        serverConnection.workerGroup().shutdownGracefully();
-        setState(State.OFFLINE);
-      });
+    serverConnection = serverConnectionFactory.instance();
+    setState(State.RUNNING);
+    serverConnection.channel().closeFuture().addListener(future -> {
+      setState(State.STOPPING);
+      serverConnection.bossGroup().shutdownGracefully();
+      serverConnection.workerGroup().shutdownGracefully();
+      setState(State.OFFLINE);
+    });
   }
 
   public boolean waitOnClose() {
-    if (state.equals(State.RUNNING)){
+    if (state.equals(State.RUNNING)) {
       try {
         serverConnection.channel().closeFuture().sync();
       } catch (InterruptedException e) {

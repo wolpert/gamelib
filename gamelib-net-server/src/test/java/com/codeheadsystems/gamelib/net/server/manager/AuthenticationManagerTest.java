@@ -19,7 +19,6 @@ package com.codeheadsystems.gamelib.net.server.manager;
 
 import static com.codeheadsystems.gamelib.net.server.manager.AuthenticationManager.AUTH_FAIL;
 import static com.codeheadsystems.gamelib.net.server.manager.AuthenticationManager.AUTH_TIMER_EXPIRED;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoInteractions;
@@ -53,7 +52,7 @@ class AuthenticationManagerTest {
   @InjectMocks private AuthenticationManager authenticationManager;
 
   @Test
-  void timerExpired(){
+  void timerExpired() {
     authenticationManager.timerExpired();
     verify(handler).shutdown(AUTH_TIMER_EXPIRED);
     authenticationManager.timerExpired();
@@ -61,7 +60,7 @@ class AuthenticationManagerTest {
   }
 
   @Test
-  void authenticate_timerExpired(){
+  void authenticate_timerExpired() {
     when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
 
     authenticationManager.initialized();
@@ -72,7 +71,7 @@ class AuthenticationManagerTest {
   }
 
   @Test
-  void authenticate_identityValid(){
+  void authenticate_identityValid() {
     when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
     when(jsonManager.fromJson(MESSAGE, Identity.class)).thenReturn(identity);
     when(authenticator.isAuthenticated(identity)).thenReturn(true);
@@ -86,7 +85,7 @@ class AuthenticationManagerTest {
   }
 
   @Test
-  void authenticate_identityInvalid(){
+  void authenticate_identityInvalid() {
     when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
     when(jsonManager.fromJson(MESSAGE, Identity.class)).thenReturn(identity);
     when(authenticator.isAuthenticated(identity)).thenReturn(false);
@@ -101,7 +100,7 @@ class AuthenticationManagerTest {
   }
 
   @Test
-  void authenticate_identityAuthException(){
+  void authenticate_identityAuthException() {
     when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
     when(jsonManager.fromJson(MESSAGE, Identity.class)).thenReturn(identity);
     when(authenticator.isAuthenticated(identity)).thenThrow(new IllegalArgumentException());
@@ -116,7 +115,7 @@ class AuthenticationManagerTest {
   }
 
   @Test
-  void authenticate_badJson(){
+  void authenticate_badJson() {
     when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
     when(jsonManager.fromJson(MESSAGE, Identity.class)).thenThrow(new JsonException());
 
@@ -130,9 +129,8 @@ class AuthenticationManagerTest {
   }
 
 
-
   @Test
-  void initialized(){
+  void initialized() {
     when(timerManager.enabledAuthTimeoutHandler(authenticationManager)).thenReturn(future);
 
     authenticationManager.initialized();

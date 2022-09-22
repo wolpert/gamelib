@@ -25,7 +25,9 @@ import org.immutables.value.Value;
 public interface ServerConnection {
 
   Channel channel();
+
   EventLoopGroup bossGroup();
+
   EventLoopGroup workerGroup();
 
 }

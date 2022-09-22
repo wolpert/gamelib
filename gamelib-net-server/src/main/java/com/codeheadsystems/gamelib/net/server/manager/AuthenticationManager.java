@@ -35,8 +35,8 @@ import org.slf4j.LoggerFactory;
 public class AuthenticationManager {
 
   public static final String AUTH_FAIL = "Auth Fail";
-  private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationManager.class);
   public static final String AUTH_TIMER_EXPIRED = "Auth timer expired";
+  private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationManager.class);
   private final Authenticator authenticator;
   private final TimerManager timerManager;
   private final JsonManager jsonManager;

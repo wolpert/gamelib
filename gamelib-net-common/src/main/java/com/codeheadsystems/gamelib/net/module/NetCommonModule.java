@@ -21,13 +21,7 @@ import com.codeheadsystems.gamelib.net.factory.ObjectMapperFactory;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import dagger.Module;
 import dagger.Provides;
-import io.netty.handler.ssl.SslContext;
-import io.netty.handler.ssl.SslContextBuilder;
-import java.io.File;
-import java.util.List;
-import javax.inject.Named;
 import javax.inject.Singleton;
-import javax.net.ssl.SSLException;
 
 @Module
 public class NetCommonModule {
