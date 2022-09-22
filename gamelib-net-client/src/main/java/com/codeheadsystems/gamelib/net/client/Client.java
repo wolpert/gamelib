@@ -19,6 +19,7 @@ package com.codeheadsystems.gamelib.net.client;
 
 import com.codeheadsystems.gamelib.net.client.component.ClientComponent;
 import com.codeheadsystems.gamelib.net.client.component.DaggerClientComponent;
+import com.codeheadsystems.gamelib.net.client.manager.ClientManager;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
@@ -32,20 +33,19 @@ public class Client {
 
     final ClientComponent clientComponent = DaggerClientComponent.builder()
         .build();
+    final ClientManager clientManager = clientComponent.clientManager();
+    clientManager.connect();
 
     try {
-      // Start the connection attempt.
-      Channel ch = clientComponent.channelFactory().instance();
-
       // Read commands from the stdin.
-      ch.writeAndFlush("{\"value\":1}\r\n");
+      clientManager.sendMessage("{\"value\":1}");
       final String message = clientComponent.queue().take();
       System.out.println("Message: " + message);
       clientComponent.queue().poll(1000, TimeUnit.MILLISECONDS);
     } finally {
       // The connection is closed automatically on shutdown.
       System.out.println("Shutting down");
-      clientComponent.eventLoopGroup().shutdownGracefully();
+      clientManager.disconnect();
     }
   }
 }
