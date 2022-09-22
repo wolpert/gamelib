@@ -17,16 +17,9 @@
 
 package com.codeheadsystems.gamelib.net.server.manager;
 
-import static com.codeheadsystems.gamelib.net.server.module.NetServerModule.BOSS_GROUP;
-import static com.codeheadsystems.gamelib.net.server.module.NetServerModule.WORKER_GROUP;
-
-import com.codeheadsystems.gamelib.net.server.model.NetServerConfiguration;
-import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import io.netty.channel.EventLoopGroup;
+import com.codeheadsystems.gamelib.net.server.factory.ServerConnectionFactory;
+import com.codeheadsystems.gamelib.net.server.model.ServerConnection;
 import javax.inject.Inject;
-import javax.inject.Named;
 import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -35,48 +28,36 @@ import org.slf4j.LoggerFactory;
 public class ServerManager {
   private static final Logger LOGGER = LoggerFactory.getLogger(ServerManager.class);
 
-  private final NetServerConfiguration netServerConfiguration;
-  private final ServerBootstrap serverBootstrap;
-  private final EventLoopGroup bossGroup;
-  private final EventLoopGroup workerGroup;
-
-  private Channel channel;
+  private final ServerConnectionFactory serverConnectionFactory;
+  private ServerConnection serverConnection;
   private State state;
 
   @Inject
-  public ServerManager(final NetServerConfiguration netServerConfiguration,
-                       final ServerBootstrap serverBootstrap,
-                       @Named(BOSS_GROUP) final EventLoopGroup bossGroup,
-                       @Named(WORKER_GROUP) final EventLoopGroup workerGroup) {
-    LOGGER.info("ServerManager({},{},{},{})", netServerConfiguration, serverBootstrap, bossGroup, workerGroup);
-    this.netServerConfiguration = netServerConfiguration;
-    this.serverBootstrap = serverBootstrap;
-    this.bossGroup = bossGroup;
-    this.workerGroup = workerGroup;
-    setState(State.INIT);
+  public ServerManager(final ServerConnectionFactory serverConnectionFactory) {
+    this.serverConnectionFactory = serverConnectionFactory;
+    LOGGER.info("ServerManager({})", serverConnectionFactory);
+    setState(State.OFFLINE);
   }
 
   public void executeServer() {
     LOGGER.info("executeServer()");
+    setState(State.STARTING);
     try {
-      setState(State.STARTING);
-      final ChannelFuture startupFuture = serverBootstrap.bind(netServerConfiguration.port());
-      startupFuture.sync();
+      serverConnection = serverConnectionFactory.instance();
       setState(State.RUNNING);
-      channel = startupFuture.channel();
-      channel.closeFuture().sync(); // Lock this thread waiting to close.
+      serverConnection.channel().closeFuture().sync(); // Lock this thread waiting to close.
     } catch (InterruptedException e) {
       LOGGER.error("Interrupted", e);
       throw new RuntimeException(e);
     } finally {
       LOGGER.info("Closing");
-      bossGroup.shutdownGracefully();
-      workerGroup.shutdownGracefully();
-      setState(State.DEAD);
+      serverConnection.bossGroup().shutdownGracefully();
+      serverConnection.workerGroup().shutdownGracefully();
+      setState(State.OFFLINE);
     }
   }
 
-  private void setState(final State state){
+  private void setState(final State state) {
     LOGGER.info("State change {} -> {}", this.state, state);
     this.state = state;
   }
@@ -86,10 +67,10 @@ public class ServerManager {
    */
   public void stop() {
     LOGGER.info("stop()");
-    channel.close();
+    serverConnection.channel().close();
     setState(State.STOPPING);
   }
 
-  public enum State { INIT, STARTING, RUNNING, STOPPING, DEAD}
+  public enum State {OFFLINE, STARTING, RUNNING, STOPPING}
 
 }
