@@ -25,11 +25,12 @@ public class Server {
 
   public static void main(String[] args) throws Exception {
     // TODO: make authenticators plugable
-    final Authenticator authenticator = (i) ->Boolean.TRUE;
+    final Authenticator authenticator = (i) -> Boolean.TRUE;
 
     final ServerComponent component = DaggerServerComponent.builder()
         .netServerModule(new NetServerModule(authenticator))
         .build();
     component.serverManager().executeServer();
+    component.serverManager().waitOnClose();
   }
 }
