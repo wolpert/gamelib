@@ -17,7 +17,9 @@
 
 package com.codeheadsystems.gamelib.net.client.manager;
 
-import com.codeheadsystems.gamelib.net.client.factory.ChannelFactory;
+import com.codeheadsystems.gamelib.net.client.factory.ClientConnectionFactory;
+import com.codeheadsystems.gamelib.net.client.model.ClientConnection;
+import com.codeheadsystems.gamelib.net.model.Identity;
 import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import java.util.concurrent.BlockingQueue;
@@ -31,21 +33,18 @@ public class ClientManager {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ClientManager.class);
 
-  private final ChannelFactory channelFactory;
+  private final ClientConnectionFactory clientConnectionFactory;
   private final BlockingQueue<String> queue;
-  private final EventLoopGroup eventLoopGroup; // TODO: This is attached to the connection, need to refactor it.
 
-  private Channel channel;
+  private ClientConnection client;
   private Status status = Status.OFFLINE;
 
   @Inject
-  public ClientManager(final ChannelFactory channelFactory,
-                       final BlockingQueue<String> queue,
-                       final EventLoopGroup eventLoopGroup) {
-    this.channelFactory = channelFactory;
+  public ClientManager(final ClientConnectionFactory clientConnectionFactory,
+                       final BlockingQueue<String> queue) {
+    this.clientConnectionFactory = clientConnectionFactory;
     this.queue = queue;
-    this.eventLoopGroup = eventLoopGroup;
-    LOGGER.info("ClientManager({},{},{}", channelFactory, queue, eventLoopGroup);
+    LOGGER.info("ClientManager({},{}", clientConnectionFactory, queue);
     setStatus(Status.OFFLINE);
   }
 
@@ -58,15 +57,19 @@ public class ClientManager {
     this.status = status;
   }
 
-  public void sendMessage(String msg) {
-    channel.writeAndFlush(msg + "\r\n");
+  public boolean sendMessage(String msg) {
+    if(status.equals(Status.OFFLINE)) {
+      return false;
+    }
+    client.channel().writeAndFlush(msg + "\r\n");
+    return true;
   }
 
   public boolean connect() {
     LOGGER.info("connect()");
     if (status.equals(Status.OFFLINE)) {
       setStatus(Status.CONNECTING);
-      channel = channelFactory.instance();
+      client = clientConnectionFactory.instance();
       setStatus(Status.UNAUTH);
       return true;
     } else {
@@ -74,11 +77,15 @@ public class ClientManager {
     }
   }
 
+  public boolean authenticated(final Identity identity) {
+    return false; // TODO: implement
+  }
+
   public boolean disconnect() {
     LOGGER.info("disconnect()");
     if (status != Status.OFFLINE && status != Status.STOPPING) {
       setStatus(Status.STOPPING);
-      eventLoopGroup.shutdownGracefully();
+      client.eventLoopGroup().shutdownGracefully();
       setStatus(Status.OFFLINE);
       return true;
     } else {

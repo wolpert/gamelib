@@ -20,11 +20,6 @@ package com.codeheadsystems.gamelib.net.client;
 import com.codeheadsystems.gamelib.net.client.component.ClientComponent;
 import com.codeheadsystems.gamelib.net.client.component.DaggerClientComponent;
 import com.codeheadsystems.gamelib.net.client.manager.ClientManager;
-import io.netty.bootstrap.Bootstrap;
-import io.netty.channel.Channel;
-import io.netty.channel.ChannelFuture;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.util.concurrent.TimeUnit;
 
 public class Client {

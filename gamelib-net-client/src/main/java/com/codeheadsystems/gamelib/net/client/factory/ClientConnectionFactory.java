@@ -17,28 +17,42 @@
 
 package com.codeheadsystems.gamelib.net.client.factory;
 
+import com.codeheadsystems.gamelib.net.client.Initializer;
+import com.codeheadsystems.gamelib.net.client.model.ClientConnection;
+import com.codeheadsystems.gamelib.net.client.model.ImmutableClientConnection;
 import com.codeheadsystems.gamelib.net.client.model.NetClientConfiguration;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.Channel;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioSocketChannel;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
 @Singleton
-public class ChannelFactory {
+public class ClientConnectionFactory {
 
   private final NetClientConfiguration netClientConfiguration;
-  private final Bootstrap bootstrap;
+  private final Initializer initializer;
 
   @Inject
-  public ChannelFactory(final NetClientConfiguration netClientConfiguration,
-                        final Bootstrap bootstrap) {
+  public ClientConnectionFactory(final NetClientConfiguration netClientConfiguration,
+                                 final Initializer initializer) {
     this.netClientConfiguration = netClientConfiguration;
-    this.bootstrap = bootstrap;
+    this.initializer = initializer;
   }
 
-  public Channel instance() {
+  public ClientConnection instance() {
+    final EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
+    final Bootstrap bootstrap = new Bootstrap()
+        .group(eventLoopGroup)
+        .channel(NioSocketChannel.class)
+        .handler(initializer);
     try {
-      return bootstrap.connect(netClientConfiguration.host(), netClientConfiguration.port()).sync().channel();
+      final Channel channel = bootstrap
+          .connect(netClientConfiguration.host(), netClientConfiguration.port())
+          .sync().channel();
+      return ImmutableClientConnection.builder().channel(channel).eventLoopGroup(eventLoopGroup).build();
     } catch (InterruptedException e) {
       throw new IllegalStateException(e);
     }

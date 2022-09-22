@@ -74,21 +74,4 @@ public class NetClientModule {
     }
   }
 
-  @Provides
-  @Singleton
-  public EventLoopGroup eventLoopGroup() {
-    return new NioEventLoopGroup();
-  }
-
-  @Provides
-  @Singleton
-  public Bootstrap bootstrap(final EventLoopGroup group,
-                             final Initializer initializer) {
-    Bootstrap b = new Bootstrap();
-    b.group(group)
-        .channel(NioSocketChannel.class)
-        .handler(initializer);
-    return b;
-  }
-
 }
