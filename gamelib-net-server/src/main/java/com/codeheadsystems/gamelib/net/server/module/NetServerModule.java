@@ -131,33 +131,6 @@ public class NetServerModule {
 
   @Provides
   @Singleton
-  @Named(BOSS_GROUP)
-  public EventLoopGroup bossGroup() {
-    return new NioEventLoopGroup(1);
-  }
-
-  @Provides
-  @Singleton
-  @Named(WORKER_GROUP)
-  public EventLoopGroup workerGroup() {
-    return new NioEventLoopGroup();
-  }
-
-  @Provides
-  @Singleton
-  public ServerBootstrap serverBootstrap(@Named(BOSS_GROUP) final EventLoopGroup bossGroup,
-                                         @Named(WORKER_GROUP) final EventLoopGroup workerGroup,
-                                         final ChannelPipelineInitializer initializer) {
-    ServerBootstrap b = new ServerBootstrap();
-    b.group(bossGroup, workerGroup)
-        .channel(NioServerSocketChannel.class)
-        .handler(new LoggingHandler(LogLevel.DEBUG))
-        .childHandler(initializer);
-    return b;
-  }
-
-  @Provides
-  @Singleton
   @Named(TIMER_EXECUTOR_SERVICE)
   public ScheduledThreadPoolExecutor timerExecutorService(final NetServerConfiguration configuration) {
     return new ScheduledThreadPoolExecutor(configuration.timerExecutorPoolSize());
