@@ -20,6 +20,7 @@ package com.codeheadsystems.gamelib.net.client.manager;
 import com.codeheadsystems.gamelib.net.client.factory.ClientConnectionFactory;
 import com.codeheadsystems.gamelib.net.client.model.ClientConnection;
 import com.codeheadsystems.gamelib.net.model.Identity;
+import io.netty.channel.ChannelFuture;
 import java.util.concurrent.BlockingQueue;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -55,12 +56,11 @@ public class ClientManager {
     this.status = status;
   }
 
-  public boolean sendMessage(String msg) {
+  public ChannelFuture sendMessage(String msg) {
     if (status.equals(Status.OFFLINE)) {
-      return false;
+      return null;
     }
-    client.channel().writeAndFlush(msg + "\r\n");
-    return true;
+    return client.channel().writeAndFlush(msg + "\r\n");
   }
 
   public boolean connect() {

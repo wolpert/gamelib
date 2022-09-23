@@ -5,5 +5,5 @@
 
 include ':codehead-test', 
         ":gamelib-core", ":gamelib-entity", ":gamelib-box2d", ":gamelib-hex",
-        ':gamelib-net-server', ':gamelib-net-client', 'gamelib-net-common',
+        ':gamelib-net-server', ':gamelib-net-client', 'gamelib-net-common', 'gamelib-net-integ',
         ':sample-core', ':sample-desktop'

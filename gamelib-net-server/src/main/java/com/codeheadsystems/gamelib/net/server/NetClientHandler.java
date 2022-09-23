@@ -19,6 +19,7 @@ package com.codeheadsystems.gamelib.net.server;
 
 import com.codeheadsystems.gamelib.net.manager.JsonManager;
 import com.codeheadsystems.gamelib.net.model.Disconnect;
+import com.codeheadsystems.gamelib.net.model.ImmutableAuthenticated;
 import com.codeheadsystems.gamelib.net.model.ImmutableDisconnect;
 import com.codeheadsystems.gamelib.net.model.ImmutableServerDetails;
 import com.codeheadsystems.gamelib.net.model.ServerDetails;
@@ -26,6 +27,7 @@ import com.codeheadsystems.gamelib.net.server.factory.AuthenticationManagerFacto
 import com.codeheadsystems.gamelib.net.server.manager.AuthenticationManager;
 import dagger.assisted.AssistedInject;
 import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.channel.group.ChannelGroup;
@@ -82,16 +84,21 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
               .crypto(ctx.pipeline().get(SslHandler.class).engine().getSession().getCipherSuite())
               .name(InetAddress.getLocalHost().getHostName())
               .build();
-          ctx.writeAndFlush(jsonManager.toJson(serverDetails));
+          writeMessage(jsonManager.toJson(serverDetails));
           channels.add(channel);
           this.setStatus(Status.AUTH_REQUEST);
           authenticationManager.initialized();
         });
   }
 
+  public ChannelFuture writeMessage(final String message) {
+    return channel.writeAndFlush(message + "\r\n");
+  }
+
   public void authenticated() {
     if (status.equals(Status.AUTH_REQUEST)) {
       this.setStatus(Status.AUTHENTICATED);
+      writeMessage(jsonManager.toJson(ImmutableAuthenticated.builder().build()));
     } else {
       LOGGER.warn("Request to set status to authenticated when we are {}", status);
     }
@@ -105,7 +112,7 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     }
     final Disconnect disconnect = ImmutableDisconnect.builder().reason(reason).build();
     final String message = jsonManager.toJson(disconnect);
-    channel.writeAndFlush(message).addListener(future -> {
+    writeMessage(message).addListener(future -> {
       this.setStatus(Status.OFFLINE);
       status = Status.STOPPED;
       channel.close();

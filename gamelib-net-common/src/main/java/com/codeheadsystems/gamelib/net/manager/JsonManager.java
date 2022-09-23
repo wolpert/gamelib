@@ -35,7 +35,7 @@ public class JsonManager {
 
 
   public <T> String toJson(final T object) {
-    return toJson(object, true);
+    return toJson(object, false);
   }
 
 
