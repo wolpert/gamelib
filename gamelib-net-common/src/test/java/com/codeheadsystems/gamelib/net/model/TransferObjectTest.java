@@ -17,15 +17,14 @@
 
 package com.codeheadsystems.gamelib.net.model;
 
-class DisconnectTest extends TransferObjectTest<Disconnect> {
+import com.codeheadsystems.test.model.BaseJacksonTest;
+import java.util.Optional;
+
+public abstract class TransferObjectTest<T> extends BaseJacksonTest<T> {
 
   @Override
-  protected Class<Disconnect> getBaseClass() {
-    return Disconnect.class;
+  protected Optional<Class<?>> getPolymorphicBaseClass() {
+    return Optional.of(TransferObject.class);
   }
 
-  @Override
-  protected Disconnect getInstance() {
-    return ImmutableDisconnect.builder().reason("reason").build();
-  }
 }

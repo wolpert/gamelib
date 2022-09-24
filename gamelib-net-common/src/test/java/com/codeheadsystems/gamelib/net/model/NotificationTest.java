@@ -17,9 +17,7 @@
 
 package com.codeheadsystems.gamelib.net.model;
 
-import com.codeheadsystems.test.model.BaseJacksonTest;
-
-class NotificationTest extends BaseJacksonTest<Notification> {
+class NotificationTest extends TransferObjectTest<Notification> {
 
   @Override
   protected Class<Notification> getBaseClass() {

@@ -91,5 +91,5 @@ public class ClientManager {
     }
   }
 
-  enum Status {OFFLINE, CONNECTING, UNAUTH, CONNECTED, STOPPING}
+  public enum Status {OFFLINE, CONNECTING, UNAUTH, CONNECTED, STOPPING}
 }

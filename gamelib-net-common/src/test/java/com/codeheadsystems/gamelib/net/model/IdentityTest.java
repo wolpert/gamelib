@@ -17,9 +17,7 @@
 
 package com.codeheadsystems.gamelib.net.model;
 
-import com.codeheadsystems.test.model.BaseJacksonTest;
-
-class IdentityTest extends BaseJacksonTest<Identity> {
+class IdentityTest extends TransferObjectTest<Identity> {
 
   @Override
   protected Class<Identity> getBaseClass() {

@@ -18,15 +18,19 @@
 package com.codeheadsystems.gamelib.net.integ;
 
 import static com.codeheadsystems.gamelib.net.integ.authenticator.Authenticators.AlwaysAuth;
+import static com.codeheadsystems.gamelib.net.integ.authenticator.Authenticators.AlwaysFail;
 import static org.assertj.core.api.Assertions.assertThat;
 
+import com.codeheadsystems.gamelib.net.client.manager.ClientManager;
 import com.codeheadsystems.gamelib.net.factory.ObjectMapperFactory;
 import com.codeheadsystems.gamelib.net.integ.util.NetComponents;
 import com.codeheadsystems.gamelib.net.manager.JsonManager;
 import com.codeheadsystems.gamelib.net.model.Authenticated;
+import com.codeheadsystems.gamelib.net.model.Disconnect;
 import com.codeheadsystems.gamelib.net.model.Identity;
 import com.codeheadsystems.gamelib.net.model.ImmutableIdentity;
 import com.codeheadsystems.gamelib.net.model.ServerDetails;
+import com.codeheadsystems.gamelib.net.server.manager.ServerManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.BeforeEach;
@@ -56,6 +60,25 @@ public class AuthTest {
     validateAuthenticated(net.queue().poll(500, TimeUnit.MILLISECONDS));
     net.stop();
   }
+
+  @Test
+  public void TestAuthFailure() throws InterruptedException {
+    final NetComponents net = new NetComponents(AlwaysFail).start();
+    final Identity identity = ImmutableIdentity.builder().id("id").token("token").build();
+    validateServerDetails(net.queue().poll(500, TimeUnit.MILLISECONDS));
+    // auth
+    net.sendMessageFromClient(jsonManager.toJson(identity));
+    validateAuthFailure(net.queue().poll(500, TimeUnit.MILLISECONDS));
+    net.stop();
+  }
+
+  private void validateAuthFailure(final String msg) {
+    LOGGER.info("validateAuthFailure({})", msg);
+    assertThat(msg).isNotNull();
+    final Disconnect details = jsonManager.fromJson(msg, Disconnect.class);
+    assertThat(details).isNotNull();
+  }
+
 
   private void validateAuthenticated(final String msg) {
     LOGGER.info("validateAuthenticated({})", msg);

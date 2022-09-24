@@ -17,9 +17,7 @@
 
 package com.codeheadsystems.gamelib.net.model;
 
-import com.codeheadsystems.test.model.BaseJacksonTest;
-
-class ServerDetailsTest extends BaseJacksonTest<ServerDetails> {
+class ServerDetailsTest extends TransferObjectTest<ServerDetails> {
 
   @Override
   protected Class<ServerDetails> getBaseClass() {

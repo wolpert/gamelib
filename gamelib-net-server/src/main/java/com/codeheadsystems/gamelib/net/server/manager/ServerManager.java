@@ -19,6 +19,7 @@ package com.codeheadsystems.gamelib.net.server.manager;
 
 import com.codeheadsystems.gamelib.net.server.factory.ServerConnectionFactory;
 import com.codeheadsystems.gamelib.net.server.model.ServerConnection;
+import io.netty.channel.ChannelFuture;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.slf4j.Logger;
@@ -39,8 +40,11 @@ public class ServerManager {
     setState(State.OFFLINE);
   }
 
-  public void executeServer() {
+  public boolean executeServer() {
     LOGGER.info("executeServer()");
+    if (!state.equals(State.OFFLINE)){
+      return false;
+    }
     setState(State.STARTING);
     serverConnection = serverConnectionFactory.instance();
     setState(State.RUNNING);
@@ -50,6 +54,7 @@ public class ServerManager {
       serverConnection.workerGroup().shutdownGracefully();
       setState(State.OFFLINE);
     });
+    return true;
   }
 
   public boolean waitOnClose() {
@@ -70,13 +75,16 @@ public class ServerManager {
     this.state = state;
   }
 
+  public State getState(){
+    return state;
+  }
   /**
    * Tell ourselves to close.
    */
-  public void stop() {
+  public ChannelFuture stop() {
     LOGGER.info("stop()");
-    serverConnection.channel().close();
     setState(State.STOPPING);
+    return serverConnection.channel().close();
   }
 
   public enum State {OFFLINE, STARTING, RUNNING, STOPPING}
