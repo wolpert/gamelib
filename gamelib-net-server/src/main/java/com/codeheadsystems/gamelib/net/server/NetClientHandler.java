@@ -150,7 +150,7 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
   public enum Status {
     OFFLINE, UNAUTH, AUTH_REQUEST, AUTHENTICATED(true), AVAILABLE(true), STOPPING, STOPPED;
 
-    private boolean communicable;
+    private final boolean communicable;
 
     Status() {
       this(false);

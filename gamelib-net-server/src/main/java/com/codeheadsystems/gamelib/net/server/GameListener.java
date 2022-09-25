@@ -15,28 +15,15 @@
  *
  */
 
-package com.codeheadsystems.gamelib.net.model;
+package com.codeheadsystems.gamelib.net.server;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
-/**
- * Wrapper for the message needed for the game.
- */
-@JsonSerialize(as = ImmutableMessage.class)
-@JsonDeserialize(builder = ImmutableMessage.Builder.class)
-@JsonIgnoreProperties(ignoreUnknown = true)
 @Value.Immutable
-public interface Message extends TransferObject {
-  String TYPE = "mesg";
+public interface GameListener {
 
-  @Value.Default
-  @Override
-  default String type() {
-    return TYPE;
-  }
+  MessageHandler authenticatedMessageHandler();
 
-  String value();
+  MessageHandler availableMessageHandler();
+
 }

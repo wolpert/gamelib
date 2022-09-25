@@ -15,17 +15,19 @@
  *
  */
 
-package com.codeheadsystems.gamelib.net.model;
+package com.codeheadsystems.gamelib.net.integ.listener;
 
-class MessageTest extends TransferObjectTest<Message> {
+import com.codeheadsystems.gamelib.net.server.GameListener;
+import com.codeheadsystems.gamelib.net.server.ImmutableGameListener;
+import com.codeheadsystems.gamelib.net.server.MessageHandler;
 
-  @Override
-  protected Class<Message> getBaseClass() {
-    return Message.class;
-  }
+public class Listeners {
 
-  @Override
-  protected Message getInstance() {
-    return ImmutableMessage.builder().value("value").build();
-  }
+  public static MessageHandler IGNORE_HANDLER = (m,c) -> {};
+  public static GameListener IGNORE_LISTENER = ImmutableGameListener.builder()
+      .authenticatedMessageHandler(IGNORE_HANDLER)
+      .availableMessageHandler(IGNORE_HANDLER)
+      .build();
+
+
 }

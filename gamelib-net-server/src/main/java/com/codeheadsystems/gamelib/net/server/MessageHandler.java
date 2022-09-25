@@ -17,20 +17,9 @@
 
 package com.codeheadsystems.gamelib.net.server;
 
-import com.codeheadsystems.gamelib.net.server.component.DaggerServerComponent;
-import com.codeheadsystems.gamelib.net.server.component.ServerComponent;
-import com.codeheadsystems.gamelib.net.server.module.NetServerModule;
+@FunctionalInterface
+public interface MessageHandler {
 
-public class Server {
+  void handleMessage(String message, NetClientHandler client);
 
-  public static void main(String[] args) {
-    // TODO: make authenticators plugable
-    final Authenticator authenticator = (i) -> Boolean.TRUE;
-
-    final ServerComponent component = DaggerServerComponent.builder()
-        .netServerModule(new NetServerModule(authenticator))
-        .build();
-    component.serverManager().executeServer();
-    component.serverManager().waitOnClose();
-  }
 }

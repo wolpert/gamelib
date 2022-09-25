@@ -19,6 +19,7 @@ package com.codeheadsystems.gamelib.net.server.module;
 
 import com.codeheadsystems.gamelib.net.module.NetCommonModule;
 import com.codeheadsystems.gamelib.net.server.Authenticator;
+import com.codeheadsystems.gamelib.net.server.GameListener;
 import com.codeheadsystems.gamelib.net.server.model.ImmutableNetServerConfiguration;
 import com.codeheadsystems.gamelib.net.server.model.NetServerConfiguration;
 import dagger.Module;
@@ -46,15 +47,25 @@ public class NetServerModule {
   public static final String TIMER_EXECUTOR_SERVICE = "TimerExecutorService";
   private final NetServerConfiguration netServerConfiguration;
   private final Authenticator authenticator;
+  private final GameListener gameListener;
 
-  public NetServerModule(final Authenticator authenticator) {
-    this(ImmutableNetServerConfiguration.builder().build(), authenticator);
+  public NetServerModule(final Authenticator authenticator,
+                         final GameListener gameListener) {
+    this(ImmutableNetServerConfiguration.builder().build(), authenticator, gameListener);
   }
 
   public NetServerModule(final ImmutableNetServerConfiguration netServerConfiguration,
-                         final Authenticator authenticator) {
+                         final Authenticator authenticator,
+                         final GameListener gameListener) {
     this.netServerConfiguration = netServerConfiguration;
     this.authenticator = authenticator;
+    this.gameListener = gameListener;
+  }
+
+  @Provides
+  @Singleton
+  public GameListener gameListener() {
+    return gameListener;
   }
 
   @Provides

@@ -19,10 +19,10 @@ package com.codeheadsystems.gamelib.net.integ;
 
 import static com.codeheadsystems.gamelib.net.integ.authenticator.Authenticators.AlwaysAuth;
 import static com.codeheadsystems.gamelib.net.integ.authenticator.Authenticators.AlwaysFail;
+import static com.codeheadsystems.gamelib.net.integ.listener.Listeners.IGNORE_LISTENER;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.fail;
 
-import com.codeheadsystems.gamelib.net.client.manager.ClientManager;
 import com.codeheadsystems.gamelib.net.factory.ObjectMapperFactory;
 import com.codeheadsystems.gamelib.net.integ.util.NetComponents;
 import com.codeheadsystems.gamelib.net.manager.JsonManager;
@@ -31,7 +31,6 @@ import com.codeheadsystems.gamelib.net.model.Disconnect;
 import com.codeheadsystems.gamelib.net.model.Identity;
 import com.codeheadsystems.gamelib.net.model.ImmutableIdentity;
 import com.codeheadsystems.gamelib.net.model.ServerDetails;
-import com.codeheadsystems.gamelib.net.server.manager.ServerManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.concurrent.TimeUnit;
 import org.junit.jupiter.api.AfterEach;
@@ -64,7 +63,7 @@ public class AuthTest {
 
   @Test
   public void TestAuthSuccess() throws InterruptedException {
-    net = new NetComponents(AlwaysAuth).start();
+    net = new NetComponents(AlwaysAuth, IGNORE_LISTENER).start();
     final Identity identity = ImmutableIdentity.builder().id("id").token("token").build();
     validateServerDetails(net.queue().poll(500, TimeUnit.MILLISECONDS));
     // auth
@@ -74,13 +73,13 @@ public class AuthTest {
 
   @Test
   public void TestAuthFailure() throws InterruptedException {
-    net = new NetComponents(AlwaysFail).start();
+    net = new NetComponents(AlwaysFail, IGNORE_LISTENER).start();
     final Identity identity = ImmutableIdentity.builder().id("id").token("token").build();
     validateServerDetails(net.queue().poll(500, TimeUnit.MILLISECONDS));
     // auth
     net.sendMessageFromClient(jsonManager.toJson(identity));
     validateAuthFailure(net.queue().poll(500, TimeUnit.MILLISECONDS));
-    if (!net.clientManager().closeFuture().await(500, TimeUnit.MILLISECONDS)){
+    if (!net.clientManager().closeFuture().await(500, TimeUnit.MILLISECONDS)) {
       fail("Connection didn't close in time");
     }
   }

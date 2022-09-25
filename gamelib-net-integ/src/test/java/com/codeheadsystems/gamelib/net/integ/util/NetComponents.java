@@ -23,6 +23,7 @@ import com.codeheadsystems.gamelib.net.integ.component.DaggerTestServerComponent
 import com.codeheadsystems.gamelib.net.integ.component.TestClientComponent;
 import com.codeheadsystems.gamelib.net.integ.component.TestServerComponent;
 import com.codeheadsystems.gamelib.net.server.Authenticator;
+import com.codeheadsystems.gamelib.net.server.GameListener;
 import com.codeheadsystems.gamelib.net.server.manager.ServerManager;
 import com.codeheadsystems.gamelib.net.server.module.NetServerModule;
 import io.netty.channel.ChannelFuture;
@@ -34,9 +35,10 @@ public class NetComponents {
   private final ClientManager clientManager;
   private final BlockingQueue<String> queue;
 
-  public NetComponents(final Authenticator authenticator) {
+  public NetComponents(final Authenticator authenticator,
+                       final GameListener gameListener) {
     final TestServerComponent serverComponent = DaggerTestServerComponent.builder()
-        .netServerModule(new NetServerModule(authenticator))
+        .netServerModule(new NetServerModule(authenticator, gameListener))
         .build();
     final TestClientComponent clientComponent = DaggerTestClientComponent.builder()
         .build();
