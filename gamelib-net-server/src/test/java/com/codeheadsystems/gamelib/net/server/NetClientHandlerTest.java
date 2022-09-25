@@ -45,6 +45,7 @@ class NetClientHandlerTest {
   @Mock private AuthenticationManagerFactory authenticationManagerFactory;
   @Mock private AuthenticationManager authenticationManager;
   @Mock private ServerDetailsManager serverDetailsManager;
+  @Mock private GameListener gameListener;
   @Mock private Channel channel;
   @Mock private ChannelHandlerContext ctx;
 
@@ -53,7 +54,7 @@ class NetClientHandlerTest {
   @BeforeEach
   void setup() {
     when(authenticationManagerFactory.instance(any())).thenReturn(authenticationManager);
-    handler = new NetClientHandler(channels, jsonManager, authenticationManagerFactory, serverDetailsManager);
+    handler = new NetClientHandler(channels, jsonManager, authenticationManagerFactory, serverDetailsManager, gameListener);
   }
 
   @Test

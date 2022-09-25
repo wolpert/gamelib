@@ -34,6 +34,7 @@ import io.netty.channel.group.ChannelGroup;
 import io.netty.handler.ssl.SslHandler;
 import io.netty.util.concurrent.Future;
 import io.netty.util.concurrent.GenericFutureListener;
+import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -44,19 +45,23 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
   private final JsonManager jsonManager;
   private final AuthenticationManager authenticationManager;
   private final ServerDetailsManager serverDetailsManager;
+  private final GameListener gameListener;
 
   private Channel channel;
   private Status status;
+  private Optional<MessageHandler> messageHandler;
 
   @AssistedInject
   public NetClientHandler(final ChannelGroup channels,
                           final JsonManager jsonManager,
                           final AuthenticationManagerFactory authenticationManagerFactory,
-                          final ServerDetailsManager serverDetailsManager) {
+                          final ServerDetailsManager serverDetailsManager,
+                          final GameListener gameListener) {
     LOGGER.info("GameClientChannelHandler({},{})", channels, jsonManager);
     this.channels = channels;
     this.jsonManager = jsonManager;
     this.serverDetailsManager = serverDetailsManager;
+    this.gameListener = gameListener;
     this.authenticationManager = authenticationManagerFactory.instance(this);
     this.setStatus(Status.OFFLINE);
   }
@@ -68,6 +73,13 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
   private void setStatus(final Status status) {
     LOGGER.info("State change for {}, {}->{}", (channel != null ? channel.id() : "null"), this.status, status);
     this.status = status;
+    if (status.equals(Status.AVAILABLE)) {
+      messageHandler = Optional.of(gameListener.availableMessageHandler());
+    } else if (status.equals(Status.AUTHENTICATED)) {
+      messageHandler = Optional.of(gameListener.authenticatedMessageHandler());
+    } else {
+      messageHandler = Optional.empty();
+    }
   }
 
   @Override
@@ -124,15 +136,9 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     if (status.equals(Status.AUTH_REQUEST)) {
       authenticationManager.authenticate(msg);
     } else if (status.communicable) {
-      // Send the received message to all channels but the current one.
-      for (Channel c : channels) {
-        c.writeAndFlush(msg);
-      }
-
-      // Close the connection if the client has sent 'bye'.
-      if ("bye".equalsIgnoreCase(msg)) {
-        shutdown("Disconnected");
-      }
+      messageHandler.ifPresentOrElse(
+          mh -> mh.handleMessage(msg, this),
+          () -> LOGGER.warn("Unable to handle message: {}:{}", status, msg));
     } else {
       LOGGER.warn("Message out of order: {}", msg);
     }
