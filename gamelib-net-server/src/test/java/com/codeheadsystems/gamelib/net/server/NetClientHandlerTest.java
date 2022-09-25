@@ -25,6 +25,7 @@ import static org.mockito.Mockito.when;
 import com.codeheadsystems.gamelib.net.manager.JsonManager;
 import com.codeheadsystems.gamelib.net.server.factory.AuthenticationManagerFactory;
 import com.codeheadsystems.gamelib.net.server.manager.AuthenticationManager;
+import com.codeheadsystems.gamelib.net.server.manager.ServerDetailsManager;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.group.ChannelGroup;
@@ -43,6 +44,7 @@ class NetClientHandlerTest {
   @Mock private JsonManager jsonManager;
   @Mock private AuthenticationManagerFactory authenticationManagerFactory;
   @Mock private AuthenticationManager authenticationManager;
+  @Mock private ServerDetailsManager serverDetailsManager;
   @Mock private Channel channel;
   @Mock private ChannelHandlerContext ctx;
 
@@ -51,7 +53,7 @@ class NetClientHandlerTest {
   @BeforeEach
   void setup() {
     when(authenticationManagerFactory.instance(any())).thenReturn(authenticationManager);
-    handler = new NetClientHandler(channels, jsonManager, authenticationManagerFactory);
+    handler = new NetClientHandler(channels, jsonManager, authenticationManagerFactory, serverDetailsManager);
   }
 
   @Test
