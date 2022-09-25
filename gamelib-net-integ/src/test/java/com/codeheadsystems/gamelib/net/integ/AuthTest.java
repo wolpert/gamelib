@@ -20,6 +20,7 @@ package com.codeheadsystems.gamelib.net.integ;
 import static com.codeheadsystems.gamelib.net.integ.authenticator.Authenticators.AlwaysAuth;
 import static com.codeheadsystems.gamelib.net.integ.authenticator.Authenticators.AlwaysFail;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.fail;
 
 import com.codeheadsystems.gamelib.net.client.manager.ClientManager;
 import com.codeheadsystems.gamelib.net.factory.ObjectMapperFactory;
@@ -33,6 +34,7 @@ import com.codeheadsystems.gamelib.net.model.ServerDetails;
 import com.codeheadsystems.gamelib.net.server.manager.ServerManager;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.concurrent.TimeUnit;
+import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.slf4j.Logger;
@@ -43,33 +45,44 @@ public class AuthTest {
   private static final Logger LOGGER = LoggerFactory.getLogger(AuthTest.class);
 
   private JsonManager jsonManager;
+  private NetComponents net;
 
   @BeforeEach
   public void setup() {
     final ObjectMapper mapper = new ObjectMapperFactory().objectMapper();
     jsonManager = new JsonManager(mapper);
+    net = null;
+  }
+
+  @AfterEach
+  void tearDown() {
+    if (net != null) {
+      net.stop();
+      net = null;
+    }
   }
 
   @Test
   public void TestAuthSuccess() throws InterruptedException {
-    final NetComponents net = new NetComponents(AlwaysAuth).start();
+    net = new NetComponents(AlwaysAuth).start();
     final Identity identity = ImmutableIdentity.builder().id("id").token("token").build();
     validateServerDetails(net.queue().poll(500, TimeUnit.MILLISECONDS));
     // auth
     net.sendMessageFromClient(jsonManager.toJson(identity));
     validateAuthenticated(net.queue().poll(500, TimeUnit.MILLISECONDS));
-    net.stop();
   }
 
   @Test
   public void TestAuthFailure() throws InterruptedException {
-    final NetComponents net = new NetComponents(AlwaysFail).start();
+    net = new NetComponents(AlwaysFail).start();
     final Identity identity = ImmutableIdentity.builder().id("id").token("token").build();
     validateServerDetails(net.queue().poll(500, TimeUnit.MILLISECONDS));
     // auth
     net.sendMessageFromClient(jsonManager.toJson(identity));
     validateAuthFailure(net.queue().poll(500, TimeUnit.MILLISECONDS));
-    net.stop();
+    if (!net.clientManager().closeFuture().await(500, TimeUnit.MILLISECONDS)){
+      fail("Connection didn't close in time");
+    }
   }
 
   private void validateAuthFailure(final String msg) {

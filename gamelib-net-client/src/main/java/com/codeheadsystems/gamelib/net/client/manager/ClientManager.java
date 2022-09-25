@@ -91,5 +91,9 @@ public class ClientManager {
     }
   }
 
+  public ChannelFuture closeFuture() {
+    return client.channel().closeFuture();
+  }
+
   public enum Status {OFFLINE, CONNECTING, UNAUTH, CONNECTED, STOPPING}
 }

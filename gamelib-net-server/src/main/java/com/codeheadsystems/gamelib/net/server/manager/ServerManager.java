@@ -42,7 +42,7 @@ public class ServerManager {
 
   public boolean executeServer() {
     LOGGER.info("executeServer()");
-    if (!state.equals(State.OFFLINE)){
+    if (!state.equals(State.OFFLINE)) {
       return false;
     }
     setState(State.STARTING);
@@ -70,14 +70,15 @@ public class ServerManager {
     }
   }
 
+  public State getState() {
+    return state;
+  }
+
   private void setState(final State state) {
     LOGGER.info("State change {} -> {}", this.state, state);
     this.state = state;
   }
 
-  public State getState(){
-    return state;
-  }
   /**
    * Tell ourselves to close.
    */
@@ -85,6 +86,10 @@ public class ServerManager {
     LOGGER.info("stop()");
     setState(State.STOPPING);
     return serverConnection.channel().close();
+  }
+
+  public ChannelFuture closeFuture() {
+    return serverConnection.channel().closeFuture();
   }
 
   public enum State {OFFLINE, STARTING, RUNNING, STOPPING}
