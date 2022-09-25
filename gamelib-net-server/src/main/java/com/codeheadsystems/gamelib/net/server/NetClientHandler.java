@@ -97,6 +97,7 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
           this.setStatus(Status.AUTH_REQUEST);
           authenticationManager.initialized();
         });
+    ctx.channel().closeFuture().addListener(future -> setStatus(Status.OFFLINE));
   }
 
   public ChannelFuture writeMessage(final String message) {
@@ -123,8 +124,6 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     final Disconnect disconnect = ImmutableDisconnect.builder().reason(reason).build();
     final String message = jsonManager.toJson(disconnect);
     writeMessage(message).addListener(future -> {
-      this.setStatus(Status.OFFLINE);
-      status = Status.STOPPED;
       channel.close();
     });
   }
@@ -148,11 +147,11 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
   public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) {
     LOGGER.error(cause.getMessage() + ":" + ctx.channel().remoteAddress(), cause);
     ctx.close();
-    this.setStatus(Status.STOPPED);
+    this.setStatus(Status.OFFLINE);
   }
 
   public enum Status {
-    OFFLINE, UNAUTH, AUTH_REQUEST, AUTHENTICATED(true), AVAILABLE(true), STOPPING, STOPPED;
+    OFFLINE, UNAUTH, AUTH_REQUEST, AUTHENTICATED(true), AVAILABLE(true), STOPPING;
 
     private final boolean communicable;
 
