@@ -21,6 +21,8 @@ import com.codeheadsystems.gamelib.net.client.factory.ClientConnectionFactory;
 import com.codeheadsystems.gamelib.net.client.model.ClientConnection;
 import com.codeheadsystems.gamelib.net.model.Identity;
 import io.netty.channel.ChannelFuture;
+import io.netty.util.concurrent.Future;
+import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -69,6 +71,7 @@ public class ClientManager {
       setStatus(Status.CONNECTING);
       client = clientConnectionFactory.instance();
       setStatus(Status.UNAUTH);
+      closeFuture().addListener((f)->setStatus(Status.OFFLINE));
       return true;
     } else {
       return false;
@@ -79,15 +82,13 @@ public class ClientManager {
     return false; // TODO: implement
   }
 
-  public boolean disconnect() {
+  public Optional<Future<?>> disconnect() {
     LOGGER.info("disconnect()");
     if (status != Status.OFFLINE && status != Status.STOPPING) {
       setStatus(Status.STOPPING);
-      client.eventLoopGroup().shutdownGracefully();
-      setStatus(Status.OFFLINE);
-      return true;
+      return Optional.of(client.eventLoopGroup().shutdownGracefully());
     } else {
-      return false;
+      return Optional.empty();
     }
   }
 

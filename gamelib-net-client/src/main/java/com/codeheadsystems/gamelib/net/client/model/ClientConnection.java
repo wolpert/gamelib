@@ -28,4 +28,6 @@ public interface ClientConnection {
 
   EventLoopGroup eventLoopGroup();
 
+  String id();
+
 }

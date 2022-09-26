@@ -53,42 +53,42 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
 
   @Override
   public void channelRegistered(final ChannelHandlerContext ctx) throws Exception {
-    LOGGER.info("channelRegistered:{}", ctx);
+    LOGGER.debug("channelRegistered:{}", ctx);
     super.channelRegistered(ctx);
   }
 
   @Override
   public void channelUnregistered(final ChannelHandlerContext ctx) throws Exception {
-    LOGGER.info("channelUnregistered: {}", ctx);
+    LOGGER.debug("channelUnregistered: {}", ctx);
   }
 
   @Override
   public void channelActive(final ChannelHandlerContext ctx) throws Exception {
-    LOGGER.info("channelActive: {}", ctx);
+    LOGGER.debug("channelActive: {}", ctx);
     super.channelActive(ctx);
   }
 
   @Override
   public void channelInactive(final ChannelHandlerContext ctx) throws Exception {
-    LOGGER.info("channelInactive: {}", ctx);
+    LOGGER.debug("channelInactive: {}", ctx);
     super.channelInactive(ctx);
   }
 
   @Override
   public void channelReadComplete(final ChannelHandlerContext ctx) throws Exception {
-    LOGGER.info("channelReadComplete: {}", ctx);
+    LOGGER.debug("channelReadComplete: {}", ctx);
     super.channelReadComplete(ctx);
   }
 
   @Override
   public void userEventTriggered(final ChannelHandlerContext ctx, final Object evt) throws Exception {
-    LOGGER.info("userEventTriggered: {},{}", ctx, evt);
+    LOGGER.debug("userEventTriggered: {},{}", ctx, evt);
     super.userEventTriggered(ctx, evt);
   }
 
   @Override
   public void channelWritabilityChanged(final ChannelHandlerContext ctx) throws Exception {
-    LOGGER.info("channelWritabilityChanged: {}", ctx);
+    LOGGER.debug("channelWritabilityChanged: {}", ctx);
     super.channelWritabilityChanged(ctx);
   }
 }

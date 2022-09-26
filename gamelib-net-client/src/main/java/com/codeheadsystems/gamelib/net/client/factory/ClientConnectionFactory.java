@@ -52,7 +52,8 @@ public class ClientConnectionFactory {
       final Channel channel = bootstrap
           .connect(netClientConfiguration.host(), netClientConfiguration.port())
           .sync().channel();
-      return ImmutableClientConnection.builder().channel(channel).eventLoopGroup(eventLoopGroup).build();
+      return ImmutableClientConnection.builder().id(channel.id().asShortText())
+          .channel(channel).eventLoopGroup(eventLoopGroup).build();
     } catch (InterruptedException e) {
       throw new IllegalStateException(e);
     }
