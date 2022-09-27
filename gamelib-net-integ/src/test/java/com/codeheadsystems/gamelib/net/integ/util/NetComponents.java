@@ -22,6 +22,8 @@ import com.codeheadsystems.gamelib.net.integ.component.DaggerTestClientComponent
 import com.codeheadsystems.gamelib.net.integ.component.DaggerTestServerComponent;
 import com.codeheadsystems.gamelib.net.integ.component.TestClientComponent;
 import com.codeheadsystems.gamelib.net.integ.component.TestServerComponent;
+import com.codeheadsystems.gamelib.net.model.Identity;
+import com.codeheadsystems.gamelib.net.model.ImmutableIdentity;
 import com.codeheadsystems.gamelib.net.server.Authenticator;
 import com.codeheadsystems.gamelib.net.server.GameListener;
 import com.codeheadsystems.gamelib.net.server.manager.ServerManager;
@@ -30,6 +32,8 @@ import io.netty.channel.ChannelFuture;
 import java.util.concurrent.BlockingQueue;
 
 public class NetComponents {
+
+  private static final Identity IDENTITY = ImmutableIdentity.builder().id("id").token("token").build();
 
   private final ServerManager serverManager;
   private final ClientManager clientManager;
@@ -66,7 +70,7 @@ public class NetComponents {
 
   public NetComponents start() {
     serverManager.executeServer(); // enable the server
-    clientManager.connect(); // enable the client.
+    clientManager.connect(IDENTITY); // enable the client.
     return this;
   }
 

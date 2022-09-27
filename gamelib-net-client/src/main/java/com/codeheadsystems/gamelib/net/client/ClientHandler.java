@@ -17,6 +17,12 @@
 
 package com.codeheadsystems.gamelib.net.client;
 
+import com.codeheadsystems.gamelib.net.client.manager.ClientManager;
+import com.codeheadsystems.gamelib.net.manager.JsonManager;
+import com.codeheadsystems.gamelib.net.model.Authenticated;
+import com.codeheadsystems.gamelib.net.model.Message;
+import com.codeheadsystems.gamelib.net.model.ServerDetails;
+import com.codeheadsystems.gamelib.net.model.TransferObject;
 import dagger.assisted.AssistedInject;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
@@ -29,19 +35,34 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
   private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
 
   private final BlockingQueue<String> queue;
+  private final ClientManager clientManager;
+  private final JsonManager jsonManager;
 
   @AssistedInject
-  public ClientHandler(final BlockingQueue<String> queue) {
-    LOGGER.info("ClientHandler({})", queue);
+  public ClientHandler(final BlockingQueue<String> queue,
+                       final ClientManager clientManager,
+                       final JsonManager jsonManager) {
+    LOGGER.info("ClientHandler({},{},{})", queue, clientManager, jsonManager);
+    this.clientManager = clientManager;
+    this.jsonManager = jsonManager;
     this.queue = queue;
   }
 
   @Override
   public void channelRead0(ChannelHandlerContext ctx, String msg) throws Exception {
-    if (queue.offer(msg)) {
-      LOGGER.debug("Message: {}", msg);
+    final TransferObject transferObject = jsonManager.fromJson(msg, TransferObject.class);
+    if (transferObject instanceof Message) {
+      if (queue.offer(msg)) {
+        LOGGER.debug("Message: {}", msg);
+      } else {
+        LOGGER.error("Lost Message: {}", msg);
+      }
+    } else if (transferObject instanceof ServerDetails) {
+      clientManager.serverDetails((ServerDetails) transferObject);
+    } else if (transferObject instanceof Authenticated) {
+      clientManager.authenticated((Authenticated) transferObject);
     } else {
-      LOGGER.error("Lost Message: {}", msg);
+      LOGGER.warn("Unknown message: {},{}", msg, transferObject);
     }
   }
 

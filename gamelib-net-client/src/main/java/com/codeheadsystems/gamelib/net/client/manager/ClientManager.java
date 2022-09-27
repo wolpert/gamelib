@@ -19,11 +19,15 @@ package com.codeheadsystems.gamelib.net.client.manager;
 
 import com.codeheadsystems.gamelib.net.client.factory.ClientConnectionFactory;
 import com.codeheadsystems.gamelib.net.client.model.ClientConnection;
+import com.codeheadsystems.gamelib.net.manager.JsonManager;
+import com.codeheadsystems.gamelib.net.model.Authenticated;
 import com.codeheadsystems.gamelib.net.model.Identity;
+import com.codeheadsystems.gamelib.net.model.ServerDetails;
 import io.netty.channel.ChannelFuture;
 import io.netty.util.concurrent.Future;
 import java.util.Optional;
 import java.util.concurrent.BlockingQueue;
+import java.util.concurrent.CompletableFuture;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 import org.slf4j.Logger;
@@ -35,18 +39,34 @@ public class ClientManager {
   private static final Logger LOGGER = LoggerFactory.getLogger(ClientManager.class);
 
   private final ClientConnectionFactory clientConnectionFactory;
+  private final JsonManager jsonManager;
   private final BlockingQueue<String> queue;
 
   private ClientConnection client;
   private Status status = Status.OFFLINE;
+  private Identity identity;
+  private CompletableFuture<ServerDetails> serverDetailsFuture;
+  private CompletableFuture<Authenticated> authenticatedFuture;
 
   @Inject
   public ClientManager(final ClientConnectionFactory clientConnectionFactory,
+                       final JsonManager jsonManager,
                        final BlockingQueue<String> queue) {
     this.clientConnectionFactory = clientConnectionFactory;
+    this.jsonManager = jsonManager;
     this.queue = queue;
     LOGGER.info("ClientManager({},{}", clientConnectionFactory, queue);
     setStatus(Status.OFFLINE);
+    serverDetailsFuture = new CompletableFuture<>();
+    authenticatedFuture = new CompletableFuture<>();
+  }
+
+  public java.util.concurrent.Future<ServerDetails> getServerDetailsFuture() {
+    return serverDetailsFuture;
+  }
+
+  public java.util.concurrent.Future<Authenticated> getAuthenticatedFuture() {
+    return authenticatedFuture;
   }
 
   public Status getStatus() {
@@ -65,21 +85,47 @@ public class ClientManager {
     return client.channel().writeAndFlush(msg + "\r\n");
   }
 
-  public boolean connect() {
-    LOGGER.info("connect()");
+  public boolean connect(final Identity identity) {
+    LOGGER.info("connect({})", identity.id());
     if (status.equals(Status.OFFLINE)) {
       setStatus(Status.CONNECTING);
+      this.identity = identity;
       client = clientConnectionFactory.instance();
-      setStatus(Status.UNAUTH);
-      closeFuture().addListener((f)->setStatus(Status.OFFLINE));
+      closeFuture().addListener(this::closed);
       return true;
     } else {
       return false;
     }
   }
 
-  public boolean authenticated(final Identity identity) {
-    return false; // TODO: implement
+  /**
+   * Closed the connection.
+   *
+   * @param f the future that closed.
+   */
+  private void closed(Future<? super Void> f) {
+    setStatus(Status.OFFLINE);
+    if (!serverDetailsFuture.isDone()) {
+      serverDetailsFuture.cancel(true);
+    }
+    if (!authenticatedFuture.isDone()) {
+      authenticatedFuture.cancel(true);
+    }
+    serverDetailsFuture = new CompletableFuture<>();
+    authenticatedFuture = new CompletableFuture<>();
+  }
+
+  public void serverDetails(final ServerDetails serverDetails) {
+    LOGGER.info("serverDetails({})", serverDetails);
+    setStatus(Status.UNAUTH);
+    sendMessage(jsonManager.toJson(identity));
+    serverDetailsFuture.complete(serverDetails);
+  }
+
+  public void authenticated(final Authenticated authenticated) {
+    LOGGER.info("authenticated({})", authenticated);
+    setStatus(Status.CONNECTED);
+    authenticatedFuture.complete(authenticated);
   }
 
   public Optional<Future<?>> disconnect() {

@@ -32,7 +32,9 @@ import com.codeheadsystems.gamelib.net.model.Identity;
 import com.codeheadsystems.gamelib.net.model.ImmutableIdentity;
 import com.codeheadsystems.gamelib.net.model.ServerDetails;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import java.util.concurrent.ExecutionException;
 import java.util.concurrent.TimeUnit;
+import java.util.concurrent.TimeoutException;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -62,48 +64,38 @@ public class AuthTest {
   }
 
   @Test
-  public void TestAuthSuccess() throws InterruptedException {
+  public void TestAuthSuccess() throws InterruptedException, ExecutionException, TimeoutException {
     net = new NetComponents(AlwaysAuth, IGNORE_LISTENER).start();
     final Identity identity = ImmutableIdentity.builder().id("id").token("token").build();
-    validateServerDetails(net.queue().poll(500, TimeUnit.MILLISECONDS));
+    validateServerDetails(net);
     // auth
     net.sendMessageFromClient(jsonManager.toJson(identity));
-    validateAuthenticated(net.queue().poll(500, TimeUnit.MILLISECONDS));
+    validateAuthenticated(net);
   }
 
   @Test
-  public void TestAuthFailure() throws InterruptedException {
+  public void TestAuthFailure() throws InterruptedException, ExecutionException, TimeoutException {
     net = new NetComponents(AlwaysFail, IGNORE_LISTENER).start();
     final Identity identity = ImmutableIdentity.builder().id("id").token("token").build();
-    validateServerDetails(net.queue().poll(500, TimeUnit.MILLISECONDS));
+    validateServerDetails(net);
     // auth
     net.sendMessageFromClient(jsonManager.toJson(identity));
-    validateAuthFailure(net.queue().poll(500, TimeUnit.MILLISECONDS));
     if (!net.clientManager().closeFuture().await(500, TimeUnit.MILLISECONDS)) {
       fail("Connection didn't close in time");
     }
   }
 
-  private void validateAuthFailure(final String msg) {
-    LOGGER.info("validateAuthFailure({})", msg);
-    assertThat(msg).isNotNull();
-    final Disconnect details = jsonManager.fromJson(msg, Disconnect.class);
-    assertThat(details).isNotNull();
+
+  private void validateAuthenticated(final NetComponents net) throws ExecutionException, InterruptedException, TimeoutException {
+    LOGGER.info("validateAuthenticated({})", net);
+    final Authenticated authenticated = net.clientManager().getAuthenticatedFuture().get(500, TimeUnit.MILLISECONDS);
+    assertThat(authenticated).isNotNull();
   }
 
-
-  private void validateAuthenticated(final String msg) {
-    LOGGER.info("validateAuthenticated({})", msg);
-    assertThat(msg).isNotNull();
-    final Authenticated details = jsonManager.fromJson(msg, Authenticated.class);
-    assertThat(details).isNotNull();
-  }
-
-  private void validateServerDetails(final String msg) {
-    LOGGER.info("validateServerDetails({})", msg);
-    assertThat(msg).isNotNull();
-    final ServerDetails details = jsonManager.fromJson(msg, ServerDetails.class);
-    assertThat(details).isNotNull();
+  private void validateServerDetails(final NetComponents net) throws ExecutionException, InterruptedException, TimeoutException {
+    LOGGER.info("validateServerDetails({})", net);
+    final ServerDetails serverDetails = net.clientManager().getServerDetailsFuture().get(500, TimeUnit.MILLISECONDS);
+    assertThat(serverDetails).isNotNull();
   }
 
 }

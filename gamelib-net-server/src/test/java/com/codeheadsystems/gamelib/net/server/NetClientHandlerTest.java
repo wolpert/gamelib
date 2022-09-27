@@ -70,7 +70,7 @@ class NetClientHandlerTest {
     handler.exceptionCaught(ctx, new NullPointerException());
 
     assertThat(handler)
-        .hasFieldOrPropertyWithValue("status", NetClientHandler.Status.STOPPED);
+        .hasFieldOrPropertyWithValue("status", NetClientHandler.Status.OFFLINE);
     verify(ctx).close();
   }
 
