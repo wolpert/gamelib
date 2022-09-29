@@ -105,6 +105,7 @@ group 'com.codeheadsystems.gamelib'
 version '1.0-SNAPSHOT'
 
 ext {
+    codeheadTestVersion = '1.0.1'
     aiVersion = '1.8.2' // https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx-ai
     ashleyVersion = '1.7.4' // https://mvnrepository.com/artifact/com.badlogicgames.ashley/ashley
     assertjVersion = '3.23.1' // https://mvnrepository.com/artifact/org.assertj/assertj-core
