@@ -53,7 +53,7 @@ publishing {
             }
             pom {
                 name = appName
-                description = 'Various libraries for creating gamees in Java with libGDX.'
+                description = 'Entity system support for libGDX with dagger support.'
                 url = "https://github.com/wolpert/gamelib"
                 licenses {
                     license {

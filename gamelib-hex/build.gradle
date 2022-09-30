@@ -61,7 +61,7 @@ publishing {
             }
             pom {
                 name = appName
-                description = 'Various libraries for creating gamees in Java with libGDX.'
+                description = 'Hex playfield support for libGDX.'
                 url = "https://github.com/wolpert/gamelib"
                 licenses {
                     license {

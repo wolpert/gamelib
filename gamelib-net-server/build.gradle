@@ -68,7 +68,7 @@ publishing {
             }
             pom {
                 name = appName
-                description = 'Various libraries for creating gamees in Java with libGDX.'
+                description = 'Netty/Server support for game development. Not libGDX specific.'
                 url = "https://github.com/wolpert/gamelib"
                 licenses {
                     license {

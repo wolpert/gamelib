@@ -52,7 +52,7 @@ publishing {
             }
             pom {
                 name = appName
-                description = 'Various libraries for creating gamees in Java with libGDX.'
+                description = 'Easy integration of Box2d for libGDX with Dagger support.'
                 url = "https://github.com/wolpert/gamelib"
                 licenses {
                     license {
