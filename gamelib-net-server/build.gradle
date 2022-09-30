@@ -8,6 +8,9 @@ ext {
     appName = "gamelib-net-server"
 }
 
+// OVERRIDE, experimental only!
+version '1.0.0-SNAPSHOT'
+
 configurations {
     project.archivesBaseName = "${appName}"
     jar.baseName = "${appName}"

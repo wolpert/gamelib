@@ -11,6 +11,8 @@ configurations {
     project.archivesBaseName = "${appName}"
     jar.baseName = "${appName}"
 }
+// OVERRIDE, experimental only!
+version '1.0.0-SNAPSHOT'
 
 //jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 

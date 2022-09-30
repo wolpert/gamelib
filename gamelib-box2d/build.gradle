@@ -23,10 +23,6 @@ dependencies {
     implementation "com.google.dagger:dagger:${daggerVersion}" // Common files for runtime
     annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
 
-    // Immutables
-    implementation("org.immutables:value-annotations:${immutablesVersion}")
-    annotationProcessor("org.immutables:value:${immutablesVersion}")
-
     testImplementation("org.assertj:assertj-core:${assertjVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}")
     testImplementation("org.junit.jupiter:junit-jupiter-api:${jupiterVersion}")
