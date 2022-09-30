@@ -23,12 +23,19 @@ buildscript {
 }
 
 allprojects {
+    group 'com.codeheadsystems'
+    version '1.0.0-SNAPSHOT'
+
     apply plugin: "java-library"
-    apply plugin: "eclipse"
+    apply plugin: "idea"
     apply plugin: 'jacoco'
+    apply plugin: 'signing'
+    apply plugin: 'maven-publish'
     java {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
+        withJavadocJar()
+        withSourcesJar()
     }
     repositories {
         mavenLocal()
@@ -99,10 +106,14 @@ allprojects {
             }
         }
     }
-}
 
-group 'com.codeheadsystems.gamelib'
-version '1.0-SNAPSHOT'
+    javadoc {
+        if(JavaVersion.current().isJava9Compatible()) {
+            options.addBooleanOption('html5', true)
+        }
+    }
+
+}
 
 ext {
     codeheadTestVersion = '1.0.1'

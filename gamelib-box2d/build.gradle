@@ -36,3 +36,56 @@ dependencies {
     testImplementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion")
     testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 }
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifactId = appName
+            from components.java
+            versionMapping {
+                usage('java-api') {
+                    fromResolutionOf('runtimeClasspath')
+                }
+                usage('java-runtime') {
+                    fromResolutionResult()
+                }
+            }
+            pom {
+                name = appName
+                description = 'Various libraries for creating gamees in Java with libGDX.'
+                url = "https://github.com/wolpert/gamelib"
+                licenses {
+                    license {
+                        name = 'The Apache License, Version 2.0'
+                        url = 'https://www.apache.org/licenses/LICENSE-2.0.txt'
+                    }
+                }
+                developers {
+                    developer {
+                        id = 'wolpert'
+                        name = 'Ned Wolpert'
+                        email = 'ned.wolpert@gmail.com'
+                    }
+                }
+                scm {
+                    connection = 'scm:git:git://github.com/wolpert/gamelib.git'
+                    developerConnection = 'scm:git:ssh://github.com/wolpert/gamelib.git'
+                    url = 'https://github.com/wolpert/gamelib/'
+                }
+            }
+        }
+    }
+    repositories {
+        maven {
+            def releasesRepoUrl = "https://oss.sonatype.org/service/local/staging/deploy/maven2"
+            def snapshotsRepoUrl = "https://oss.sonatype.org/content/repositories/snapshots"
+            url = version.endsWith('SNAPSHOT') ? snapshotsRepoUrl : releasesRepoUrl
+            name = "ossrh"
+            credentials(PasswordCredentials)
+        }
+    }
+}
+signing {
+    useGpgCmd()
+    sign publishing.publications.mavenJava
+}
