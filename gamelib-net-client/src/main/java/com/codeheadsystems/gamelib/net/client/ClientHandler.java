@@ -81,6 +81,7 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
   @Override
   public void channelUnregistered(final ChannelHandlerContext ctx) throws Exception {
     LOGGER.debug("channelUnregistered: {}", ctx);
+    super.channelUnregistered(ctx);
   }
 
   @Override
