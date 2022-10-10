@@ -1,8 +1,0 @@
-{
-  "assetsToLoad": {
-    "com.badlogic.gdx.graphics.Texture": [
-      "badlogic.jpg"
-    ]
-  },
-  "loaders": []
-}

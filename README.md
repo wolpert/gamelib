@@ -36,6 +36,19 @@ dependencies {
 }
 ```
 
+## Sample usage
+
+If you want an example in how to use it, clone https://github.com/wolpert/sample-game
+and you can run
+```
+gradle :desktop:run
+gradle :desktop:entity
+gradle :desktop:hex
+gradle :desktop:box2d
+```
+
+
+
 ## Current status
 
 *IN PROGRESS*
