@@ -76,8 +76,8 @@ public class GdxModule {
 
   @Provides
   @Singleton
-  public AssetManager assetManager() {
-    return new AssetManager();
+  public AssetManager assetManager(final FileHandleResolver fileHandleResolver) {
+    return new AssetManager(fileHandleResolver);
   }
 
   @Provides

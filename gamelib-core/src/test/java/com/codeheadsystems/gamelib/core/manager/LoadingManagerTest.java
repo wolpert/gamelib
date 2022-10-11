@@ -51,7 +51,6 @@ public class LoadingManagerTest extends GdxTest {
 
   private static final String FILENAME = "filename";
 
-  private ResourcePathManager resourcePathManager;
   @Mock
   private AssetManager assetManager;
   @Mock
@@ -72,8 +71,7 @@ public class LoadingManagerTest extends GdxTest {
 
   @BeforeEach
   void setUp() {
-    resourcePathManager = new ResourcePathManager(Optional.empty());
-    this.loadingManager = new LoadingManager(assetManager, resourcePathManager, fileHandleResolver, loadingConfiguration, jsonManager);
+    this.loadingManager = new LoadingManager(assetManager, fileHandleResolver, loadingConfiguration, jsonManager);
   }
 
   @Test

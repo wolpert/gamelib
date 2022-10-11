@@ -39,7 +39,6 @@ public class InternalPrefixedFileHandleResolver implements FileHandleResolver {
     } else {
       this.internalPath = internalPath;
     }
-    LOGGER.info("internal path = " + this.internalPath);
   }
 
   @Override
