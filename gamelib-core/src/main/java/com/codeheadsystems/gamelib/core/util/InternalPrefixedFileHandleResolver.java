@@ -44,6 +44,8 @@ public class InternalPrefixedFileHandleResolver implements FileHandleResolver {
 
   @Override
   public FileHandle resolve(final String fileName) {
-    return Gdx.files.internal(internalPath + fileName);
+    final String fullPath = internalPath + fileName;
+    LOGGER.info("Resolving: " + fullPath);
+    return Gdx.files.internal(fullPath);
   }
 }

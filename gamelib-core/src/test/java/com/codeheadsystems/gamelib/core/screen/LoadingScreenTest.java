@@ -29,6 +29,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.codeheadsystems.gamelib.core.GdxTest;
 import com.codeheadsystems.gamelib.core.manager.LoadingBar;
 import com.codeheadsystems.gamelib.core.manager.LoadingManager;
+import com.codeheadsystems.gamelib.core.manager.ResourcePathManager;
 import java.io.IOException;
 import java.io.InputStream;
 import org.apache.commons.io.IOUtils;
@@ -51,12 +52,14 @@ class LoadingScreenTest extends GdxTest {
   @Mock private Texture texture;
   @Mock private Sprite sprite;
   @Mock private FileHandle fileHandle;
+  @Mock private ResourcePathManager resourcePathManager;
 
   private LoadingScreen loadingScreen;
 
   @BeforeEach
   void setUp() {
-    loadingScreen = new LoadingScreen(spriteBatch, loadingManager, loadingBar, LOADING_IMAGE, screen);
+    when(resourcePathManager.path(LOADING_IMAGE)).thenReturn(LOADING_IMAGE);
+    loadingScreen = new LoadingScreen(resourcePathManager, spriteBatch, loadingManager, loadingBar, LOADING_IMAGE, screen);
     loadingScreen.setGame(game);
   }
 

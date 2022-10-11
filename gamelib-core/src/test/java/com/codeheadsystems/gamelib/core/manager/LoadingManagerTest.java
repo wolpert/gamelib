@@ -32,6 +32,7 @@ import com.codeheadsystems.gamelib.core.model.Assets;
 import com.codeheadsystems.gamelib.core.model.LoadingConfiguration;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Optional;
 import org.assertj.core.util.Lists;
 import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.BeforeEach;
@@ -50,6 +51,7 @@ public class LoadingManagerTest extends GdxTest {
 
   private static final String FILENAME = "filename";
 
+  private ResourcePathManager resourcePathManager;
   @Mock
   private AssetManager assetManager;
   @Mock
@@ -70,7 +72,8 @@ public class LoadingManagerTest extends GdxTest {
 
   @BeforeEach
   void setUp() {
-    this.loadingManager = new LoadingManager(assetManager, fileHandleResolver, loadingConfiguration, jsonManager);
+    resourcePathManager = new ResourcePathManager(Optional.empty());
+    this.loadingManager = new LoadingManager(assetManager, resourcePathManager, fileHandleResolver, loadingConfiguration, jsonManager);
   }
 
   @Test

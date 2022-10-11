@@ -17,7 +17,6 @@
 
 package com.codeheadsystems.gamelib.core.dagger;
 
-import static com.codeheadsystems.gamelib.core.dagger.GameResources.RESOURCE_PATH;
 import static com.codeheadsystems.gamelib.core.util.LoggerHelper.logger;
 
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
@@ -30,7 +29,6 @@ import com.codeheadsystems.gamelib.core.util.GameListener;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoSet;
-import java.util.Optional;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
@@ -55,12 +53,9 @@ public class LoadingModule {
 
   @Provides
   @Singleton
-  public LoadingConfiguration loadingConfiguration(@Named(RESOURCE_PATH) final Optional<String> resourcePath,
-                                                   final FileHandleResolver fileHandleResolver,
+  public LoadingConfiguration loadingConfiguration(final FileHandleResolver fileHandleResolver,
                                                    final Json json) {
-    final String loadingFile = resourcePath.orElse("./") + CONFIGURATION_JSON;
-    LOGGER.info("Loading: " + loadingFile);
-    final FileHandle fileHandle = fileHandleResolver.resolve(loadingFile);
+    final FileHandle fileHandle = fileHandleResolver.resolve(CONFIGURATION_JSON);
     return json.fromJson(LoadingConfiguration.class, fileHandle);
   }
 

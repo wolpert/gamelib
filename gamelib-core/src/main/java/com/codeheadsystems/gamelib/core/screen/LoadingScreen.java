@@ -29,6 +29,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.codeheadsystems.gamelib.core.manager.LoadingBar;
 import com.codeheadsystems.gamelib.core.manager.LoadingManager;
+import com.codeheadsystems.gamelib.core.manager.ResourcePathManager;
 import com.codeheadsystems.gamelib.core.util.GameListener;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -54,7 +55,8 @@ public class LoadingScreen implements Screen, GameListener {
   private boolean init = false;
 
   @Inject
-  public LoadingScreen(final SpriteBatch spriteBatch,
+  public LoadingScreen(final ResourcePathManager resourcePathManager,
+                       final SpriteBatch spriteBatch,
                        final LoadingManager loadingManager,
                        final LoadingBar loadingBar,
                        @Named(LOADING_IMAGE) final String loadingImage,
@@ -62,7 +64,7 @@ public class LoadingScreen implements Screen, GameListener {
     this.spriteBatch = spriteBatch;
     this.loadingManager = loadingManager;
     this.loadingBar = loadingBar;
-    this.loadingImage = loadingImage;
+    this.loadingImage = resourcePathManager.path(loadingImage);
     this.mainScreen = mainScreen;
   }
 

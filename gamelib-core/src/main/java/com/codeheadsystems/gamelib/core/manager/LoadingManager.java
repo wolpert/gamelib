@@ -42,6 +42,7 @@ public class LoadingManager {
 
     private static final Logger LOGGER = LoggerHelper.logger(LoadingManager.class);
     private final AssetManager assetManager;
+    private final ResourcePathManager resourcePathManager;
     private final FileHandleResolver fileHandleResolver;
     private final LoadingConfiguration loadingConfiguration;
     private final JsonManager jsonManager;
@@ -50,10 +51,12 @@ public class LoadingManager {
 
     @Inject
     public LoadingManager(final AssetManager assetManager,
+                          final ResourcePathManager resourcePathManager,
                           final FileHandleResolver fileHandleResolver,
                           final LoadingConfiguration loadingConfiguration,
                           final JsonManager jsonManager) {
         this.assetManager = assetManager;
+        this.resourcePathManager = resourcePathManager;
         this.fileHandleResolver = fileHandleResolver;
         this.loadingConfiguration = loadingConfiguration;
         this.jsonManager = jsonManager;
@@ -86,8 +89,9 @@ public class LoadingManager {
                     try {
                         final Class<?> clazz = Class.forName(clazzName);
                         for (String filename : entry.getValue()) {
-                            LOGGER.info("  adding to queue: " + clazz.getSimpleName() + ":" + filename);
-                            assetManager.load(filename, clazz);
+                            final String path = resourcePathManager.path(filename);
+                            LOGGER.info("  adding to queue: " + clazz.getSimpleName() + ":" + path);
+                            assetManager.load(path, clazz);
                         }
                     } catch (ClassNotFoundException e) {
                         throw new IllegalStateException(e);

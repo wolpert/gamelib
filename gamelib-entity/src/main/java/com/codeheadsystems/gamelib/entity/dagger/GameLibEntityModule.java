@@ -17,7 +17,6 @@
 
 package com.codeheadsystems.gamelib.entity.dagger;
 
-import static com.codeheadsystems.gamelib.core.dagger.GameResources.RESOURCE_PATH;
 import static com.codeheadsystems.gamelib.core.util.LoggerHelper.logger;
 
 import com.badlogic.ashley.core.Entity;
@@ -35,7 +34,6 @@ import dagger.BindsOptionalOf;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoSet;
-import java.util.Optional;
 import java.util.function.Consumer;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -46,76 +44,73 @@ import javax.inject.Singleton;
 @Module(includes = {GameLibEntityModule.Binder.class})
 public class GameLibEntityModule {
 
-    public static final String CONFIGURATION_JSON = "ashleyGameConfiguration.json";
-    public static final String ENTITY_SCREEN_SHOW_CONSUMER = "EntityScreenShowConsumer";
-    public static final String ENTITY_SCREEN_HIDE_CONSUMER = "EntityScreenHideConsumer";
-    private static final Logger LOGGER = logger(GameLibEntityModule.class);
+  public static final String CONFIGURATION_JSON = "ashleyGameConfiguration.json";
+  public static final String ENTITY_SCREEN_SHOW_CONSUMER = "EntityScreenShowConsumer";
+  public static final String ENTITY_SCREEN_HIDE_CONSUMER = "EntityScreenHideConsumer";
+  private static final Logger LOGGER = logger(GameLibEntityModule.class);
 
-    @IntoSet
-    @Provides
-    @Singleton
-    public Entity background(final PooledEngine pooledEngine) {
-        return pooledEngine.createEntity();
-    }
+  @IntoSet
+  @Provides
+  @Singleton
+  public Entity background(final PooledEngine pooledEngine) {
+    return pooledEngine.createEntity();
+  }
 
-    @IntoSet
-    @Provides
-    @Singleton
-    public EntitySystem spriteRenderEntitySystem(final SpriteBatchRenderer system) {
-        return system;
-    }
+  @IntoSet
+  @Provides
+  @Singleton
+  public EntitySystem spriteRenderEntitySystem(final SpriteBatchRenderer system) {
+    return system;
+  }
 
-    @IntoSet
-    @Provides
-    @Singleton
-    public EntitySystem cameraEntitySystem(final CameraEntitySystem entitySystem) {
-        return entitySystem;
-    }
+  @IntoSet
+  @Provides
+  @Singleton
+  public EntitySystem cameraEntitySystem(final CameraEntitySystem entitySystem) {
+    return entitySystem;
+  }
 
-    @Provides
-    @Singleton
-    public PooledEngine pooledEngine(final AshleyGameConfiguration configuration) {
-        final PooledEngine pooledEngine = new PooledEngine(
-            configuration.entityPoolInitialSize,
-            configuration.entityPoolMaxSize,
-            configuration.componentPoolInitialSize,
-            configuration.componentPoolMaxSize);
-        return pooledEngine;
-    }
+  @Provides
+  @Singleton
+  public PooledEngine pooledEngine(final AshleyGameConfiguration configuration) {
+    final PooledEngine pooledEngine = new PooledEngine(
+        configuration.entityPoolInitialSize,
+        configuration.entityPoolMaxSize,
+        configuration.componentPoolInitialSize,
+        configuration.componentPoolMaxSize);
+    return pooledEngine;
+  }
 
-    @Provides
-    @Singleton
-    public AshleyGameConfiguration ashleyGameConfiguration(@Named(RESOURCE_PATH) final Optional<String> resourcePath,
-                                                           final FileHandleResolver fileHandleResolver,
-                                                           final Json json) {
-        final String loadingFile = resourcePath.orElse("./") + CONFIGURATION_JSON;
-        LOGGER.info("Loading: " + loadingFile);
-        final FileHandle fileHandle = fileHandleResolver.resolve(loadingFile);
-        return json.fromJson(AshleyGameConfiguration.class, fileHandle);
-    }
+  @Provides
+  @Singleton
+  public AshleyGameConfiguration ashleyGameConfiguration(final FileHandleResolver fileHandleResolver,
+                                                         final Json json) {
+    final FileHandle fileHandle = fileHandleResolver.resolve(CONFIGURATION_JSON);
+    return json.fromJson(AshleyGameConfiguration.class, fileHandle);
+  }
 
-    @Module
-    interface Binder {
-        /**
-         * This is the entity manager version of the libgdx show() method.
-         * <p>
-         * Implement this method to configure the entity screen as needed. The consumer is called only
-         * when the system is loaded, including all assets. This is your primary entrance method in
-         * most case.
-         *
-         * @return a consumer of the entity screen.
-         */
-        @BindsOptionalOf
-        @Named(ENTITY_SCREEN_SHOW_CONSUMER)
-        Consumer<EntityScreen> showConsumer();
+  @Module
+  interface Binder {
+    /**
+     * This is the entity manager version of the libgdx show() method.
+     * <p>
+     * Implement this method to configure the entity screen as needed. The consumer is called only
+     * when the system is loaded, including all assets. This is your primary entrance method in
+     * most case.
+     *
+     * @return a consumer of the entity screen.
+     */
+    @BindsOptionalOf
+    @Named(ENTITY_SCREEN_SHOW_CONSUMER)
+    Consumer<EntityScreen> showConsumer();
 
-        /**
-         * This is the entity manager version of the libgdx hide() method.
-         *
-         * @return a consumer method for the entity screen.
-         */
-        @BindsOptionalOf
-        @Named(ENTITY_SCREEN_HIDE_CONSUMER)
-        Consumer<EntityScreen> hideConsumer();
-    }
+    /**
+     * This is the entity manager version of the libgdx hide() method.
+     *
+     * @return a consumer method for the entity screen.
+     */
+    @BindsOptionalOf
+    @Named(ENTITY_SCREEN_HIDE_CONSUMER)
+    Consumer<EntityScreen> hideConsumer();
+  }
 }
