@@ -27,6 +27,7 @@ import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
 import com.codeheadsystems.gamelib.entity.configuration.AshleyGameConfiguration;
+import com.codeheadsystems.gamelib.entity.entity.EntityGenerator;
 import com.codeheadsystems.gamelib.entity.entity.EntityScreen;
 import com.codeheadsystems.gamelib.entity.entitysystem.CameraEntitySystem;
 import com.codeheadsystems.gamelib.entity.entitysystem.SpriteBatchRenderer;
@@ -34,6 +35,8 @@ import dagger.BindsOptionalOf;
 import dagger.Module;
 import dagger.Provides;
 import dagger.multibindings.IntoSet;
+import dagger.multibindings.Multibinds;
+import java.util.Set;
 import java.util.function.Consumer;
 import javax.inject.Named;
 import javax.inject.Singleton;
@@ -112,5 +115,14 @@ public class GameLibEntityModule {
     @BindsOptionalOf
     @Named(ENTITY_SCREEN_HIDE_CONSUMER)
     Consumer<EntityScreen> hideConsumer();
+
+    /**
+     * Entities that should be created when the screen is shown are placed here.
+     * Note, hiding the screen and showing it again can result in fun!
+     *
+     * @return set of entity generators.
+     */
+    @Multibinds
+    Set<EntityGenerator> entityGenerators();
   }
 }

@@ -13,6 +13,7 @@ configurations {
 }
 
 //jacocoTestReport.finalizedBy jacocoTestCoverageVerification
+version '1.0.1-SNAPSHOT' // TODO: Experimental only
 
 dependencies {
     api "com.badlogicgames.gdx:gdx:$gdxVersion"

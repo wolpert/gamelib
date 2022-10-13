@@ -19,20 +19,20 @@ it's due. See the LICENSE file for details.
 Here are the full sets of libraries available.
 
 *WARNING* gamelib-net-client and gamelib-net-server are preliminary only.
-They are only available as `1.0.0-SNAPSHOT` versions
+They are only available as `1.0.1-SNAPSHOT` versions
 
 ```groovy
 
 ext {
-    gamelibVersion = '1.0.0'
+    gamelibVersion = '1.0.1'
 }
 dependencies {
     implementation "com.codeheadsystems:gamelib-core:${gamelibVersion}"
     implementation "com.codeheadsystems:gamelib-box2d:${gamelibVersion}"
     implementation "com.codeheadsystems:gamelib-entity:${gamelibVersion}"
     implementation "com.codeheadsystems:gamelib-hex:${gamelibVersion}"
-    implementation "com.codeheadsystems:gamelib-net-client:1.0.0-SNAPSHOT"
-    implementation "com.codeheadsystems:gamelib-net-server:1.0.0-SNAPSHOT"
+    implementation "com.codeheadsystems:gamelib-net-client:1.0.1-SNAPSHOT"
+    implementation "com.codeheadsystems:gamelib-net-server:1.0.1-SNAPSHOT"
 }
 ```
 
@@ -47,7 +47,22 @@ gradle :desktop:hex
 gradle :desktop:box2d
 ```
 
+## Notes on Entity usage
 
+* You can totally create your own scene to use and not have to use the entity scene.
+but if you do that, make sure the 'render' method of your scene calls the update
+method of the entity engine. If you don't, the ashley library won't work. Example:
+```java
+    @Override
+    public void render(final float delta) {
+        super.render(delta);
+        engineManager.update(delta);
+    }
+```
+* If you use the EntityGenerator with the EntityScreen given, and you are on android,
+be aware that the generators run each time the screen show() method is called. This is
+likely not what you want. Your main scene should do the right thing. EntityScreen is
+there just to get you started.
 
 ## Current status
 

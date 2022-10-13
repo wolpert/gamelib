@@ -25,6 +25,7 @@ import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.utils.Logger;
 import com.codeheadsystems.gamelib.entity.manager.EngineManager;
 import java.util.Optional;
+import java.util.Set;
 import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -42,20 +43,24 @@ public class EntityScreen extends ScreenAdapter {
     private final EngineManager engineManager;
     private final Optional<Consumer<EntityScreen>> showConsumer;
     private final Optional<Consumer<EntityScreen>> hideConsumer;
+    private final Set<EntityGenerator> entityGenerators;
 
     @Inject
     public EntityScreen(final EngineManager engineManager,
                         @Named(ENTITY_SCREEN_SHOW_CONSUMER) final Optional<Consumer<EntityScreen>> showConsumer,
-                        @Named(ENTITY_SCREEN_HIDE_CONSUMER) final Optional<Consumer<EntityScreen>> hideConsumer) {
+                        @Named(ENTITY_SCREEN_HIDE_CONSUMER) final Optional<Consumer<EntityScreen>> hideConsumer,
+                        final Set<EntityGenerator> entityGenerators) {
         this.engineManager = engineManager;
         this.showConsumer = showConsumer;
         this.hideConsumer = hideConsumer;
+        this.entityGenerators = entityGenerators;
         LOGGER.info("EntityScreen()");
     }
 
     @Override
     public void show() {
         super.show();
+        entityGenerators.forEach(EntityGenerator::generate);
         showConsumer.ifPresent(c -> c.accept(this));
     }
 
