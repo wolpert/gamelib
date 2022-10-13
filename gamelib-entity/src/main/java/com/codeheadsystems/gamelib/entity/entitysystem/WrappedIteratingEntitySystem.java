@@ -80,7 +80,9 @@ public abstract class WrappedIteratingEntitySystem extends EntitySystem implemen
 
   @Override
   public void entityAdded(Entity entity) {
-    entities.add(entity);
+    if (family.matches(entity)) {
+      entities.add(entity);
+    }
   }
 
   @Override
