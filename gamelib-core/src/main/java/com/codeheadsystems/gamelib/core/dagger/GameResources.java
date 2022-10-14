@@ -17,9 +17,14 @@
 
 package com.codeheadsystems.gamelib.core.dagger;
 
+import static com.codeheadsystems.gamelib.core.dagger.LoadingModule.MAIN_SCREEN;
+import static com.codeheadsystems.gamelib.core.dagger.LoadingModule.MAIN_SCREEN_PROVIDER;
+
+import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import dagger.BindsOptionalOf;
 import dagger.Module;
+import java.util.function.Function;
 import javax.inject.Named;
 
 /**
@@ -51,5 +56,21 @@ public interface GameResources {
   @BindsOptionalOf
   @Named(VIEWPORT_WIDTH)
   Float viewportWidth();
+
+  /**
+   * If you use the MAIN_SCREEN approach, we will just call that with the existing dagger injection.
+   */
+  @BindsOptionalOf
+  @Named(MAIN_SCREEN)
+  Screen mainScreen();
+
+  /**
+   * Use this if you want to setup your own injected framework for the main screen.
+   *
+   * @return optional function for the main screen.
+   */
+  @BindsOptionalOf
+  @Named(MAIN_SCREEN_PROVIDER)
+  Function<GdxRuntimeCache, Screen> mainScreenProvider();
 
 }

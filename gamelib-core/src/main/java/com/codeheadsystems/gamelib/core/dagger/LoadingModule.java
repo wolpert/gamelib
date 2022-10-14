@@ -42,6 +42,7 @@ public class LoadingModule {
   public static final String CONFIGURATION_JSON = "loadingConfiguration.json";
   public static final String LOADING_IMAGE = "loadingImage";
   public static final String MAIN_SCREEN = "mainScreen";
+  public static final String MAIN_SCREEN_PROVIDER = "mainScreenProvider";
   private static final Logger LOGGER = logger(LoadingModule.class);
 
   @Named(LOADING_IMAGE)

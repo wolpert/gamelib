@@ -18,7 +18,6 @@
 package com.codeheadsystems.gamelib.core.screen;
 
 import static com.codeheadsystems.gamelib.core.dagger.LoadingModule.LOADING_IMAGE;
-import static com.codeheadsystems.gamelib.core.dagger.LoadingModule.MAIN_SCREEN;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;
@@ -29,6 +28,7 @@ import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.codeheadsystems.gamelib.core.manager.LoadingBar;
 import com.codeheadsystems.gamelib.core.manager.LoadingManager;
+import com.codeheadsystems.gamelib.core.manager.MainScreenManager;
 import com.codeheadsystems.gamelib.core.manager.ResourcePathManager;
 import com.codeheadsystems.gamelib.core.util.GameListener;
 import javax.inject.Inject;
@@ -45,7 +45,7 @@ public class LoadingScreen implements Screen, GameListener {
   private final SpriteBatch spriteBatch;
   private final LoadingManager loadingManager;
   private final LoadingBar loadingBar;
-  private final Screen mainScreen;
+  private final MainScreenManager mainScreenManager;
   private final String loadingImage;
 
   private Game game;
@@ -60,12 +60,12 @@ public class LoadingScreen implements Screen, GameListener {
                        final LoadingManager loadingManager,
                        final LoadingBar loadingBar,
                        @Named(LOADING_IMAGE) final String loadingImage,
-                       @Named(MAIN_SCREEN) final Screen mainScreen) {
+                       final MainScreenManager mainScreenManager) {
     this.spriteBatch = spriteBatch;
     this.loadingManager = loadingManager;
     this.loadingBar = loadingBar;
     this.loadingImage = resourcePathManager.path(loadingImage);
-    this.mainScreen = mainScreen;
+    this.mainScreenManager = mainScreenManager;
   }
 
   public Texture getLoadingTexture() {
@@ -109,6 +109,7 @@ public class LoadingScreen implements Screen, GameListener {
     Gdx.app.log(getClass().getSimpleName(), loadingManager.getStageTitle() + ":" + loadingManager.getProgress());
     if (loadingManager.update()) {
       if (!init) {
+        final Screen mainScreen = mainScreenManager.mainScreen();
         Gdx.app.log("LoadingScreen", "Showing: " + mainScreen);
         game.setScreen(mainScreen);
         init = true;

@@ -29,6 +29,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.codeheadsystems.gamelib.core.GdxTest;
 import com.codeheadsystems.gamelib.core.manager.LoadingBar;
 import com.codeheadsystems.gamelib.core.manager.LoadingManager;
+import com.codeheadsystems.gamelib.core.manager.MainScreenManager;
 import com.codeheadsystems.gamelib.core.manager.ResourcePathManager;
 import java.io.IOException;
 import java.io.InputStream;
@@ -48,6 +49,7 @@ class LoadingScreenTest extends GdxTest {
   @Mock private LoadingManager loadingManager;
   @Mock private LoadingBar loadingBar;
   @Mock private Screen screen;
+  @Mock private MainScreenManager mainScreenManager;
   @Mock private Game game;
   @Mock private Texture texture;
   @Mock private Sprite sprite;
@@ -59,7 +61,7 @@ class LoadingScreenTest extends GdxTest {
   @BeforeEach
   void setUp() {
     when(resourcePathManager.path(LOADING_IMAGE)).thenReturn(LOADING_IMAGE);
-    loadingScreen = new LoadingScreen(resourcePathManager, spriteBatch, loadingManager, loadingBar, LOADING_IMAGE, screen);
+    loadingScreen = new LoadingScreen(resourcePathManager, spriteBatch, loadingManager, loadingBar, LOADING_IMAGE, mainScreenManager);
     loadingScreen.setGame(game);
   }
 
@@ -101,6 +103,7 @@ class LoadingScreenTest extends GdxTest {
     loadingScreen.setLoadingTexture(texture);
     when(loadingManager.update()).thenReturn(true);
     when(loadingManager.getProgress()).thenReturn(10f);
+    when(mainScreenManager.mainScreen()).thenReturn(screen);
 
     loadingScreen.render(DELTA);
     loadingScreen.render(DELTA);
