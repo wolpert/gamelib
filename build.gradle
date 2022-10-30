@@ -128,13 +128,13 @@ ext {
     guavaVersion = '31.1-jre' // https://mvnrepository.com/artifact/com.google.guava/guava
     immutablesVersion = '2.9.2' // https://mvnrepository.com/artifact/org.immutables/value
     jacksonVersion = '2.13.4' // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-core
-    jacksonDatabindVersion = '2.13.4' // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
+    jacksonDatabindVersion = '2.13.4.2' // https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind
     javaxInjectVersion = '1'
     jupiterVersion = '5.9.1' // https://mvnrepository.com/artifact/org.junit.jupiter/junit-jupiter-api
     log4jVersion = '2.19.0' //  https://mvnrepository.com/artifact/org.apache.logging.log4j/log4j-core
-    logbackVersion = '1.4.1' // https://mvnrepository.com/artifact/ch.qos.logback/logback-core
-    nettyVersion = '4.1.82.Final' //  https://mvnrepository.com/artifact/io.netty/netty-all
-    mockitoVersion = '4.8.0' // https://mvnrepository.com/artifact/org.mockito/mockito-core
+    logbackVersion = '1.4.4' // https://mvnrepository.com/artifact/ch.qos.logback/logback-core
+    nettyVersion = '4.1.84.Final' //  https://mvnrepository.com/artifact/io.netty/netty-all
+    mockitoVersion = '4.8.1' // https://mvnrepository.com/artifact/org.mockito/mockito-core
     slf4jVersion = '2.0.3' // https://mvnrepository.com/artifact/org.slf4j/slf4j-api
 }
 
