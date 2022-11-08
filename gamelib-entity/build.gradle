@@ -17,20 +17,20 @@ jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 
 dependencies {
     implementation project(":gamelib-core")
-    api "com.badlogicgames.gdx:gdx:$gdxVersion"
-    api "com.badlogicgames.ashley:ashley:$ashleyVersion"
+    api libs.gdx
+    api libs.ashley
 
     // Dagger
-    implementation "com.google.dagger:dagger:${daggerVersion}" // Common files for runtime
-    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    implementation libs.dagger // Common files for runtime
+    annotationProcessor libs.dagger.compiler
 
-    testImplementation("org.assertj:assertj-core:${assertjVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${jupiterVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:${jupiterVersion}")
-    testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
-    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
-    testImplementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion")
+    testImplementation(libs.assertj.core)
+    testImplementation(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter.params)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.gdx.backend.lwjgl3)
     testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
 }
 publishing {

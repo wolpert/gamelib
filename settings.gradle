@@ -5,3 +5,15 @@
 
 include ":gamelib-core", ":gamelib-entity", ":gamelib-box2d", ":gamelib-hex",
         ':gamelib-net-server', ':gamelib-net-client', 'gamelib-net-common', 'gamelib-net-integ'
+
+dependencyResolutionManagement {
+    versionCatalogs {
+        repositories {
+            mavenLocal()
+            mavenCentral()
+        }
+        libs {
+            from("com.codeheadsystems:dependencies:1.0.1-SNAPSHOT")
+        }
+    }
+}

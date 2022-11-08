@@ -13,43 +13,42 @@ configurations {
 }
 
 //jacocoTestReport.finalizedBy jacocoTestCoverageVerification
-version '1.0.1-SNAPSHOT' // TODO: Experimental only
 
 dependencies {
-    api "com.badlogicgames.gdx:gdx:$gdxVersion"
-    api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
-    api("commons-io:commons-io:${commonsIoVersion}")
-    implementation("com.fasterxml.jackson.core:jackson-core:${jacksonVersion}")
-    implementation("com.fasterxml.jackson.datatype:jackson-datatype-jdk8:${jacksonVersion}")
-    implementation("com.fasterxml.jackson.core:jackson-annotations:${jacksonVersion}")
-    implementation("com.fasterxml.jackson.core:jackson-databind:${jacksonVersion}")
-    implementation "io.netty:netty-all:${nettyVersion}"
-    implementation "org.bouncycastle:bcprov-jdk15on:${bouncyVersion}"
-    implementation "org.bouncycastle:bcpkix-jdk15on:${bouncyVersion}"
-    implementation "org.slf4j:slf4j-api:${slf4jVersion}"
+    api libs.gdx
+    api libs.gdx.backend.lwjgl3
+    api(libs.commons.io)
+    implementation(libs.jackson.core)
+    implementation(libs.jackson.datatype.jdk8)
+    implementation(libs.jackson.annotations)
+    implementation(libs.jackson.databind)
+    implementation libs.netty.all
+    implementation libs.bcprov.jdk15on
+    implementation libs.bcpkix.jdk15on
+    implementation libs.slf4j.api
 
     // Dagger
-    implementation "com.google.dagger:dagger:${daggerVersion}" // Common files for runtime
-    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    implementation libs.dagger // Common files for runtime
+    annotationProcessor libs.dagger.compiler
 
     // Immutables
-    implementation("org.immutables:value-annotations:${immutablesVersion}")
-    annotationProcessor("org.immutables:value:${immutablesVersion}")
+    implementation(libs.immutables.value.annotations)
+    annotationProcessor(libs.immutables.value)
 
+    testImplementation(libs.assertj.core)
+    testImplementation(libs.junit.jupiter.engine)
+    testImplementation(libs.junit.jupiter.api)
+    testImplementation(libs.junit.jupiter.params)
+    testImplementation(libs.mockito.junit.jupiter)
+    testImplementation(libs.mockito.core)
+    testImplementation(libs.gdx.backend.lwjgl3)
+    testImplementation(libs.gdx.backend.headless)
+    testImplementation(libs.commons.io)
+
+    testImplementation(libs.logback.classic)
+    testImplementation(libs.logback.core)
     testImplementation("com.codeheadsystems:codehead-test:${codeheadTestVersion}")
-    testImplementation("org.assertj:assertj-core:${assertjVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${jupiterVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:${jupiterVersion}")
-    testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
-    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
-    testImplementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion")
     testImplementation("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
-    testImplementation("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
-    testImplementation("commons-io:commons-io:${commonsIoVersion}")
-
-    testImplementation("ch.qos.logback:logback-classic:${logbackVersion}")
-    testImplementation("ch.qos.logback:logback-core:${logbackVersion}")
 }
 publishing {
     publications {

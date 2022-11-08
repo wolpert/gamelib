@@ -15,23 +15,23 @@ configurations {
 //jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 
 dependencies {
-    api "com.badlogicgames.gdx:gdx:$gdxVersion"
-    api "com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion"
+    api libs.gdx
+    api libs.gdx.backend.lwjgl3
 
     // Dagger
-    implementation "com.google.dagger:dagger:${daggerVersion}" // Common files for runtime
-    annotationProcessor "com.google.dagger:dagger-compiler:${daggerVersion}"
+    implementation libs.dagger
+    annotationProcessor libs.dagger.compiler
 
-    testImplementation("org.assertj:assertj-core:${assertjVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-engine:${jupiterVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-api:${jupiterVersion}")
-    testImplementation("org.junit.jupiter:junit-jupiter-params:${jupiterVersion}")
-    testImplementation("org.mockito:mockito-junit-jupiter:${mockitoVersion}")
-    testImplementation("org.mockito:mockito-core:${mockitoVersion}")
-    testImplementation("com.badlogicgames.gdx:gdx-backend-lwjgl3:$gdxVersion")
+    testImplementation libs.assertj.core
+    testImplementation libs.junit.jupiter.engine
+    testImplementation libs.junit.jupiter.api
+    testImplementation libs.junit.jupiter.params
+    testImplementation libs.mockito.junit.jupiter
+    testImplementation libs.mockito.core
+    testImplementation libs.gdx.backend.lwjgl3
+    testImplementation libs.gdx.backend.headless
+    testImplementation libs.commons.io
     testImplementation("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
-    testImplementation("com.badlogicgames.gdx:gdx-backend-headless:$gdxVersion")
-    testImplementation("commons-io:commons-io:${commonsIoVersion}")
 }
 publishing {
     publications {
