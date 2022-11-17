@@ -13,7 +13,7 @@ dependencyResolutionManagement {
             mavenCentral()
         }
         libs {
-            from("com.codeheadsystems:dependencies:1.0.2-SNAPSHOT")
+            from("com.codeheadsystems:dependencies:1.0.3-SNAPSHOT")
         }
     }
 }
