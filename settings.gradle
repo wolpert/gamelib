@@ -11,6 +11,7 @@ dependencyResolutionManagement {
         repositories {
             mavenLocal()
             mavenCentral()
+            maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
         }
         libs {
             from("com.codeheadsystems:dependencies:1.0.3-SNAPSHOT")
