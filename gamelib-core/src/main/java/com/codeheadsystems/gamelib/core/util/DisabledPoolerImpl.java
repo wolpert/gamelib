@@ -17,34 +17,33 @@
 
 package com.codeheadsystems.gamelib.core.util;
 
-import com.badlogic.gdx.utils.Pool;
 import java.util.function.Supplier;
 
-public class PoolerImpl<T> implements Pooler<T> {
+/**
+ * A disabled pool. Used when you want caching off.
+ *
+ * @param <T> type of object to supply.
+ */
+public class DisabledPoolerImpl<T> implements Pooler<T> {
 
-    final private Pool<T> pool;
+  private final Supplier<T> supplier;
 
-    protected PoolerImpl(final Supplier<T> supplier) {
-        this.pool = new Pool<>() {
-            @Override
-            protected T newObject() {
-                return supplier.get();
-            }
-        };
-    }
+  protected DisabledPoolerImpl(final Supplier<T> supplier) {
+    this.supplier = supplier;
+  }
 
-    @Override
-    public T obtain() {
-        return pool.obtain();
-    }
+  @Override
+  public T obtain() {
+    return supplier.get();
+  }
 
-    @Override
-    public void free(T tInstance) {
-        pool.free(tInstance);
-    }
+  @Override
+  public void free(T tInstance) {
 
-    @Override
-    public int poolSize() {
-        return pool.getFree();
-    }
+  }
+
+  @Override
+  public int poolSize() {
+    return 0;
+  }
 }

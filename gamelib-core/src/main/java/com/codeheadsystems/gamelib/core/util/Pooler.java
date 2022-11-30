@@ -21,14 +21,18 @@ import java.util.function.Supplier;
 
 public interface Pooler<T> {
 
-    static <T> Pooler<T> of(final Supplier<T> supplier){
-        return new PoolerImpl<>(supplier);
-    }
+  static <T> Pooler<T> of(final Supplier<T> supplier) {
+    return new PoolerImpl<>(supplier);
+  }
 
-    T obtain();
+  static <T> Pooler<T> disabled(final Supplier<T> supplier) {
+    return new DisabledPoolerImpl<>(supplier);
+  }
 
-    void free(T tInstance);
+  T obtain();
 
-    int poolSize();
+  void free(T tInstance);
+
+  int poolSize();
 
 }
