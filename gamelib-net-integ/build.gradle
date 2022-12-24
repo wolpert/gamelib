@@ -22,8 +22,8 @@ dependencies {
     api libs.gdx.backend.lwjgl3
     api(libs.commons.io)
     implementation libs.netty.all
-    implementation libs.bcprov.jdk15on
-    implementation libs.bcpkix.jdk15on
+    implementation libs.bcprov
+    implementation libs.bcpkix
     implementation libs.slf4j.api
 
     implementation(libs.jackson.core)
