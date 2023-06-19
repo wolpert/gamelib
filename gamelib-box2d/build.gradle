@@ -9,7 +9,7 @@ ext {
 
 configurations {
     project.archivesBaseName = "${appName}"
-    jar.baseName = "${appName}"
+    jar.archiveBaseName = "${appName}"
 }
 
 dependencies {

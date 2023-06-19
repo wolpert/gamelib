@@ -7,12 +7,12 @@ include ":gamelib-core", ":gamelib-entity", ":gamelib-box2d", ":gamelib-hex",
         ':gamelib-net-server', ':gamelib-net-client', 'gamelib-net-common', 'gamelib-net-integ'
 
 dependencyResolutionManagement {
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
+    }
     versionCatalogs {
-        repositories {
-            mavenLocal()
-            mavenCentral()
-            maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
-        }
         libs {
             from("com.codeheadsystems:dependencies:1.0.4-SNAPSHOT")
         }
