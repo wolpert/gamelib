@@ -18,7 +18,6 @@
 package com.codeheadsystems.gamelib.core.util;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 
 import java.util.function.Supplier;
 import org.junit.jupiter.api.BeforeEach;
@@ -36,7 +35,7 @@ class DisabledPoolerImplTest {
   }
 
   @Test
-  void testFullUsage(){
+  void testFullUsage() {
     assertThat(pooler.poolSize()).isEqualTo(0);
     final Object o1 = pooler.obtain();
     assertThat(o1).isNotNull();

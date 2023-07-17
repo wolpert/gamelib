@@ -23,7 +23,8 @@ import com.codeheadsystems.gamelib.net.server.MessageHandler;
 
 public class Listeners {
 
-  public static MessageHandler IGNORE_HANDLER = (m,c) -> {};
+  public static MessageHandler IGNORE_HANDLER = (m, c) -> {
+  };
   public static GameListener IGNORE_LISTENER = ImmutableGameListener.builder()
       .authenticatedMessageHandler(IGNORE_HANDLER)
       .availableMessageHandler(IGNORE_HANDLER)

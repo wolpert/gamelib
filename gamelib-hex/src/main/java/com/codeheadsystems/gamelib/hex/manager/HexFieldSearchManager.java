@@ -41,9 +41,9 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class HexFieldSearchManager {
-    private static final Logger LOGGER = logger(HexFieldSearchManager.class);
-    private final ComponentMapper<HexComponent> hm = ComponentMapper.getFor(HexComponent.class);
-    private final HexManager hexManager;
+  private static final Logger LOGGER = logger(HexFieldSearchManager.class);
+  private final ComponentMapper<HexComponent> hm = ComponentMapper.getFor(HexComponent.class);
+  private final HexManager hexManager;
 
   /**
    * Instantiates a new Hex field search manager.
@@ -51,10 +51,10 @@ public class HexFieldSearchManager {
    * @param hexManager the hex manager
    */
   @Inject
-    public HexFieldSearchManager(final HexManager hexManager) {
-        this.hexManager = hexManager;
-        LOGGER.debug("HexFieldSearchManager()");
-    }
+  public HexFieldSearchManager(final HexManager hexManager) {
+    this.hexManager = hexManager;
+    LOGGER.debug("HexFieldSearchManager()");
+  }
 
   /**
    * Hex entity hash map map.
@@ -63,9 +63,9 @@ public class HexFieldSearchManager {
    * @return the map
    */
   public Map<Hex, Entity> hexEntityHashMap(final Set<Entity> entities) {
-        return entities.stream()
-            .collect(Collectors.toMap(this::hexForEntity, e -> e));
-    }
+    return entities.stream()
+        .collect(Collectors.toMap(this::hexForEntity, e -> e));
+  }
 
   /**
    * Hex for entity hex.
@@ -74,8 +74,8 @@ public class HexFieldSearchManager {
    * @return the hex
    */
   public Hex hexForEntity(final Entity entity) {
-        return hm.get(entity).hex();
-    }
+    return hm.get(entity).hex();
+  }
 
   /**
    * Provides a way to convert a point to a hex that can then be used for a search function.
@@ -88,43 +88,43 @@ public class HexFieldSearchManager {
    * @return whatever type they found.
    */
   protected <T> Optional<T> fromPoint(final float x,
-                                        final float y,
-                                        final Layout layout,
-                                        final Function<Hex, Optional<T>> searchFunction) {
-        // Convert the point on the screen to the whole field, based on the camera.
-        final float layoutX = x - layout.origin().x;
-        final float layoutY = y - layout.origin().y;
-        // Convert the point to a fractional q/r/s via https://www.redblobgames.com/grids/hexagons/#pixel-to-hex
-        final float fractionalQ = toFloat(2. / 3 * layoutX) / layout.size().x;
-        final float fractionalR = toFloat(-1. / 3 * layoutX + sqrt(3) / 3 * layoutY) / layout.size().y;
-        final float fractionalS = -fractionalQ - fractionalR;
+                                      final float y,
+                                      final Layout layout,
+                                      final Function<Hex, Optional<T>> searchFunction) {
+    // Convert the point on the screen to the whole field, based on the camera.
+    final float layoutX = x - layout.origin().x;
+    final float layoutY = y - layout.origin().y;
+    // Convert the point to a fractional q/r/s via https://www.redblobgames.com/grids/hexagons/#pixel-to-hex
+    final float fractionalQ = toFloat(2. / 3 * layoutX) / layout.size().x;
+    final float fractionalR = toFloat(-1. / 3 * layoutX + sqrt(3) / 3 * layoutY) / layout.size().y;
+    final float fractionalS = -fractionalQ - fractionalR;
 
-        // Finally, getting the hex by converting to an integer q/r/s based on where the fractional q/r/s was in the hex.
-        // https://www.redblobgames.com/grids/hexagons/#rounding
-        int q = Math.round(fractionalQ);
-        int r = Math.round(fractionalR);
-        int s = Math.round(fractionalS);
-        final float q_diff = Math.abs(q - fractionalQ);
-        final float r_diff = Math.abs(r - fractionalR);
-        final float s_diff = Math.abs(s - fractionalS);
-        if (q_diff > r_diff && q_diff > s_diff) {
-            q = -r - s;
-        } else if (r_diff > s_diff) {
-            r = -q - s;
-        } else {
-            s = -q - r;
-        }
-        Hex checkHex = null;
-        try {
-            checkHex = hexManager.obtain().set(q, r, s);
-            // finally, lets see if anything is there.
-            return searchFunction.apply(checkHex);
-        } finally {
-            if (checkHex != null) {
-                hexManager.free(checkHex);
-            }
-        }
+    // Finally, getting the hex by converting to an integer q/r/s based on where the fractional q/r/s was in the hex.
+    // https://www.redblobgames.com/grids/hexagons/#rounding
+    int q = Math.round(fractionalQ);
+    int r = Math.round(fractionalR);
+    int s = Math.round(fractionalS);
+    final float q_diff = Math.abs(q - fractionalQ);
+    final float r_diff = Math.abs(r - fractionalR);
+    final float s_diff = Math.abs(s - fractionalS);
+    if (q_diff > r_diff && q_diff > s_diff) {
+      q = -r - s;
+    } else if (r_diff > s_diff) {
+      r = -q - s;
+    } else {
+      s = -q - r;
     }
+    Hex checkHex = null;
+    try {
+      checkHex = hexManager.obtain().set(q, r, s);
+      // finally, lets see if anything is there.
+      return searchFunction.apply(checkHex);
+    } finally {
+      if (checkHex != null) {
+        hexManager.free(checkHex);
+      }
+    }
+  }
 
   /**
    * Note, the x/y here must be in the same space that was used for the hex map. This likely needs conversion
@@ -137,13 +137,13 @@ public class HexFieldSearchManager {
    * @return optional
    */
   public Optional<HexComponent> fromPoint(final float x,
-                                            final float y,
-                                            final Layout layout,
-                                            final Set<HexComponent> hexComponentSet) {
-        return fromPoint(x, y, layout, h -> hexComponentSet.stream()
-            .filter(hc -> hc.isHex(h))
-            .findFirst());
-    }
+                                          final float y,
+                                          final Layout layout,
+                                          final Set<HexComponent> hexComponentSet) {
+    return fromPoint(x, y, layout, h -> hexComponentSet.stream()
+        .filter(hc -> hc.isHex(h))
+        .findFirst());
+  }
 
   /**
    * Note, the x/y here must be in the same space that was used for the hex map. This likely needs conversion
@@ -155,9 +155,9 @@ public class HexFieldSearchManager {
    * @return optional
    */
   public Optional<Entity> fromPoint(final float x,
-                                      final float y,
-                                      final HexField hexField) {
-        return fromPoint(x, y, hexField.getHexFieldLayout().layout(), h ->
-            Optional.ofNullable(hexField.hexEntityHashMap().get(h)));
-    }
+                                    final float y,
+                                    final HexField hexField) {
+    return fromPoint(x, y, hexField.getHexFieldLayout().layout(), h ->
+        Optional.ofNullable(hexField.hexEntityHashMap().get(h)));
+  }
 }

@@ -28,6 +28,6 @@ public class MathConverter {
    * @return the float
    */
   public static float toFloat(Double d) {
-        return d.floatValue();
-    }
+    return d.floatValue();
+  }
 }

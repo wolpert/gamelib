@@ -26,49 +26,49 @@ import org.junit.jupiter.api.Test;
 
 class OffsetCoordTest {
 
-    private OffsetCoordManager manager;
+  private OffsetCoordManager manager;
 
-    @BeforeEach
-    public void setup() {
-        manager = new OffsetCoordManager(new HexManager());
-    }
+  @BeforeEach
+  public void setup() {
+    manager = new OffsetCoordManager(new HexManager());
+  }
 
-    @Test
-    public void testOffsetRoundtrip() {
-        final Hex a = Hex.of(3, 4, -7);
-        final OffsetCoord b = OffsetCoord.of(1, -3);
+  @Test
+  public void testOffsetRoundtrip() {
+    final Hex a = Hex.of(3, 4, -7);
+    final OffsetCoord b = OffsetCoord.of(1, -3);
 
-        assertThat(a)
-                .isEqualTo(manager.qoffsetToCube(OffsetCoord.Offset.EVEN, manager.qoffsetFromCube(OffsetCoord.Offset.EVEN, a)));
-        assertThat(b)
-                .isEqualTo(manager.qoffsetFromCube(OffsetCoord.Offset.EVEN, manager.qoffsetToCube(OffsetCoord.Offset.EVEN, b)));
-        assertThat(a)
-                .isEqualTo(manager.qoffsetToCube(OffsetCoord.Offset.ODD, manager.qoffsetFromCube(OffsetCoord.Offset.ODD, a)));
-        assertThat(b)
-                .isEqualTo(manager.qoffsetFromCube(OffsetCoord.Offset.ODD, manager.qoffsetToCube(OffsetCoord.Offset.ODD, b)));
-        assertThat(a)
-                .isEqualTo(manager.roffsetToCube(OffsetCoord.Offset.EVEN, manager.roffsetFromCube(OffsetCoord.Offset.EVEN, a)));
-        assertThat(b)
-                .isEqualTo(manager.roffsetFromCube(OffsetCoord.Offset.EVEN, manager.roffsetToCube(OffsetCoord.Offset.EVEN, b)));
-        assertThat(a)
-                .isEqualTo(manager.roffsetToCube(OffsetCoord.Offset.ODD, manager.roffsetFromCube(OffsetCoord.Offset.ODD, a)));
-        assertThat(b)
-                .isEqualTo(manager.roffsetFromCube(OffsetCoord.Offset.ODD, manager.roffsetToCube(OffsetCoord.Offset.ODD, b)));
-    }
+    assertThat(a)
+        .isEqualTo(manager.qoffsetToCube(OffsetCoord.Offset.EVEN, manager.qoffsetFromCube(OffsetCoord.Offset.EVEN, a)));
+    assertThat(b)
+        .isEqualTo(manager.qoffsetFromCube(OffsetCoord.Offset.EVEN, manager.qoffsetToCube(OffsetCoord.Offset.EVEN, b)));
+    assertThat(a)
+        .isEqualTo(manager.qoffsetToCube(OffsetCoord.Offset.ODD, manager.qoffsetFromCube(OffsetCoord.Offset.ODD, a)));
+    assertThat(b)
+        .isEqualTo(manager.qoffsetFromCube(OffsetCoord.Offset.ODD, manager.qoffsetToCube(OffsetCoord.Offset.ODD, b)));
+    assertThat(a)
+        .isEqualTo(manager.roffsetToCube(OffsetCoord.Offset.EVEN, manager.roffsetFromCube(OffsetCoord.Offset.EVEN, a)));
+    assertThat(b)
+        .isEqualTo(manager.roffsetFromCube(OffsetCoord.Offset.EVEN, manager.roffsetToCube(OffsetCoord.Offset.EVEN, b)));
+    assertThat(a)
+        .isEqualTo(manager.roffsetToCube(OffsetCoord.Offset.ODD, manager.roffsetFromCube(OffsetCoord.Offset.ODD, a)));
+    assertThat(b)
+        .isEqualTo(manager.roffsetFromCube(OffsetCoord.Offset.ODD, manager.roffsetToCube(OffsetCoord.Offset.ODD, b)));
+  }
 
-    @Test
-    public void testOffsetFromCube() {
-        assertThat(OffsetCoord.of(1, 3))
-                .isEqualTo(manager.qoffsetFromCube(OffsetCoord.Offset.EVEN, Hex.of(1, 2, -3)));
-        assertThat(OffsetCoord.of(1, 2))
-                .isEqualTo(manager.qoffsetFromCube(OffsetCoord.Offset.ODD, Hex.of(1, 2, -3)));
-    }
+  @Test
+  public void testOffsetFromCube() {
+    assertThat(OffsetCoord.of(1, 3))
+        .isEqualTo(manager.qoffsetFromCube(OffsetCoord.Offset.EVEN, Hex.of(1, 2, -3)));
+    assertThat(OffsetCoord.of(1, 2))
+        .isEqualTo(manager.qoffsetFromCube(OffsetCoord.Offset.ODD, Hex.of(1, 2, -3)));
+  }
 
-    @Test
-    public void testOffsetToCube() {
-        assertThat(Hex.of(1, 2, -3))
-                .isEqualTo(manager.qoffsetToCube(OffsetCoord.Offset.EVEN, OffsetCoord.of(1, 3)));
-        assertThat(Hex.of(1, 2, -3))
-                .isEqualTo(manager.qoffsetToCube(OffsetCoord.Offset.ODD, OffsetCoord.of(1, 2)));
-    }
+  @Test
+  public void testOffsetToCube() {
+    assertThat(Hex.of(1, 2, -3))
+        .isEqualTo(manager.qoffsetToCube(OffsetCoord.Offset.EVEN, OffsetCoord.of(1, 3)));
+    assertThat(Hex.of(1, 2, -3))
+        .isEqualTo(manager.qoffsetToCube(OffsetCoord.Offset.ODD, OffsetCoord.of(1, 2)));
+  }
 }

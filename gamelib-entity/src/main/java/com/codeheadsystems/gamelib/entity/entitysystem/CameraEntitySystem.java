@@ -34,10 +34,10 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class CameraEntitySystem extends EntitySystem {
-    private static final Logger LOGGER = logger(CameraEntitySystem.class);
-    private final OrthographicCamera orthographicCamera;
-    private final SpriteBatch spriteBatch;
-    private final ShapeRenderer shapeRenderer;
+  private static final Logger LOGGER = logger(CameraEntitySystem.class);
+  private final OrthographicCamera orthographicCamera;
+  private final SpriteBatch spriteBatch;
+  private final ShapeRenderer shapeRenderer;
 
   /**
    * Instantiates a new Camera entity system.
@@ -47,22 +47,22 @@ public class CameraEntitySystem extends EntitySystem {
    * @param shapeRenderer      the shape renderer
    */
   @Inject
-    public CameraEntitySystem(final OrthographicCamera orthographicCamera,
-                              final SpriteBatch spriteBatch,
-                              final ShapeRenderer shapeRenderer) {
-        super(Priorities.CAMERA.priority());
-        this.orthographicCamera = orthographicCamera;
-        this.spriteBatch = spriteBatch;
-        this.shapeRenderer = shapeRenderer;
-    }
+  public CameraEntitySystem(final OrthographicCamera orthographicCamera,
+                            final SpriteBatch spriteBatch,
+                            final ShapeRenderer shapeRenderer) {
+    super(Priorities.CAMERA.priority());
+    this.orthographicCamera = orthographicCamera;
+    this.spriteBatch = spriteBatch;
+    this.shapeRenderer = shapeRenderer;
+  }
 
-    @Override
-    public void update(float deltaTime) {
-        Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-        Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        orthographicCamera.update();
-        spriteBatch.setProjectionMatrix(orthographicCamera.combined);
-        shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
-    }
+  @Override
+  public void update(float deltaTime) {
+    Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    orthographicCamera.update();
+    spriteBatch.setProjectionMatrix(orthographicCamera.combined);
+    shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
+  }
 
 }

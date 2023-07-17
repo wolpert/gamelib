@@ -25,13 +25,13 @@ import org.junit.jupiter.api.Test;
 
 class LoggerHelperTest extends GdxTest {
 
-    @Test
-    void logger() {
-        new LoggerHelper();
+  @Test
+  void logger() {
+    new LoggerHelper();
 
-        final Logger logger = LoggerHelper.logger(LoggerHelperTest.class);
+    final Logger logger = LoggerHelper.logger(LoggerHelperTest.class);
 
-        assertThat(logger.getLevel())
-            .isEqualTo(Logger.DEBUG);
-    }
+    assertThat(logger.getLevel())
+        .isEqualTo(Logger.DEBUG);
+  }
 }

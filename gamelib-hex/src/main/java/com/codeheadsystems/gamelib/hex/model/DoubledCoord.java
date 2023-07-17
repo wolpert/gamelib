@@ -25,8 +25,8 @@ import java.util.Objects;
  */
 public class DoubledCoord implements Pool.Poolable {
 
-    private int col;
-    private int row;
+  private int col;
+  private int row;
 
   /**
    * Of doubled coord.
@@ -36,8 +36,8 @@ public class DoubledCoord implements Pool.Poolable {
    * @return the doubled coord
    */
   public static DoubledCoord of(int col, int row) {
-        return new DoubledCoord().setCol(col).setRow(row);
-    }
+    return new DoubledCoord().setCol(col).setRow(row);
+  }
 
   /**
    * Col int.
@@ -45,8 +45,8 @@ public class DoubledCoord implements Pool.Poolable {
    * @return the int
    */
   public int col() {
-        return col;
-    }
+    return col;
+  }
 
   /**
    * Row int.
@@ -54,8 +54,8 @@ public class DoubledCoord implements Pool.Poolable {
    * @return the int
    */
   public int row() {
-        return row;
-    }
+    return row;
+  }
 
   /**
    * Sets col.
@@ -64,9 +64,9 @@ public class DoubledCoord implements Pool.Poolable {
    * @return the col
    */
   public DoubledCoord setCol(int col) {
-        this.col = col;
-        return this;
-    }
+    this.col = col;
+    return this;
+  }
 
   /**
    * Sets row.
@@ -75,26 +75,26 @@ public class DoubledCoord implements Pool.Poolable {
    * @return the row
    */
   public DoubledCoord setRow(int row) {
-        this.row = row;
-        return this;
-    }
+    this.row = row;
+    return this;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        DoubledCoord that = (DoubledCoord) o;
-        return col == that.col && row == that.row;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    DoubledCoord that = (DoubledCoord) o;
+    return col == that.col && row == that.row;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(col, row);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(col, row);
+  }
 
-    @Override
-    public void reset() {
-        row = 0;
-        col = 0;
-    }
+  @Override
+  public void reset() {
+    row = 0;
+    col = 0;
+  }
 }

@@ -87,9 +87,9 @@ public class Orientation implements Pool.Poolable {
    * @return the orientation
    */
   public static Orientation of(float f0, float f1, float f2, float f3, float b0, float b1, float b2, float b3, float start_angle) {
-        return new Orientation().setF0(f0).setF1(f1).setF2(f2).setF3(f3)
-            .setB0(b0).setB1(b1).setB2(b2).setB3(b3).setStartAngle(start_angle);
-    }
+    return new Orientation().setF0(f0).setF1(f1).setF2(f2).setF3(f3)
+        .setB0(b0).setB1(b1).setB2(b2).setB3(b3).setStartAngle(start_angle);
+  }
 
   /**
    * F 0 float.
@@ -97,8 +97,8 @@ public class Orientation implements Pool.Poolable {
    * @return the float
    */
   public float f0() {
-        return f0;
-    }
+    return f0;
+  }
 
   /**
    * F 1 float.
@@ -106,8 +106,8 @@ public class Orientation implements Pool.Poolable {
    * @return the float
    */
   public float f1() {
-        return f1;
-    }
+    return f1;
+  }
 
   /**
    * F 2 float.
@@ -115,8 +115,8 @@ public class Orientation implements Pool.Poolable {
    * @return the float
    */
   public float f2() {
-        return f2;
-    }
+    return f2;
+  }
 
   /**
    * F 3 float.
@@ -124,8 +124,8 @@ public class Orientation implements Pool.Poolable {
    * @return the float
    */
   public float f3() {
-        return f3;
-    }
+    return f3;
+  }
 
   /**
    * B 0 float.
@@ -133,8 +133,8 @@ public class Orientation implements Pool.Poolable {
    * @return the float
    */
   public float b0() {
-        return b0;
-    }
+    return b0;
+  }
 
   /**
    * B 1 float.
@@ -142,8 +142,8 @@ public class Orientation implements Pool.Poolable {
    * @return the float
    */
   public float b1() {
-        return b1;
-    }
+    return b1;
+  }
 
   /**
    * B 2 float.
@@ -151,8 +151,8 @@ public class Orientation implements Pool.Poolable {
    * @return the float
    */
   public float b2() {
-        return b2;
-    }
+    return b2;
+  }
 
   /**
    * B 3 float.
@@ -160,8 +160,8 @@ public class Orientation implements Pool.Poolable {
    * @return the float
    */
   public float b3() {
-        return b3;
-    }
+    return b3;
+  }
 
   /**
    * Start angle float.
@@ -169,8 +169,8 @@ public class Orientation implements Pool.Poolable {
    * @return the float
    */
   public float startAngle() {
-        return startAngle;
-    }
+    return startAngle;
+  }
 
   /**
    * Sets f 0.
@@ -179,9 +179,9 @@ public class Orientation implements Pool.Poolable {
    * @return the f 0
    */
   public Orientation setF0(float f0) {
-        this.f0 = f0;
-        return this;
-    }
+    this.f0 = f0;
+    return this;
+  }
 
   /**
    * Sets f 1.
@@ -190,9 +190,9 @@ public class Orientation implements Pool.Poolable {
    * @return the f 1
    */
   public Orientation setF1(float f1) {
-        this.f1 = f1;
-        return this;
-    }
+    this.f1 = f1;
+    return this;
+  }
 
   /**
    * Sets f 2.
@@ -201,9 +201,9 @@ public class Orientation implements Pool.Poolable {
    * @return the f 2
    */
   public Orientation setF2(float f2) {
-        this.f2 = f2;
-        return this;
-    }
+    this.f2 = f2;
+    return this;
+  }
 
   /**
    * Sets f 3.
@@ -212,9 +212,9 @@ public class Orientation implements Pool.Poolable {
    * @return the f 3
    */
   public Orientation setF3(float f3) {
-        this.f3 = f3;
-        return this;
-    }
+    this.f3 = f3;
+    return this;
+  }
 
   /**
    * Sets b 0.
@@ -223,9 +223,9 @@ public class Orientation implements Pool.Poolable {
    * @return the b 0
    */
   public Orientation setB0(float b0) {
-        this.b0 = b0;
-        return this;
-    }
+    this.b0 = b0;
+    return this;
+  }
 
   /**
    * Sets b 1.
@@ -234,9 +234,9 @@ public class Orientation implements Pool.Poolable {
    * @return the b 1
    */
   public Orientation setB1(float b1) {
-        this.b1 = b1;
-        return this;
-    }
+    this.b1 = b1;
+    return this;
+  }
 
   /**
    * Sets b 2.
@@ -245,9 +245,9 @@ public class Orientation implements Pool.Poolable {
    * @return the b 2
    */
   public Orientation setB2(float b2) {
-        this.b2 = b2;
-        return this;
-    }
+    this.b2 = b2;
+    return this;
+  }
 
   /**
    * Sets b 3.
@@ -256,9 +256,9 @@ public class Orientation implements Pool.Poolable {
    * @return the b 3
    */
   public Orientation setB3(float b3) {
-        this.b3 = b3;
-        return this;
-    }
+    this.b3 = b3;
+    return this;
+  }
 
   /**
    * Sets start angle.
@@ -267,33 +267,33 @@ public class Orientation implements Pool.Poolable {
    * @return the start angle
    */
   public Orientation setStartAngle(float startAngle) {
-        this.startAngle = startAngle;
-        return this;
-    }
+    this.startAngle = startAngle;
+    return this;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Orientation that = (Orientation) o;
-        return Float.compare(that.f0, f0) == 0 && Float.compare(that.f1, f1) == 0 && Float.compare(that.f2, f2) == 0 && Float.compare(that.f3, f3) == 0 && Float.compare(that.b0, b0) == 0 && Float.compare(that.b1, b1) == 0 && Float.compare(that.b2, b2) == 0 && Float.compare(that.b3, b3) == 0 && Float.compare(that.startAngle, startAngle) == 0;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Orientation that = (Orientation) o;
+    return Float.compare(that.f0, f0) == 0 && Float.compare(that.f1, f1) == 0 && Float.compare(that.f2, f2) == 0 && Float.compare(that.f3, f3) == 0 && Float.compare(that.b0, b0) == 0 && Float.compare(that.b1, b1) == 0 && Float.compare(that.b2, b2) == 0 && Float.compare(that.b3, b3) == 0 && Float.compare(that.startAngle, startAngle) == 0;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(f0, f1, f2, f3, b0, b1, b2, b3, startAngle);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(f0, f1, f2, f3, b0, b1, b2, b3, startAngle);
+  }
 
-    @Override
-    public void reset() {
-        f0 = 0;
-        f1 = 0;
-        f2 = 0;
-        f3 = 0;
-        b0 = 0;
-        b1 = 0;
-        b2 = 0;
-        b3 = 0;
-        startAngle = 0;
-    }
+  @Override
+  public void reset() {
+    f0 = 0;
+    f1 = 0;
+    f2 = 0;
+    f3 = 0;
+    b0 = 0;
+    b1 = 0;
+    b2 = 0;
+    b3 = 0;
+    startAngle = 0;
+  }
 }

@@ -22,8 +22,8 @@ package com.codeheadsystems.gamelib.core.model;
  */
 public class LoadingConfiguration {
 
-    private String assetsFilename;
-    private String loadingImage;
+  private String assetsFilename;
+  private String loadingImage;
 
   /**
    * Gets assets filename.
@@ -31,8 +31,8 @@ public class LoadingConfiguration {
    * @return the assets filename
    */
   public String getAssetsFilename() {
-        return assetsFilename;
-    }
+    return assetsFilename;
+  }
 
   /**
    * Gets loading image.
@@ -40,6 +40,6 @@ public class LoadingConfiguration {
    * @return the loading image
    */
   public String getLoadingImage() {
-        return loadingImage;
-    }
+    return loadingImage;
+  }
 }

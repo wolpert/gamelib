@@ -27,7 +27,7 @@ import java.util.function.Supplier;
  */
 public class PoolerImpl<T> implements Pooler<T> {
 
-    final private Pool<T> pool;
+  final private Pool<T> pool;
 
   /**
    * Instantiates a new Pooler.
@@ -35,26 +35,26 @@ public class PoolerImpl<T> implements Pooler<T> {
    * @param supplier the supplier
    */
   protected PoolerImpl(final Supplier<T> supplier) {
-        this.pool = new Pool<>() {
-            @Override
-            protected T newObject() {
-                return supplier.get();
-            }
-        };
-    }
+    this.pool = new Pool<>() {
+      @Override
+      protected T newObject() {
+        return supplier.get();
+      }
+    };
+  }
 
-    @Override
-    public T obtain() {
-        return pool.obtain();
-    }
+  @Override
+  public T obtain() {
+    return pool.obtain();
+  }
 
-    @Override
-    public void free(T tInstance) {
-        pool.free(tInstance);
-    }
+  @Override
+  public void free(T tInstance) {
+    pool.free(tInstance);
+  }
 
-    @Override
-    public int poolSize() {
-        return pool.getFree();
-    }
+  @Override
+  public int poolSize() {
+    return pool.getFree();
+  }
 }

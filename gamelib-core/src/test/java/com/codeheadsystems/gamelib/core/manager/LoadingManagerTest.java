@@ -20,7 +20,9 @@ package com.codeheadsystems.gamelib.core.manager;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatExceptionOfType;
 import static org.mockito.ArgumentMatchers.eq;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AssetLoader;
@@ -32,7 +34,6 @@ import com.codeheadsystems.gamelib.core.model.Assets;
 import com.codeheadsystems.gamelib.core.model.LoadingConfiguration;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Optional;
 import org.assertj.core.util.Lists;
 import org.assertj.core.util.Maps;
 import org.junit.jupiter.api.BeforeEach;

@@ -141,6 +141,7 @@ public class ServerManager {
     /**
      * Stopping state.
      */
-    STOPPING}
+    STOPPING
+  }
 
 }

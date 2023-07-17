@@ -222,5 +222,6 @@ public class ClientManager {
     /**
      * Stopping status.
      */
-    STOPPING}
+    STOPPING
+  }
 }

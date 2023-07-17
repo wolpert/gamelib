@@ -33,7 +33,7 @@ public class LoggerHelper {
    * @return a usable logger.
    */
   public static Logger logger(final Class<?> clazz) {
-        return new Logger(clazz.getSimpleName(), Logger.DEBUG);
-    }
+    return new Logger(clazz.getSimpleName(), Logger.DEBUG);
+  }
 
 }

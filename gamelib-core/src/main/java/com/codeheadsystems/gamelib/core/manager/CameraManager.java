@@ -29,10 +29,10 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class CameraManager {
-    private static final Logger LOGGER = LoggerHelper.logger(CameraManager.class);
+  private static final Logger LOGGER = LoggerHelper.logger(CameraManager.class);
 
-    private final ThreadLocal<Vector3> vector3ThreadLocal = ThreadLocal.withInitial(Vector3::new);
-    private final OrthographicCamera camera;
+  private final ThreadLocal<Vector3> vector3ThreadLocal = ThreadLocal.withInitial(Vector3::new);
+  private final OrthographicCamera camera;
 
   /**
    * Instantiates a new Camera manager.
@@ -40,10 +40,10 @@ public class CameraManager {
    * @param camera the camera
    */
   @Inject
-    public CameraManager(final OrthographicCamera camera) {
-        LOGGER.info("CameraManager()");
-        this.camera = camera;
-    }
+  public CameraManager(final OrthographicCamera camera) {
+    LOGGER.info("CameraManager()");
+    this.camera = camera;
+  }
 
   /**
    * Width float.
@@ -51,8 +51,8 @@ public class CameraManager {
    * @return the float
    */
   public float width() {
-        return camera.viewportWidth;
-    }
+    return camera.viewportWidth;
+  }
 
   /**
    * Height float.
@@ -60,8 +60,8 @@ public class CameraManager {
    * @return the float
    */
   public float height() {
-        return camera.viewportHeight;
-    }
+    return camera.viewportHeight;
+  }
 
   /**
    * Use this method to covert the points on the screen to the location in the camera field.
@@ -74,7 +74,7 @@ public class CameraManager {
    * @return thread local vector3.
    */
   public Vector3 unproject(final int screenX, final int screenY) {
-        return camera.unproject(vector3ThreadLocal.get().set(screenX, screenY, 0));
-    }
+    return camera.unproject(vector3ThreadLocal.get().set(screenX, screenY, 0));
+  }
 
 }

@@ -40,13 +40,13 @@ import javax.inject.Singleton;
 @Singleton
 public class LoadingManager {
 
-    private static final Logger LOGGER = LoggerHelper.logger(LoadingManager.class);
-    private final AssetManager assetManager;
-    private final FileHandleResolver fileHandleResolver;
-    private final LoadingConfiguration loadingConfiguration;
-    private final JsonManager jsonManager;
-    private Stages currentStage;
-    private Assets assets;
+  private static final Logger LOGGER = LoggerHelper.logger(LoadingManager.class);
+  private final AssetManager assetManager;
+  private final FileHandleResolver fileHandleResolver;
+  private final LoadingConfiguration loadingConfiguration;
+  private final JsonManager jsonManager;
+  private Stages currentStage;
+  private Assets assets;
 
   /**
    * Instantiates a new Loading manager.
@@ -57,17 +57,17 @@ public class LoadingManager {
    * @param jsonManager          the json manager
    */
   @Inject
-    public LoadingManager(final AssetManager assetManager,
-                          final FileHandleResolver fileHandleResolver,
-                          final LoadingConfiguration loadingConfiguration,
-                          final JsonManager jsonManager) {
-        this.assetManager = assetManager;
-        this.fileHandleResolver = fileHandleResolver;
-        this.loadingConfiguration = loadingConfiguration;
-        this.jsonManager = jsonManager;
-        currentStage = Stages.INIT;
-        LOGGER.info("LoadingManager()");
-    }
+  public LoadingManager(final AssetManager assetManager,
+                        final FileHandleResolver fileHandleResolver,
+                        final LoadingConfiguration loadingConfiguration,
+                        final JsonManager jsonManager) {
+    this.assetManager = assetManager;
+    this.fileHandleResolver = fileHandleResolver;
+    this.loadingConfiguration = loadingConfiguration;
+    this.jsonManager = jsonManager;
+    currentStage = Stages.INIT;
+    LOGGER.info("LoadingManager()");
+  }
 
   /**
    * Returns false if no more updates are needed.
@@ -75,69 +75,71 @@ public class LoadingManager {
    * @return boolean boolean
    */
   public boolean update() {
-        LOGGER.info("Update() : " + currentStage);
-        switch (currentStage) {
-            case INIT:
-                setAssets(jsonManager.fromJson(Assets.class, fileHandleResolver.resolve(loadingConfiguration.getAssetsFilename())));
-                setCurrentStage(Stages.ASSET_LOADERS);
-                return false;
-            case ASSET_LOADERS:
-                setCurrentStage(Stages.QUEUE_ASSETS);
-                assetManager.setLoader(TiledMap.class, ".tmx", new TmxMapLoader(fileHandleResolver));
-                // Loop through the loaders.
-                assets.loaders().forEach(this::buildLoader);
-                return false;
-            case QUEUE_ASSETS:
-                for (Map.Entry<String, ArrayList<String>> entry : assets.getAssetsToLoad().entrySet()) {
-                    final String clazzName = entry.getKey();
-                    LOGGER.info("Processing: " + clazzName);
-                    try {
-                        final Class<?> clazz = Class.forName(clazzName);
-                        for (String filename : entry.getValue()) {
-                            LOGGER.info("  adding to queue: " + clazz.getSimpleName() + ":" + filename);
-                            assetManager.load(filename, clazz);
-                        }
-                    } catch (ClassNotFoundException e) {
-                        throw new IllegalStateException(e);
-                    }
-                }
-                setCurrentStage(Stages.LOAD_ASSETS);
-                return false;
-            case LOAD_ASSETS:
-                if (assetManager.update()) {
-                    setCurrentStage(Stages.DONE);
-                }
-                return false;
-            case DONE:
-            default:
-                return true;
+    LOGGER.info("Update() : " + currentStage);
+    switch (currentStage) {
+      case INIT:
+        setAssets(jsonManager.fromJson(Assets.class, fileHandleResolver.resolve(loadingConfiguration.getAssetsFilename())));
+        setCurrentStage(Stages.ASSET_LOADERS);
+        return false;
+      case ASSET_LOADERS:
+        setCurrentStage(Stages.QUEUE_ASSETS);
+        assetManager.setLoader(TiledMap.class, ".tmx", new TmxMapLoader(fileHandleResolver));
+        // Loop through the loaders.
+        assets.loaders().forEach(this::buildLoader);
+        return false;
+      case QUEUE_ASSETS:
+        for (Map.Entry<String, ArrayList<String>> entry : assets.getAssetsToLoad().entrySet()) {
+          final String clazzName = entry.getKey();
+          LOGGER.info("Processing: " + clazzName);
+          try {
+            final Class<?> clazz = Class.forName(clazzName);
+            for (String filename : entry.getValue()) {
+              LOGGER.info("  adding to queue: " + clazz.getSimpleName() + ":" + filename);
+              assetManager.load(filename, clazz);
+            }
+          } catch (ClassNotFoundException e) {
+            throw new IllegalStateException(e);
+          }
         }
-    }
-
-    private <T> void buildLoader(final Loader l) {
-        try {
-            LOGGER.info("Asset class to load: " + l.classToLoad());
-            final Class<T> classToLoad = getParemeterizedClass(l.classToLoad());
-            LOGGER.info("    Loading class for the asset: " + l.loaderClass());
-            final Class<AsynchronousAssetLoader<T, AssetLoaderParameters<T>>> loaderClazz = getParemeterizedClass(l.loaderClass());
-            final AsynchronousAssetLoader<T, AssetLoaderParameters<T>> instance = loaderClazz.getConstructor(FileHandleResolver.class).newInstance(fileHandleResolver);
-            assetManager.setLoader(classToLoad, l.suffix(), instance);
-        } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException | IllegalAccessException e) {
-            LOGGER.error("Failed to add loader: " + l.classToLoad() + ":" + l.loaderClass(), e);
-            throw new IllegalArgumentException(e);
+        setCurrentStage(Stages.LOAD_ASSETS);
+        return false;
+      case LOAD_ASSETS:
+        if (assetManager.update()) {
+          setCurrentStage(Stages.DONE);
         }
+        return false;
+      case DONE:
+      default:
+        return true;
     }
+  }
 
-    /**
-     * Isolate the evil here. Needs to be a better way to get the class as a generalized class.
-     * @param classToLoad what we are loading.
-     * @param <T> whatever the type is supposed to be.
-     * @return the class.
-     * @throws ClassNotFoundException Which could also be due to the type not matching.
-     */
-    private <T> Class<T> getParemeterizedClass(final String classToLoad) throws ClassNotFoundException {
-        return (Class<T>) Class.forName(classToLoad);
+  private <T> void buildLoader(final Loader l) {
+    try {
+      LOGGER.info("Asset class to load: " + l.classToLoad());
+      final Class<T> classToLoad = getParemeterizedClass(l.classToLoad());
+      LOGGER.info("    Loading class for the asset: " + l.loaderClass());
+      final Class<AsynchronousAssetLoader<T, AssetLoaderParameters<T>>> loaderClazz = getParemeterizedClass(l.loaderClass());
+      final AsynchronousAssetLoader<T, AssetLoaderParameters<T>> instance = loaderClazz.getConstructor(FileHandleResolver.class).newInstance(fileHandleResolver);
+      assetManager.setLoader(classToLoad, l.suffix(), instance);
+    } catch (ClassNotFoundException | NoSuchMethodException | InvocationTargetException | InstantiationException |
+             IllegalAccessException e) {
+      LOGGER.error("Failed to add loader: " + l.classToLoad() + ":" + l.loaderClass(), e);
+      throw new IllegalArgumentException(e);
     }
+  }
+
+  /**
+   * Isolate the evil here. Needs to be a better way to get the class as a generalized class.
+   *
+   * @param classToLoad what we are loading.
+   * @param <T>         whatever the type is supposed to be.
+   * @return the class.
+   * @throws ClassNotFoundException Which could also be due to the type not matching.
+   */
+  private <T> Class<T> getParemeterizedClass(final String classToLoad) throws ClassNotFoundException {
+    return (Class<T>) Class.forName(classToLoad);
+  }
 
   /**
    * Returns the current progress as float.
@@ -145,20 +147,20 @@ public class LoadingManager {
    * @return progress bar.
    */
   public float getProgress() {
-        switch (currentStage) {
-            case INIT:
-                return 0f;
-            case ASSET_LOADERS:
-                return 0.1f;
-            case QUEUE_ASSETS:
-                return 0.2f;
-            case LOAD_ASSETS:
-                return 0.3f + (0.7f * assetManager.getProgress());
-            case DONE:
-            default:
-                return 1f;
-        }
+    switch (currentStage) {
+      case INIT:
+        return 0f;
+      case ASSET_LOADERS:
+        return 0.1f;
+      case QUEUE_ASSETS:
+        return 0.2f;
+      case LOAD_ASSETS:
+        return 0.3f + (0.7f * assetManager.getProgress());
+      case DONE:
+      default:
+        return 1f;
     }
+  }
 
   /**
    * Asset manager asset manager.
@@ -166,8 +168,8 @@ public class LoadingManager {
    * @return the asset manager
    */
   public AssetManager assetManager() {
-        return this.assetManager;
-    }
+    return this.assetManager;
+  }
 
   /**
    * Assets assets.
@@ -175,8 +177,8 @@ public class LoadingManager {
    * @return the assets
    */
   public Assets assets() {
-        return assets;
-    }
+    return assets;
+  }
 
   /**
    * Sets assets.
@@ -184,8 +186,8 @@ public class LoadingManager {
    * @param assets the assets
    */
   public void setAssets(final Assets assets) {
-        this.assets = assets;
-    }
+    this.assets = assets;
+  }
 
   /**
    * Gets stage title.
@@ -193,8 +195,8 @@ public class LoadingManager {
    * @return the stage title
    */
   public String getStageTitle() {
-        return currentStage.title;
-    }
+    return currentStage.title;
+  }
 
   /**
    * Gets current stage.
@@ -202,8 +204,8 @@ public class LoadingManager {
    * @return the current stage
    */
   Stages getCurrentStage() {
-        return currentStage;
-    }
+    return currentStage;
+  }
 
   /**
    * Sets current stage.
@@ -211,8 +213,8 @@ public class LoadingManager {
    * @param currentStage the current stage
    */
   void setCurrentStage(final Stages currentStage) {
-        this.currentStage = currentStage;
-    }
+    this.currentStage = currentStage;
+  }
 
   /**
    * The enum Stages.
@@ -239,11 +241,11 @@ public class LoadingManager {
      */
     DONE("Complete!");
 
-        private final String title;
+    private final String title;
 
-        Stages(String title) {
-            this.title = title;
-        }
+    Stages(String title) {
+      this.title = title;
     }
+  }
 
 }

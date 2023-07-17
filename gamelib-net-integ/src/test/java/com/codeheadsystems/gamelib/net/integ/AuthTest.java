@@ -27,7 +27,6 @@ import com.codeheadsystems.gamelib.net.factory.ObjectMapperFactory;
 import com.codeheadsystems.gamelib.net.integ.util.NetComponents;
 import com.codeheadsystems.gamelib.net.manager.JsonManager;
 import com.codeheadsystems.gamelib.net.model.Authenticated;
-import com.codeheadsystems.gamelib.net.model.Disconnect;
 import com.codeheadsystems.gamelib.net.model.Identity;
 import com.codeheadsystems.gamelib.net.model.ImmutableIdentity;
 import com.codeheadsystems.gamelib.net.model.ServerDetails;

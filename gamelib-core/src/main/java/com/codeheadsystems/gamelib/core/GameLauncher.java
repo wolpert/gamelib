@@ -36,16 +36,16 @@ import javax.inject.Singleton;
 @Singleton
 public class GameLauncher extends Game {
 
-    private static final Logger LOGGER = logger(GameLauncher.class);
+  private static final Logger LOGGER = logger(GameLauncher.class);
 
-    /**
-     * This has to be lazy. The rest of the GDX app needs to be initialized before we get the loading screen.
-     * By making this lazy, the app is initialized later.
-     */
-    private final Lazy<LoadingScreen> loadingScreen;
-    private final Lazy<Set<GameListener>> gameListeners;
-    private final Lazy<ResizeManager> resizeManager;
-    private final AssetManager assetManager;
+  /**
+   * This has to be lazy. The rest of the GDX app needs to be initialized before we get the loading screen.
+   * By making this lazy, the app is initialized later.
+   */
+  private final Lazy<LoadingScreen> loadingScreen;
+  private final Lazy<Set<GameListener>> gameListeners;
+  private final Lazy<ResizeManager> resizeManager;
+  private final AssetManager assetManager;
 
   /**
    * Instantiates a new Game launcher.
@@ -56,39 +56,39 @@ public class GameLauncher extends Game {
    * @param assetManager  the asset manager
    */
   @Inject
-    public GameLauncher(final Lazy<LoadingScreen> loadingScreen,
-                        final Lazy<Set<GameListener>> gameListeners,
-                        final Lazy<ResizeManager> resizeManager,
-                        final AssetManager assetManager) {
-        this.loadingScreen = loadingScreen;
-        this.gameListeners = gameListeners;
-        this.resizeManager = resizeManager;
-        this.assetManager = assetManager;
-    }
+  public GameLauncher(final Lazy<LoadingScreen> loadingScreen,
+                      final Lazy<Set<GameListener>> gameListeners,
+                      final Lazy<ResizeManager> resizeManager,
+                      final AssetManager assetManager) {
+    this.loadingScreen = loadingScreen;
+    this.gameListeners = gameListeners;
+    this.resizeManager = resizeManager;
+    this.assetManager = assetManager;
+  }
 
-    @Override
-    public void create() {
-        gameListeners.get().forEach(l -> l.setGame(this));
-        final LoadingScreen screen = loadingScreen.get();
-        LOGGER.info("Setting screen: " + screen);
-        setScreen(screen);
-    }
+  @Override
+  public void create() {
+    gameListeners.get().forEach(l -> l.setGame(this));
+    final LoadingScreen screen = loadingScreen.get();
+    LOGGER.info("Setting screen: " + screen);
+    setScreen(screen);
+  }
 
-    @Override
-    public void resize(final int width, final int height) {
-        LOGGER.info("resize: X:" + width + " Y:" + height);
-        resizeManager.get().resize(width, height);
-        super.resize(width, height);
-    }
+  @Override
+  public void resize(final int width, final int height) {
+    LOGGER.info("resize: X:" + width + " Y:" + height);
+    resizeManager.get().resize(width, height);
+    super.resize(width, height);
+  }
 
-    /**
-     * We're dead.... remove all the assets.
-     */
-    @Override
-    public void dispose() {
-        LOGGER.info("Disposing...");
-        super.dispose();
-        assetManager.dispose();
-        LOGGER.info("Disposed");
-    }
+  /**
+   * We're dead.... remove all the assets.
+   */
+  @Override
+  public void dispose() {
+    LOGGER.info("Disposing...");
+    super.dispose();
+    assetManager.dispose();
+    LOGGER.info("Disposed");
+  }
 }

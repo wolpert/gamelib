@@ -31,7 +31,7 @@ import javax.inject.Singleton;
 @Singleton
 public class JsonManager {
 
-    private final Json json;
+  private final Json json;
 
   /**
    * Instantiates a new Json manager.
@@ -39,9 +39,9 @@ public class JsonManager {
    * @param json the json
    */
   @Inject
-    public JsonManager(final Json json) {
-        this.json = json;
-    }
+  public JsonManager(final Json json) {
+    this.json = json;
+  }
 
   /**
    * Wrappper for the fromJson method to ease testing.
@@ -52,9 +52,9 @@ public class JsonManager {
    * @return an instance of clazz based on the type.
    */
   public <T> T fromJson(final Class<T> clazz,
-                          final FileHandle file) {
-        return json.fromJson(clazz, file);
-    }
+                        final FileHandle file) {
+    return json.fromJson(clazz, file);
+  }
 
   /**
    * From json t.
@@ -65,7 +65,7 @@ public class JsonManager {
    * @return the t
    */
   public <T> T fromJson(final Class<T> clazz,
-                          final String jsonString) {
-        return json.fromJson(clazz, jsonString);
-    }
+                        final String jsonString) {
+    return json.fromJson(clazz, jsonString);
+  }
 }

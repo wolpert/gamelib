@@ -41,14 +41,14 @@ import javax.inject.Singleton;
 @Singleton
 public class HexFieldEntityManager {
 
-    private static final Logger LOGGER = logger(HexFieldEntityManager.class);
-    private static final Family HEXS = Family.all(HexComponent.class).get();
-    private final EngineManager engineManager;
-    private final HexManager hexManager;
-    private final LayoutManager layoutManager;
-    private final HexFieldLayoutManager hexFieldLayoutManager;
-    private final Pooler<HexField> pool;
-    private final HexFieldSearchManager hexFieldSearchManager;
+  private static final Logger LOGGER = logger(HexFieldEntityManager.class);
+  private static final Family HEXS = Family.all(HexComponent.class).get();
+  private final EngineManager engineManager;
+  private final HexManager hexManager;
+  private final LayoutManager layoutManager;
+  private final HexFieldLayoutManager hexFieldLayoutManager;
+  private final Pooler<HexField> pool;
+  private final HexFieldSearchManager hexFieldSearchManager;
 
   /**
    * Instantiates a new Hex field entity manager.
@@ -60,19 +60,19 @@ public class HexFieldEntityManager {
    * @param hexFieldSearchManager the hex field search manager
    */
   @Inject
-    public HexFieldEntityManager(final EngineManager engineManager,
-                                 final HexManager hexManager,
-                                 final LayoutManager layoutManager,
-                                 final HexFieldLayoutManager hexFieldLayoutManager,
-                                 final HexFieldSearchManager hexFieldSearchManager) {
-        this.engineManager = engineManager;
-        this.hexManager = hexManager;
-        this.layoutManager = layoutManager;
-        this.hexFieldLayoutManager = hexFieldLayoutManager;
-        this.hexFieldSearchManager = hexFieldSearchManager;
-        pool = Pooler.of(HexField::new);
-        LOGGER.debug("HexFieldEntityManager()");
-    }
+  public HexFieldEntityManager(final EngineManager engineManager,
+                               final HexManager hexManager,
+                               final LayoutManager layoutManager,
+                               final HexFieldLayoutManager hexFieldLayoutManager,
+                               final HexFieldSearchManager hexFieldSearchManager) {
+    this.engineManager = engineManager;
+    this.hexManager = hexManager;
+    this.layoutManager = layoutManager;
+    this.hexFieldLayoutManager = hexFieldLayoutManager;
+    this.hexFieldSearchManager = hexFieldSearchManager;
+    pool = Pooler.of(HexField::new);
+    LOGGER.debug("HexFieldEntityManager()");
+  }
 
   /**
    * Generate hex field.
@@ -82,26 +82,26 @@ public class HexFieldEntityManager {
    * @return the hex field
    */
   public HexField generate(final HexFieldConfiguration configuration,
-                             final Function<HexComponent, Set<Component>> additionalComponents) {
-        final HexFieldLayout hexFieldLayout = hexFieldLayoutManager.obtain(configuration);
-        final Set<Entity> entities = hexManager.generate(hexFieldLayout.cols(), hexFieldLayout.rows())
-                .stream()
-                .map(h -> engineManager.createComponent(HexComponent.class)
-                        .initialize(h, hexFieldLayout.layout(), layoutManager))
-                .map(hexComponent -> createEntity(hexComponent, additionalComponents))
-                .collect(Collectors.toSet());
-        entities.forEach(engineManager::addEntity);
-        return pool.obtain()
-                .setHexEntityHashMap(hexFieldSearchManager.hexEntityHashMap(entities))
-                .setHexFieldLayout(hexFieldLayout);
-    }
+                           final Function<HexComponent, Set<Component>> additionalComponents) {
+    final HexFieldLayout hexFieldLayout = hexFieldLayoutManager.obtain(configuration);
+    final Set<Entity> entities = hexManager.generate(hexFieldLayout.cols(), hexFieldLayout.rows())
+        .stream()
+        .map(h -> engineManager.createComponent(HexComponent.class)
+            .initialize(h, hexFieldLayout.layout(), layoutManager))
+        .map(hexComponent -> createEntity(hexComponent, additionalComponents))
+        .collect(Collectors.toSet());
+    entities.forEach(engineManager::addEntity);
+    return pool.obtain()
+        .setHexEntityHashMap(hexFieldSearchManager.hexEntityHashMap(entities))
+        .setHexFieldLayout(hexFieldLayout);
+  }
 
-    private Entity createEntity(final HexComponent hexComponent,
-                                final Function<HexComponent, Set<Component>> additionalComponents) {
-        final Entity entity = engineManager.createEntity().add(hexComponent);
-        additionalComponents.apply(hexComponent).forEach(entity::add);
-        return entity;
-    }
+  private Entity createEntity(final HexComponent hexComponent,
+                              final Function<HexComponent, Set<Component>> additionalComponents) {
+    final Entity entity = engineManager.createEntity().add(hexComponent);
+    additionalComponents.apply(hexComponent).forEach(entity::add);
+    return entity;
+  }
 
   /**
    * Release.
@@ -109,13 +109,13 @@ public class HexFieldEntityManager {
    * @param hexField the hex field
    */
   public void release(final HexField hexField) {
-        hexFieldLayoutManager.free(hexField.getHexFieldLayout()); // free the layout first.
-        engineManager.engine().getEntitiesFor(HEXS).forEach(e->{
-            final HexComponent component = e.getComponent(HexComponent.class);
-            hexManager.free(component.hex());
-        });
-        engineManager.engine().removeAllEntities(HEXS); // We do this since freeing each hex entity individually can retain some due to delay.
-        pool.free(hexField);
-    }
+    hexFieldLayoutManager.free(hexField.getHexFieldLayout()); // free the layout first.
+    engineManager.engine().getEntitiesFor(HEXS).forEach(e -> {
+      final HexComponent component = e.getComponent(HexComponent.class);
+      hexManager.free(component.hex());
+    });
+    engineManager.engine().removeAllEntities(HEXS); // We do this since freeing each hex entity individually can retain some due to delay.
+    pool.free(hexField);
+  }
 
 }

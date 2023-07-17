@@ -55,8 +55,8 @@ class SupplierHolderTest {
     holder.set(TWO);
 
     assertThat(holder.get())
-            .isNotNull()
-            .isEqualTo(TWO);
+        .isNotNull()
+        .isEqualTo(TWO);
   }
 
   @Test
@@ -66,8 +66,8 @@ class SupplierHolderTest {
     holder.set(THREE);
 
     assertThat(holder.get())
-            .isNotNull()
-            .isEqualTo(THREE);
+        .isNotNull()
+        .isEqualTo(THREE);
   }
 
   @Test
@@ -77,8 +77,8 @@ class SupplierHolderTest {
     holder.set(null);
 
     assertThat(holder.get())
-            .isNotNull()
-            .isEqualTo(ONE);
+        .isNotNull()
+        .isEqualTo(ONE);
   }
 
   @Test
@@ -88,7 +88,7 @@ class SupplierHolderTest {
     holder.set(null);
 
     assertThat(holder.get())
-            .isNotNull()
-            .isEqualTo(ONE);
+        .isNotNull()
+        .isEqualTo(ONE);
   }
 }

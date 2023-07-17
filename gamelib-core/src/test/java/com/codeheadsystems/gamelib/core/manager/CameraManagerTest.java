@@ -18,7 +18,6 @@
 package com.codeheadsystems.gamelib.core.manager;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -35,30 +34,30 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class CameraManagerTest extends GdxTest {
 
-    private static final int X = 1;
-    private static final int Y = 2;
+  private static final int X = 1;
+  private static final int Y = 2;
 
-    @Mock private OrthographicCamera camera;
-    @Mock private Vector3 vector3;
-    @Captor private ArgumentCaptor<Vector3> vector3ArgumentCaptor;
+  @Mock private OrthographicCamera camera;
+  @Mock private Vector3 vector3;
+  @Captor private ArgumentCaptor<Vector3> vector3ArgumentCaptor;
 
-    private CameraManager cameraManager;
+  private CameraManager cameraManager;
 
-    @BeforeEach
-    void setUp() {
-        cameraManager = new CameraManager(camera);
-    }
+  @BeforeEach
+  void setUp() {
+    cameraManager = new CameraManager(camera);
+  }
 
-    @Test
-    void unproject() {
-        when(camera.unproject(vector3ArgumentCaptor.capture())).thenReturn(vector3);
-        assertThat(cameraManager.unproject(X,Y))
-                .isNotNull()
-                .isEqualTo(vector3);
-        assertThat(vector3ArgumentCaptor.getValue())
-                .isNotNull()
-                .hasFieldOrPropertyWithValue("x", (float)X)
-                .hasFieldOrPropertyWithValue("y", (float)Y)
-                .hasFieldOrPropertyWithValue("z", 0f);
-    }
+  @Test
+  void unproject() {
+    when(camera.unproject(vector3ArgumentCaptor.capture())).thenReturn(vector3);
+    assertThat(cameraManager.unproject(X, Y))
+        .isNotNull()
+        .isEqualTo(vector3);
+    assertThat(vector3ArgumentCaptor.getValue())
+        .isNotNull()
+        .hasFieldOrPropertyWithValue("x", (float) X)
+        .hasFieldOrPropertyWithValue("y", (float) Y)
+        .hasFieldOrPropertyWithValue("z", 0f);
+  }
 }

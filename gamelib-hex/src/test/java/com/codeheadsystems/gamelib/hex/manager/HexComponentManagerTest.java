@@ -34,48 +34,48 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class HexComponentManagerTest extends GdxTest {
 
-    private static final HexFieldLayout HEX_FIELD_LAYOUT = new HexFieldLayout()
-            .setRows(2)
-            .setCols(5)
-            .setLayout(Layout.of(
-                    Orientation.flat,
-                    new Vector2().set(5, 5),
-                    new Vector2().set(10, 10))
-            );
+  private static final HexFieldLayout HEX_FIELD_LAYOUT = new HexFieldLayout()
+      .setRows(2)
+      .setCols(5)
+      .setLayout(Layout.of(
+          Orientation.flat,
+          new Vector2().set(5, 5),
+          new Vector2().set(10, 10))
+      );
 
-    private HexManager hexManager;
-    private LayoutManager layoutManager;
-    private HexComponentManager manager;
+  private HexManager hexManager;
+  private LayoutManager layoutManager;
+  private HexComponentManager manager;
 
-    @BeforeEach
-    void setup() {
-        hexManager = new HexManager();
-        layoutManager = new LayoutManager(new Vector2Manager(), new FractionalHexManager(hexManager));
-        manager = new HexComponentManager(hexManager, layoutManager);
-    }
+  @BeforeEach
+  void setup() {
+    hexManager = new HexManager();
+    layoutManager = new LayoutManager(new Vector2Manager(), new FractionalHexManager(hexManager));
+    manager = new HexComponentManager(hexManager, layoutManager);
+  }
 
-    @Test
-    void defaultObject() {
-        assertThat(manager.poolSize())
-                .isEqualTo(0);
-    }
+  @Test
+  void defaultObject() {
+    assertThat(manager.poolSize())
+        .isEqualTo(0);
+  }
 
-    @Test
-    void generate() {
-        final Set<HexComponent> result = manager.generate(HEX_FIELD_LAYOUT);
-        assertThat(result)
-                .isNotNull()
-                .isNotEmpty()
-                .hasSize(10);
-        assertThat(manager.poolSize())
-                .isEqualTo(0);
-    }
+  @Test
+  void generate() {
+    final Set<HexComponent> result = manager.generate(HEX_FIELD_LAYOUT);
+    assertThat(result)
+        .isNotNull()
+        .isNotEmpty()
+        .hasSize(10);
+    assertThat(manager.poolSize())
+        .isEqualTo(0);
+  }
 
-    @Test
-    void release() {
-        final Set<HexComponent> result = manager.generate(HEX_FIELD_LAYOUT);
-        manager.release(result);
-        assertThat(manager.poolSize())
-                .isEqualTo(10);
-    }
+  @Test
+  void release() {
+    final Set<HexComponent> result = manager.generate(HEX_FIELD_LAYOUT);
+    manager.release(result);
+    assertThat(manager.poolSize())
+        .isEqualTo(10);
+  }
 }

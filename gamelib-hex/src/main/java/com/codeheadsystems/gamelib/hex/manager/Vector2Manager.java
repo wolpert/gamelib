@@ -31,14 +31,14 @@ import javax.inject.Singleton;
 @Singleton
 public class Vector2Manager extends PoolerImpl<Vector2> {
 
-    private static final Logger LOGGER = logger(Vector2Manager.class);
+  private static final Logger LOGGER = logger(Vector2Manager.class);
 
   /**
    * Instantiates a new Vector 2 manager.
    */
   @Inject
-    public Vector2Manager() {
-        super(Vector2::new);
-        LOGGER.debug("Vector2Manager()");
-    }
+  public Vector2Manager() {
+    super(Vector2::new);
+    LOGGER.debug("Vector2Manager()");
+  }
 }

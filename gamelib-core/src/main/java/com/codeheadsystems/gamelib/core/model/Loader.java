@@ -22,9 +22,9 @@ package com.codeheadsystems.gamelib.core.model;
  */
 public class Loader {
 
-    private String classToLoad;
-    private String suffix;
-    private String loaderClass;
+  private String classToLoad;
+  private String suffix;
+  private String loaderClass;
 
   /**
    * Class to load string.
@@ -32,8 +32,8 @@ public class Loader {
    * @return the string
    */
   public String classToLoad() {
-        return classToLoad;
-    }
+    return classToLoad;
+  }
 
   /**
    * Suffix string.
@@ -41,8 +41,8 @@ public class Loader {
    * @return the string
    */
   public String suffix() {
-        return suffix;
-    }
+    return suffix;
+  }
 
   /**
    * Loader class string.
@@ -50,6 +50,6 @@ public class Loader {
    * @return the string
    */
   public String loaderClass() {
-        return loaderClass;
-    }
+    return loaderClass;
+  }
 }

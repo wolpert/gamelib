@@ -25,9 +25,16 @@ import java.util.Objects;
  */
 public class FractionalHex implements Pool.Poolable {
 
-    private double q;
-    private double r;
-    private double s;
+  private double q;
+  private double r;
+  private double s;
+
+  /**
+   * Instantiates a new Fractional hex.
+   */
+  public FractionalHex() {
+
+  }
 
   /**
    * Of fractional hex.
@@ -38,15 +45,8 @@ public class FractionalHex implements Pool.Poolable {
    * @return the fractional hex
    */
   public static FractionalHex of(double q, double r, double s) {
-        return new FractionalHex().setQ(q).setR(r).setS(s).checkConstructorArguments();
-    }
-
-  /**
-   * Instantiates a new Fractional hex.
-   */
-  public FractionalHex() {
-
-    }
+    return new FractionalHex().setQ(q).setR(r).setS(s).checkConstructorArguments();
+  }
 
   /**
    * Check constructor arguments fractional hex.
@@ -54,11 +54,11 @@ public class FractionalHex implements Pool.Poolable {
    * @return the fractional hex
    */
   public FractionalHex checkConstructorArguments() {
-        if (Math.round(q() + r() + s()) != 0) {
-            throw new IllegalArgumentException("q + r + s must equal 0");
-        }
-        return this;
+    if (Math.round(q() + r() + s()) != 0) {
+      throw new IllegalArgumentException("q + r + s must equal 0");
     }
+    return this;
+  }
 
   /**
    * Q double.
@@ -66,8 +66,8 @@ public class FractionalHex implements Pool.Poolable {
    * @return the double
    */
   public double q() {
-        return q;
-    }
+    return q;
+  }
 
   /**
    * R double.
@@ -75,8 +75,8 @@ public class FractionalHex implements Pool.Poolable {
    * @return the double
    */
   public double r() {
-        return r;
-    }
+    return r;
+  }
 
   /**
    * S double.
@@ -84,8 +84,8 @@ public class FractionalHex implements Pool.Poolable {
    * @return the double
    */
   public double s() {
-        return s;
-    }
+    return s;
+  }
 
   /**
    * Sets q.
@@ -94,9 +94,9 @@ public class FractionalHex implements Pool.Poolable {
    * @return the q
    */
   public FractionalHex setQ(double q) {
-        this.q = q;
-        return this;
-    }
+    this.q = q;
+    return this;
+  }
 
   /**
    * Sets r.
@@ -105,9 +105,9 @@ public class FractionalHex implements Pool.Poolable {
    * @return the r
    */
   public FractionalHex setR(double r) {
-        this.r = r;
-        return this;
-    }
+    this.r = r;
+    return this;
+  }
 
   /**
    * Sets s.
@@ -116,27 +116,27 @@ public class FractionalHex implements Pool.Poolable {
    * @return the s
    */
   public FractionalHex setS(double s) {
-        this.s = s;
-        return this;
-    }
+    this.s = s;
+    return this;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        FractionalHex that = (FractionalHex) o;
-        return Double.compare(that.q, q) == 0 && Double.compare(that.r, r) == 0 && Double.compare(that.s, s) == 0;
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    FractionalHex that = (FractionalHex) o;
+    return Double.compare(that.q, q) == 0 && Double.compare(that.r, r) == 0 && Double.compare(that.s, s) == 0;
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(q, r, s);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(q, r, s);
+  }
 
-    @Override
-    public void reset() {
-        q=0;
-        r=0;
-        s=0;
-    }
+  @Override
+  public void reset() {
+    q = 0;
+    r = 0;
+    s = 0;
+  }
 }

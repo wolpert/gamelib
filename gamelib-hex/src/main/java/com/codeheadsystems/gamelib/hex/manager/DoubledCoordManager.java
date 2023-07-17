@@ -20,9 +20,9 @@ package com.codeheadsystems.gamelib.hex.manager;
 import static com.codeheadsystems.gamelib.core.util.LoggerHelper.logger;
 
 import com.badlogic.gdx.utils.Logger;
+import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import com.codeheadsystems.gamelib.hex.model.DoubledCoord;
 import com.codeheadsystems.gamelib.hex.model.Hex;
-import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -31,9 +31,9 @@ import javax.inject.Singleton;
  */
 @Singleton
 public class DoubledCoordManager extends PoolerImpl<DoubledCoord> {
-    private static final Logger LOGGER = logger(DoubledCoordManager.class);
+  private static final Logger LOGGER = logger(DoubledCoordManager.class);
 
-    private final HexManager hexManager;
+  private final HexManager hexManager;
 
   /**
    * Instantiates a new Doubled coord manager.
@@ -41,11 +41,11 @@ public class DoubledCoordManager extends PoolerImpl<DoubledCoord> {
    * @param hexManager the hex manager
    */
   @Inject
-    public DoubledCoordManager(final HexManager hexManager) {
-        super(DoubledCoord::new);
-        this.hexManager = hexManager;
-        LOGGER.debug("DoubledCoordManager()");
-    }
+  public DoubledCoordManager(final HexManager hexManager) {
+    super(DoubledCoord::new);
+    this.hexManager = hexManager;
+    LOGGER.debug("DoubledCoordManager()");
+  }
 
   /**
    * Does not free old Hex.
@@ -54,10 +54,10 @@ public class DoubledCoordManager extends PoolerImpl<DoubledCoord> {
    * @return the doubled coord
    */
   public DoubledCoord qdoubledFromCube(final Hex h) {
-        final int col = h.q();
-        final int row = 2 * h.r() + h.q();
-        return obtain().setCol(col).setRow(row);
-    }
+    final int col = h.q();
+    final int row = 2 * h.r() + h.q();
+    return obtain().setCol(col).setRow(row);
+  }
 
   /**
    * Does not free old Hex.
@@ -66,10 +66,10 @@ public class DoubledCoordManager extends PoolerImpl<DoubledCoord> {
    * @return the doubled coord
    */
   public DoubledCoord rdoubledFromCube(final Hex h) {
-        final int col = 2 * h.q() + h.r();
-        final int row = h.r();
-        return obtain().setCol(col).setRow(row);
-    }
+    final int col = 2 * h.q() + h.r();
+    final int row = h.r();
+    return obtain().setCol(col).setRow(row);
+  }
 
   /**
    * Does not free old DoubledCoord.
@@ -78,11 +78,11 @@ public class DoubledCoordManager extends PoolerImpl<DoubledCoord> {
    * @return the hex
    */
   public Hex qdoubledToCube(final DoubledCoord a) {
-        final int q = a.col();
-        final int r = (a.row() - a.col()) / 2;
-        final int s = -q - r;
-        return hexManager.obtain().setQ(q).setR(r).setS(s).checkConstructorArguments();
-    }
+    final int q = a.col();
+    final int r = (a.row() - a.col()) / 2;
+    final int s = -q - r;
+    return hexManager.obtain().setQ(q).setR(r).setS(s).checkConstructorArguments();
+  }
 
   /**
    * Does not free old DoubledCoord.
@@ -91,9 +91,9 @@ public class DoubledCoordManager extends PoolerImpl<DoubledCoord> {
    * @return the hex
    */
   public Hex rdoubledToCube(final DoubledCoord a) {
-        final int q = (a.col() - a.row()) / 2;
-        final int r = a.row();
-        final int s = -q - r;
-        return hexManager.obtain().setQ(q).setR(r).setS(s).checkConstructorArguments();
-    }
+    final int q = (a.col() - a.row()) / 2;
+    final int r = a.row();
+    final int s = -q - r;
+    return hexManager.obtain().setQ(q).setR(r).setS(s).checkConstructorArguments();
+  }
 }

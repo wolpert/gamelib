@@ -18,7 +18,12 @@
 package com.codeheadsystems.gamelib.core.screen;
 
 import static org.assertj.core.api.Assertions.assertThat;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.anyFloat;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.verifyNoInteractions;
+import static org.mockito.Mockito.when;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Screen;

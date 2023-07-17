@@ -24,28 +24,28 @@ import org.junit.jupiter.api.Test;
 
 class PoolerImplTest {
 
-    private Pooler<Object> pool;
+  private Pooler<Object> pool;
 
-    @BeforeEach
-    void setup() {
-        pool = Pooler.of(Object::new);
-    }
+  @BeforeEach
+  void setup() {
+    pool = Pooler.of(Object::new);
+  }
 
-    @Test
-    void obtain() {
-        assertThat(pool.obtain())
-                .isNotNull();
-        assertThat(pool.poolSize())
-                .isEqualTo(0);
-    }
+  @Test
+  void obtain() {
+    assertThat(pool.obtain())
+        .isNotNull();
+    assertThat(pool.poolSize())
+        .isEqualTo(0);
+  }
 
-    @Test
-    void free() {
-        final Object object = pool.obtain();
-        pool.free(object);
+  @Test
+  void free() {
+    final Object object = pool.obtain();
+    pool.free(object);
 
-        assertThat(pool.poolSize())
-                .isEqualTo(1);
-    }
+    assertThat(pool.poolSize())
+        .isEqualTo(1);
+  }
 
 }

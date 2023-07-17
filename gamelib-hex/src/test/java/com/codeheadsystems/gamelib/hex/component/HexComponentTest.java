@@ -33,81 +33,79 @@ import org.mockito.junit.jupiter.MockitoExtension;
 @ExtendWith(MockitoExtension.class)
 class HexComponentTest {
 
-    @Mock private Layout layout;
-    @Mock private LayoutManager layoutManager;
+  private static final float[] VERTICES = new float[]{0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0};
+  private static final Hex HEX = Hex.of(0, 0, 0);
+  private static final Vector2 VECTOR_2 = new Vector2(10f, 20f);
+  @Mock private Layout layout;
+  @Mock private LayoutManager layoutManager;
+  private HexComponent component;
 
-    private static final float[] VERTICES = new float[]{0, 0, 1, 1, 1, 1, 2, 2, 2, 2, 0, 0};
-    private static final Hex HEX = Hex.of(0, 0, 0);
-    private static final Vector2 VECTOR_2 = new Vector2(10f,20f);
+  @BeforeEach
+  void setup() {
+    component = new HexComponent();
+  }
 
-    private HexComponent component;
+  @Test
+  void testInitialize() {
+    when(layoutManager.vertices(layout, HEX)).thenReturn(VERTICES);
+    when(layoutManager.hexToPixel(layout, HEX)).thenReturn(VECTOR_2);
+    component.initialize(HEX, layout, layoutManager);
+    assertThat(component.hex())
+        .isEqualTo(HEX);
+    assertThat(component.isHex(0, 0, 0))
+        .isTrue();
+    assertThat(component.isHex(1, 0, -1))
+        .isFalse();
+    assertThat(component.polygon())
+        .isNotNull();
+    assertThat(component.vertices())
+        .isNotNull();
+    assertThat(component.triangles())
+        .isNotNull();
+  }
 
-    @BeforeEach
-    void setup() {
-        component = new HexComponent();
-    }
+  @Test
+  void defaultObject() {
+    assertThat(component)
+        .isNotNull();
+    assertThat(component.polygon())
+        .isNull();
+    assertThat(component.vertices())
+        .isNull();
+    assertThat(component.isHex(0, 0, 0))
+        .isFalse();
+  }
 
-    @Test
-    void testInitialize() {
-        when(layoutManager.vertices(layout,HEX)).thenReturn(VERTICES);
-        when(layoutManager.hexToPixel(layout, HEX)).thenReturn(VECTOR_2);
-        component.initialize(HEX, layout, layoutManager);
-        assertThat(component.hex())
-                .isEqualTo(HEX);
-        assertThat(component.isHex(0, 0, 0))
-                .isTrue();
-        assertThat(component.isHex(1, 0, -1))
-                .isFalse();
-        assertThat(component.polygon())
-                .isNotNull();
-        assertThat(component.vertices())
-                .isNotNull();
-        assertThat(component.triangles())
-                .isNotNull();
-    }
+  @Test
+  void reset() {
+    when(layoutManager.vertices(layout, HEX)).thenReturn(VERTICES);
+    when(layoutManager.hexToPixel(layout, HEX)).thenReturn(VECTOR_2);
+    component.initialize(HEX, layout, layoutManager);
+    component.reset();
+    assertThat(component.polygon())
+        .isNull();
+    assertThat(component.vertices())
+        .isNull();
+  }
 
-    @Test
-    void defaultObject() {
-        assertThat(component)
-                .isNotNull();
-        assertThat(component.polygon())
-                .isNull();
-        assertThat(component.vertices())
-                .isNull();
-        assertThat(component.isHex(0, 0, 0))
-                .isFalse();
-    }
+  @Test
+  void vertices() {
+    when(layoutManager.vertices(layout, HEX)).thenReturn(VERTICES);
+    when(layoutManager.hexToPixel(layout, HEX)).thenReturn(VECTOR_2);
+    component.initialize(HEX, layout, layoutManager);
+    assertThat(component.vertices())
+        .isNotNull()
+        .isEqualTo(VERTICES);
+  }
 
-    @Test
-    void reset() {
-        when(layoutManager.vertices(layout,HEX)).thenReturn(VERTICES);
-        when(layoutManager.hexToPixel(layout, HEX)).thenReturn(VECTOR_2);
-        component.initialize(HEX, layout, layoutManager);
-        component.reset();
-        assertThat(component.polygon())
-                .isNull();
-        assertThat(component.vertices())
-                .isNull();
-    }
-
-    @Test
-    void vertices() {
-        when(layoutManager.vertices(layout,HEX)).thenReturn(VERTICES);
-        when(layoutManager.hexToPixel(layout, HEX)).thenReturn(VECTOR_2);
-        component.initialize(HEX, layout, layoutManager);
-        assertThat(component.vertices())
-                .isNotNull()
-                .isEqualTo(VERTICES);
-    }
-
-    @Test
-    void polygon() {
-        when(layoutManager.vertices(layout,HEX)).thenReturn(VERTICES);
-        when(layoutManager.hexToPixel(layout, HEX)).thenReturn(VECTOR_2);
-        component.initialize(HEX, layout, layoutManager);
-        assertThat(component.polygon())
-                .isNotNull()
-                .extracting("vertices")
-                .isEqualTo(VERTICES);
-    }
+  @Test
+  void polygon() {
+    when(layoutManager.vertices(layout, HEX)).thenReturn(VERTICES);
+    when(layoutManager.hexToPixel(layout, HEX)).thenReturn(VECTOR_2);
+    component.initialize(HEX, layout, layoutManager);
+    assertThat(component.polygon())
+        .isNotNull()
+        .extracting("vertices")
+        .isEqualTo(VERTICES);
+  }
 }

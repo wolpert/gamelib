@@ -26,9 +26,9 @@ import java.util.Objects;
  */
 public class Layout implements Pool.Poolable {
 
-    private Orientation orientation;
-    private Vector2 size;
-    private Vector2 origin;
+  private Orientation orientation;
+  private Vector2 size;
+  private Vector2 origin;
 
   /**
    * Of layout.
@@ -39,8 +39,8 @@ public class Layout implements Pool.Poolable {
    * @return the layout
    */
   public static Layout of(Orientation orientation, Vector2 size, Vector2 origin) {
-        return new Layout().setOrientation(orientation).setSize(size).setOrigin(origin);
-    }
+    return new Layout().setOrientation(orientation).setSize(size).setOrigin(origin);
+  }
 
   /**
    * Orientation orientation.
@@ -48,8 +48,8 @@ public class Layout implements Pool.Poolable {
    * @return the orientation
    */
   public Orientation orientation() {
-        return orientation;
-    }
+    return orientation;
+  }
 
   /**
    * Size vector 2.
@@ -57,8 +57,8 @@ public class Layout implements Pool.Poolable {
    * @return the vector 2
    */
   public Vector2 size() {
-        return size;
-    }
+    return size;
+  }
 
   /**
    * Origin vector 2.
@@ -66,8 +66,8 @@ public class Layout implements Pool.Poolable {
    * @return the vector 2
    */
   public Vector2 origin() {
-        return origin;
-    }
+    return origin;
+  }
 
   /**
    * Sets orientation.
@@ -76,9 +76,9 @@ public class Layout implements Pool.Poolable {
    * @return the orientation
    */
   public Layout setOrientation(Orientation orientation) {
-        this.orientation = orientation;
-        return this;
-    }
+    this.orientation = orientation;
+    return this;
+  }
 
   /**
    * Sets size.
@@ -87,9 +87,9 @@ public class Layout implements Pool.Poolable {
    * @return the size
    */
   public Layout setSize(Vector2 size) {
-        this.size = size;
-        return this;
-    }
+    this.size = size;
+    return this;
+  }
 
   /**
    * Sets origin.
@@ -98,27 +98,27 @@ public class Layout implements Pool.Poolable {
    * @return the origin
    */
   public Layout setOrigin(Vector2 origin) {
-        this.origin = origin;
-        return this;
-    }
+    this.origin = origin;
+    return this;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Layout layout = (Layout) o;
-        return orientation.equals(layout.orientation) && size.equals(layout.size) && origin.equals(layout.origin);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    Layout layout = (Layout) o;
+    return orientation.equals(layout.orientation) && size.equals(layout.size) && origin.equals(layout.origin);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(orientation, size, origin);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(orientation, size, origin);
+  }
 
-    @Override
-    public void reset() {
-        origin = null;
-        size = null;
-        orientation = null;
-    }
+  @Override
+  public void reset() {
+    origin = null;
+    size = null;
+    orientation = null;
+  }
 }

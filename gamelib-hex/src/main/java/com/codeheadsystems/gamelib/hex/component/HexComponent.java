@@ -30,25 +30,25 @@ import com.codeheadsystems.gamelib.hex.model.Layout;
  */
 public class HexComponent implements Pool.Poolable, Component {
 
-    private Hex hex;
-    private Polygon polygon;
-    private float[][] triangles;
-    private float originX, originY, width;
+  private Hex hex;
+  private Polygon polygon;
+  private float[][] triangles;
+  private float originX, originY, width;
 
-    @Override
-    public void reset() {
-        originX = 0;
-        originY = 0;
-        width = 0;
-        hex = null;
-        polygon = null;
-        if (triangles != null) {
-            for (int i = 0; i < triangles.length; i++) {
-                triangles[i] = null;
-            }
-            triangles = null;
-        }
+  @Override
+  public void reset() {
+    originX = 0;
+    originY = 0;
+    width = 0;
+    hex = null;
+    polygon = null;
+    if (triangles != null) {
+      for (int i = 0; i < triangles.length; i++) {
+        triangles[i] = null;
+      }
+      triangles = null;
     }
+  }
 
   /**
    * Initialize hex component.
@@ -59,26 +59,26 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the hex component
    */
   public HexComponent initialize(final Hex hex,
-                                   final Layout layout,
-                                   final LayoutManager layoutManager) {
-        final float[] vertices = layoutManager.vertices(layout, hex);
-        this.polygon = new Polygon(vertices);
-        this.hex = hex;
-        final Vector2 center = layoutManager.hexToPixel(layout, hex);
-        this.polygon.setOrigin(center.x, center.y);
-        this.polygon.setPosition(center.x, center.y);
-        final int maxsize = vertices.length - 2;
-        triangles = new float[vertices.length / 2][];
-        for (int i = 0; i < maxsize; i += 2) {
-            triangles[i / 2] = new float[]{center.x, center.y, vertices[i], vertices[i + 1], vertices[i + 2], vertices[i + 3]};
-        }
-        triangles[triangles.length - 1] = new float[]{center.x, center.y, vertices[0], vertices[1], vertices[vertices.length - 2], vertices[vertices.length - 1]};
-        // Cache the meaningful values.
-        originX = polygon.getOriginX();
-        originY = polygon.getOriginY();
-        width = polygon.getBoundingRectangle().getWidth();
-        return this;
+                                 final Layout layout,
+                                 final LayoutManager layoutManager) {
+    final float[] vertices = layoutManager.vertices(layout, hex);
+    this.polygon = new Polygon(vertices);
+    this.hex = hex;
+    final Vector2 center = layoutManager.hexToPixel(layout, hex);
+    this.polygon.setOrigin(center.x, center.y);
+    this.polygon.setPosition(center.x, center.y);
+    final int maxsize = vertices.length - 2;
+    triangles = new float[vertices.length / 2][];
+    for (int i = 0; i < maxsize; i += 2) {
+      triangles[i / 2] = new float[]{center.x, center.y, vertices[i], vertices[i + 1], vertices[i + 2], vertices[i + 3]};
     }
+    triangles[triangles.length - 1] = new float[]{center.x, center.y, vertices[0], vertices[1], vertices[vertices.length - 2], vertices[vertices.length - 1]};
+    // Cache the meaningful values.
+    originX = polygon.getOriginX();
+    originY = polygon.getOriginY();
+    width = polygon.getBoundingRectangle().getWidth();
+    return this;
+  }
 
   /**
    * Triangles float [ ] [ ].
@@ -86,8 +86,8 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the float [ ] [ ]
    */
   public float[][] triangles() {
-        return triangles;
-    }
+    return triangles;
+  }
 
   /**
    * Vertices float [ ].
@@ -95,12 +95,12 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the float [ ]
    */
   public float[] vertices() {
-        if (polygon != null) {
-            return polygon.getVertices();
-        } else {
-            return null;
-        }
+    if (polygon != null) {
+      return polygon.getVertices();
+    } else {
+      return null;
     }
+  }
 
   /**
    * Hex hex.
@@ -108,8 +108,8 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the hex
    */
   public Hex hex() {
-        return hex;
-    }
+    return hex;
+  }
 
   /**
    * Polygon polygon.
@@ -117,8 +117,8 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the polygon
    */
   public Polygon polygon() {
-        return polygon;
-    }
+    return polygon;
+  }
 
   /**
    * Is hex boolean.
@@ -127,12 +127,12 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the boolean
    */
   public boolean isHex(final Hex otherHex) {
-        if (hex != null) {
-            return hex.equals(otherHex);
-        } else {
-            return false;
-        }
+    if (hex != null) {
+      return hex.equals(otherHex);
+    } else {
+      return false;
     }
+  }
 
   /**
    * Is hex boolean.
@@ -143,12 +143,12 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the boolean
    */
   public boolean isHex(final int q, final int r, final int s) {
-        if (hex != null) {
-            return hex.sameHex(q, r, s);
-        } else {
-            return false;
-        }
+    if (hex != null) {
+      return hex.sameHex(q, r, s);
+    } else {
+      return false;
     }
+  }
 
   /**
    * Gets origin x.
@@ -156,8 +156,8 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the origin x
    */
   public float getOriginX() {
-        return originX;
-    }
+    return originX;
+  }
 
   /**
    * Gets origin y.
@@ -165,8 +165,8 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the origin y
    */
   public float getOriginY() {
-        return originY;
-    }
+    return originY;
+  }
 
   /**
    * Gets width.
@@ -174,6 +174,6 @@ public class HexComponent implements Pool.Poolable, Component {
    * @return the width
    */
   public float getWidth() {
-        return width;
-    }
+    return width;
+  }
 }

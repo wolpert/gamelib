@@ -20,9 +20,9 @@ package com.codeheadsystems.gamelib.hex.manager;
 import static com.codeheadsystems.gamelib.core.util.LoggerHelper.logger;
 
 import com.badlogic.gdx.utils.Logger;
+import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import com.codeheadsystems.gamelib.hex.model.HexFieldConfiguration;
 import com.codeheadsystems.gamelib.hex.model.Orientation;
-import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -33,15 +33,15 @@ import javax.inject.Singleton;
 @Singleton
 public class HexFieldConfigurationManager extends PoolerImpl<HexFieldConfiguration> {
 
-    private static final Logger LOGGER = logger(HexFieldConfigurationManager.class);
+  private static final Logger LOGGER = logger(HexFieldConfigurationManager.class);
 
   /**
    * Instantiates a new Hex field configuration manager.
    */
   @Inject
-    public HexFieldConfigurationManager() {
-        super(HexFieldConfiguration::new);
-    }
+  public HexFieldConfigurationManager() {
+    super(HexFieldConfiguration::new);
+  }
 
   /**
    * Standardize way to create a hex field that must fit in the width/height.
@@ -53,22 +53,22 @@ public class HexFieldConfigurationManager extends PoolerImpl<HexFieldConfigurati
    * @return hex field configuration
    */
   public HexFieldConfiguration generate(final int rows,
-                                          final int cols,
-                                          final float width,
-                                          final float height) {
-        final float maxHexHeight = height / rows;
-        final float maxHexWidth = width / cols;
-        final float hexSize = Math.min(maxHexHeight, maxHexWidth)/2;
-        LOGGER.info("Hex Size: " + hexSize);
-        return obtain()
-                .setCols(cols)
-                .setRows(rows)
-                .setOrientation(Orientation.flat)
-                .setOriginX(hexSize)
-                .setOriginY(hexSize)
-                .setSizeX(hexSize)
-                .setSizeY(hexSize);
-    }
+                                        final int cols,
+                                        final float width,
+                                        final float height) {
+    final float maxHexHeight = height / rows;
+    final float maxHexWidth = width / cols;
+    final float hexSize = Math.min(maxHexHeight, maxHexWidth) / 2;
+    LOGGER.info("Hex Size: " + hexSize);
+    return obtain()
+        .setCols(cols)
+        .setRows(rows)
+        .setOrientation(Orientation.flat)
+        .setOriginX(hexSize)
+        .setOriginY(hexSize)
+        .setSizeX(hexSize)
+        .setSizeY(hexSize);
+  }
 
   /**
    * With.
@@ -80,13 +80,13 @@ public class HexFieldConfigurationManager extends PoolerImpl<HexFieldConfigurati
    * @param consumer the consumer
    */
   public void with(final int rows,
-                     final int cols,
-                     final float width,
-                     final float height,
-                     Consumer<HexFieldConfiguration> consumer){
-        final HexFieldConfiguration configuration = generate(rows, cols, width, height);
-        consumer.accept(configuration);
-        free(configuration);
-    }
+                   final int cols,
+                   final float width,
+                   final float height,
+                   Consumer<HexFieldConfiguration> consumer) {
+    final HexFieldConfiguration configuration = generate(rows, cols, width, height);
+    consumer.accept(configuration);
+    free(configuration);
+  }
 
 }

@@ -28,17 +28,17 @@ import java.util.Objects;
 public class HexField implements Pool.Poolable {
 
 
-    private HexFieldLayout hexFieldLayout;
-    private Map<Hex, Entity> hexEntityHashMap;
+  private HexFieldLayout hexFieldLayout;
+  private Map<Hex, Entity> hexEntityHashMap;
 
-    @Override
-    public void reset() {
-        hexFieldLayout = null;
-        if (hexEntityHashMap != null) {
-            hexEntityHashMap.clear();
-            hexEntityHashMap = null;
-        }
+  @Override
+  public void reset() {
+    hexFieldLayout = null;
+    if (hexEntityHashMap != null) {
+      hexEntityHashMap.clear();
+      hexEntityHashMap = null;
     }
+  }
 
   /**
    * Hex entity hash map map.
@@ -46,8 +46,8 @@ public class HexField implements Pool.Poolable {
    * @return the map
    */
   public Map<Hex, Entity> hexEntityHashMap() {
-        return this.hexEntityHashMap;
-    }
+    return this.hexEntityHashMap;
+  }
 
   /**
    * Sets hex entity hash map.
@@ -56,9 +56,9 @@ public class HexField implements Pool.Poolable {
    * @return the hex entity hash map
    */
   public HexField setHexEntityHashMap(final Map<Hex, Entity> hexEntityHashMap) {
-        this.hexEntityHashMap = hexEntityHashMap;
-        return this;
-    }
+    this.hexEntityHashMap = hexEntityHashMap;
+    return this;
+  }
 
   /**
    * Gets hex field layout.
@@ -66,8 +66,8 @@ public class HexField implements Pool.Poolable {
    * @return the hex field layout
    */
   public HexFieldLayout getHexFieldLayout() {
-        return hexFieldLayout;
-    }
+    return hexFieldLayout;
+  }
 
   /**
    * Sets hex field layout.
@@ -76,18 +76,20 @@ public class HexField implements Pool.Poolable {
    * @return the hex field layout
    */
   public HexField setHexFieldLayout(final HexFieldLayout hexFieldLayout) {
-        this.hexFieldLayout = hexFieldLayout;
-        return this;
-    }
+    this.hexFieldLayout = hexFieldLayout;
+    return this;
+  }
 
-    @Override public boolean equals(final Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        final HexField hexField = (HexField) o;
-        return Objects.equals(hexFieldLayout, hexField.hexFieldLayout) && Objects.equals(hexEntityHashMap, hexField.hexEntityHashMap);
-    }
+  @Override
+  public boolean equals(final Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    final HexField hexField = (HexField) o;
+    return Objects.equals(hexFieldLayout, hexField.hexFieldLayout) && Objects.equals(hexEntityHashMap, hexField.hexEntityHashMap);
+  }
 
-    @Override public int hashCode() {
-        return Objects.hash(hexFieldLayout, hexEntityHashMap);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(hexFieldLayout, hexEntityHashMap);
+  }
 }

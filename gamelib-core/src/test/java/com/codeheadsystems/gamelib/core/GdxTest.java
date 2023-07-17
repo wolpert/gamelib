@@ -17,7 +17,11 @@
 
 package com.codeheadsystems.gamelib.core;
 
-import com.badlogic.gdx.*;
+import com.badlogic.gdx.Application;
+import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Files;
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Graphics;
 import com.badlogic.gdx.backends.headless.HeadlessApplication;
 import com.badlogic.gdx.backends.headless.HeadlessApplicationConfiguration;
 import com.badlogic.gdx.graphics.GL20;
@@ -39,27 +43,33 @@ public class GdxTest {
   static void setupGdxHeadless() {
     HeadlessApplicationConfiguration conf = new HeadlessApplicationConfiguration();
     new HeadlessApplication(new ApplicationAdapter() {
-      @Override public void create() {
+      @Override
+      public void create() {
         super.create();
       }
 
-      @Override public void resize(int width, int height) {
+      @Override
+      public void resize(int width, int height) {
         super.resize(width, height);
       }
 
-      @Override public void render() {
+      @Override
+      public void render() {
         super.render();
       }
 
-      @Override public void pause() {
+      @Override
+      public void pause() {
         super.pause();
       }
 
-      @Override public void resume() {
+      @Override
+      public void resume() {
         super.resume();
       }
 
-      @Override public void dispose() {
+      @Override
+      public void dispose() {
         super.dispose();
       }
     }, conf);

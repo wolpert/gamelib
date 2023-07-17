@@ -70,5 +70,6 @@ public class DirectionComponent implements Pool.Poolable, Component {
     /**
      * North direction.
      */
-    NORTH}
+    NORTH
+  }
 }

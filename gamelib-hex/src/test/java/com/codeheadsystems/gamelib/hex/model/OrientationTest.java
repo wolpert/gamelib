@@ -24,41 +24,41 @@ import org.junit.jupiter.api.Test;
 
 class OrientationTest {
 
-    private Orientation orientation;
+  private Orientation orientation;
 
-    @BeforeEach
-    void setup() {
-        orientation = Orientation.of(0, 1, 2, 3, 4, 5, 6, 7, 8);
-    }
+  @BeforeEach
+  void setup() {
+    orientation = Orientation.of(0, 1, 2, 3, 4, 5, 6, 7, 8);
+  }
 
-    @Test
-    void testHashCode() {
-        assertThat(orientation.hashCode())
-                .isEqualTo(357134623);
-    }
+  @Test
+  void testHashCode() {
+    assertThat(orientation.hashCode())
+        .isEqualTo(357134623);
+  }
 
-    @Test
-    void testReset() {
-        orientation.reset();
-        assertThat(orientation.hashCode())
-                .isEqualTo(-196513505);
-    }
+  @Test
+  void testReset() {
+    orientation.reset();
+    assertThat(orientation.hashCode())
+        .isEqualTo(-196513505);
+  }
 
-    @Test
-    void equals() {
-        assertThat(orientation.equals(null)).isFalse();
-        assertThat(orientation.equals(Orientation.class)).isFalse();
-        assertThat(orientation.equals(orientation)).isTrue();
-        assertThat(new Orientation().equals(new Orientation())).isTrue();
-        assertThat(new Orientation().equals(new Orientation().setF0(1))).isFalse();
-        assertThat(new Orientation().equals(new Orientation().setF1(1))).isFalse();
-        assertThat(new Orientation().equals(new Orientation().setF2(1))).isFalse();
-        assertThat(new Orientation().equals(new Orientation().setF3(1))).isFalse();
-        assertThat(new Orientation().equals(new Orientation().setB0(1))).isFalse();
-        assertThat(new Orientation().equals(new Orientation().setB1(1))).isFalse();
-        assertThat(new Orientation().equals(new Orientation().setB2(1))).isFalse();
-        assertThat(new Orientation().equals(new Orientation().setB3(1))).isFalse();
-        assertThat(new Orientation().equals(new Orientation().setStartAngle(1))).isFalse();
-    }
+  @Test
+  void equals() {
+    assertThat(orientation.equals(null)).isFalse();
+    assertThat(orientation.equals(Orientation.class)).isFalse();
+    assertThat(orientation.equals(orientation)).isTrue();
+    assertThat(new Orientation().equals(new Orientation())).isTrue();
+    assertThat(new Orientation().equals(new Orientation().setF0(1))).isFalse();
+    assertThat(new Orientation().equals(new Orientation().setF1(1))).isFalse();
+    assertThat(new Orientation().equals(new Orientation().setF2(1))).isFalse();
+    assertThat(new Orientation().equals(new Orientation().setF3(1))).isFalse();
+    assertThat(new Orientation().equals(new Orientation().setB0(1))).isFalse();
+    assertThat(new Orientation().equals(new Orientation().setB1(1))).isFalse();
+    assertThat(new Orientation().equals(new Orientation().setB2(1))).isFalse();
+    assertThat(new Orientation().equals(new Orientation().setB3(1))).isFalse();
+    assertThat(new Orientation().equals(new Orientation().setStartAngle(1))).isFalse();
+  }
 
 }

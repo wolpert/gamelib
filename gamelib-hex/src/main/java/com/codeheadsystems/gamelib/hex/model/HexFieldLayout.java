@@ -25,9 +25,9 @@ import java.util.Objects;
  */
 public class HexFieldLayout implements Pool.Poolable {
 
-    private int rows;
-    private int cols;
-    private Layout layout;
+  private int rows;
+  private int cols;
+  private Layout layout;
 
   /**
    * Rows int.
@@ -35,8 +35,8 @@ public class HexFieldLayout implements Pool.Poolable {
    * @return the int
    */
   public int rows() {
-        return rows;
-    }
+    return rows;
+  }
 
   /**
    * Cols int.
@@ -44,8 +44,8 @@ public class HexFieldLayout implements Pool.Poolable {
    * @return the int
    */
   public int cols() {
-        return cols;
-    }
+    return cols;
+  }
 
   /**
    * Layout layout.
@@ -53,8 +53,8 @@ public class HexFieldLayout implements Pool.Poolable {
    * @return the layout
    */
   public Layout layout() {
-        return layout;
-    }
+    return layout;
+  }
 
   /**
    * Sets rows.
@@ -63,9 +63,9 @@ public class HexFieldLayout implements Pool.Poolable {
    * @return the rows
    */
   public HexFieldLayout setRows(int rows) {
-        this.rows = rows;
-        return this;
-    }
+    this.rows = rows;
+    return this;
+  }
 
   /**
    * Sets cols.
@@ -74,9 +74,9 @@ public class HexFieldLayout implements Pool.Poolable {
    * @return the cols
    */
   public HexFieldLayout setCols(int cols) {
-        this.cols = cols;
-        return this;
-    }
+    this.cols = cols;
+    return this;
+  }
 
   /**
    * Sets layout.
@@ -85,27 +85,27 @@ public class HexFieldLayout implements Pool.Poolable {
    * @return the layout
    */
   public HexFieldLayout setLayout(Layout layout) {
-        this.layout = layout;
-        return this;
-    }
+    this.layout = layout;
+    return this;
+  }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        HexFieldLayout that = (HexFieldLayout) o;
-        return rows == that.rows && cols == that.cols && layout.equals(that.layout);
-    }
+  @Override
+  public boolean equals(Object o) {
+    if (this == o) return true;
+    if (o == null || getClass() != o.getClass()) return false;
+    HexFieldLayout that = (HexFieldLayout) o;
+    return rows == that.rows && cols == that.cols && layout.equals(that.layout);
+  }
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(rows, cols, layout);
-    }
+  @Override
+  public int hashCode() {
+    return Objects.hash(rows, cols, layout);
+  }
 
-    @Override
-    public void reset() {
-        rows = 0;
-        cols = 0;
-        layout = null;
-    }
+  @Override
+  public void reset() {
+    rows = 0;
+    cols = 0;
+    layout = null;
+  }
 }

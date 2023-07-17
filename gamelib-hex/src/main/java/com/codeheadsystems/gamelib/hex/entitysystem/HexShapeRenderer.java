@@ -36,9 +36,9 @@ import javax.inject.Singleton;
 @Singleton
 public class HexShapeRenderer extends IteratingSystem {
 
-    private static final Logger LOGGER = logger(HexShapeRenderer.class);
-    private final ComponentMapper<HexComponent> hm = ComponentMapper.getFor(HexComponent.class);
-    private final ShapeRenderer shapeRenderer;
+  private static final Logger LOGGER = logger(HexShapeRenderer.class);
+  private final ComponentMapper<HexComponent> hm = ComponentMapper.getFor(HexComponent.class);
+  private final ShapeRenderer shapeRenderer;
 
   /**
    * Instantiates a new Hex shape renderer.
@@ -46,23 +46,24 @@ public class HexShapeRenderer extends IteratingSystem {
    * @param shapeRenderer the shape renderer
    */
   @Inject
-    public HexShapeRenderer(final ShapeRenderer shapeRenderer) {
-        super(Family.all(HexComponent.class).get(), Priorities.BACKGROUND_LAYER1.priority());
-        this.shapeRenderer = shapeRenderer;
-        LOGGER.debug("HexShapeRenderer()");
-    }
+  public HexShapeRenderer(final ShapeRenderer shapeRenderer) {
+    super(Family.all(HexComponent.class).get(), Priorities.BACKGROUND_LAYER1.priority());
+    this.shapeRenderer = shapeRenderer;
+    LOGGER.debug("HexShapeRenderer()");
+  }
 
-    @Override
-    public void update(float deltaTime) {
-        beforeIteration(deltaTime);
-        super.update(deltaTime);
-        afterIteration(deltaTime);
-    }
+  @Override
+  public void update(float deltaTime) {
+    beforeIteration(deltaTime);
+    super.update(deltaTime);
+    afterIteration(deltaTime);
+  }
 
-    @Override protected void processEntity(final Entity entity,
-                                           final float deltaTime) {
-        shapeRenderer.polygon(hm.get(entity).vertices());
-    }
+  @Override
+  protected void processEntity(final Entity entity,
+                               final float deltaTime) {
+    shapeRenderer.polygon(hm.get(entity).vertices());
+  }
 
   /**
    * Override this if you need something to execute before the start of the
@@ -71,8 +72,8 @@ public class HexShapeRenderer extends IteratingSystem {
    * @param deltaTime time since last execution.
    */
   public void beforeIteration(final float deltaTime) {
-        shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
-    }
+    shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
+  }
 
   /**
    * Override this if you want to handle the end of the entity.
@@ -80,6 +81,6 @@ public class HexShapeRenderer extends IteratingSystem {
    * @param deltaTime time since last execution.
    */
   public void afterIteration(final float deltaTime) {
-        shapeRenderer.end();
-    }
+    shapeRenderer.end();
+  }
 }

@@ -33,8 +33,8 @@ import javax.inject.Singleton;
 @Singleton
 public class EngineManager {
 
-    private final Set<EntitySystem> entitySystems = new HashSet<>();
-    private final PooledEngine pooledEngine;
+  private final Set<EntitySystem> entitySystems = new HashSet<>();
+  private final PooledEngine pooledEngine;
 
   /**
    * Instantiates a new Engine manager.
@@ -44,20 +44,20 @@ public class EngineManager {
    * @param pooledEngine  the pooled engine
    */
   @Inject
-    public EngineManager(final Set<Entity> entities,
-                         final Set<EntitySystem> entitySystems,
-                         final PooledEngine pooledEngine) {
-        this.entitySystems.addAll(entitySystems);
-        this.pooledEngine = pooledEngine;
-        for (Entity entity : entities) {
-            Gdx.app.log("PoolEngineManager", "AddEntity: " + entity + ":" + entity.getComponents());
-            pooledEngine.addEntity(entity);
-        }
-        for (EntitySystem entitySystem : entitySystems) {
-            Gdx.app.log("PoolEngineManager", "AddSystem: " + entitySystem);
-            pooledEngine.addSystem(entitySystem);
-        }
+  public EngineManager(final Set<Entity> entities,
+                       final Set<EntitySystem> entitySystems,
+                       final PooledEngine pooledEngine) {
+    this.entitySystems.addAll(entitySystems);
+    this.pooledEngine = pooledEngine;
+    for (Entity entity : entities) {
+      Gdx.app.log("PoolEngineManager", "AddEntity: " + entity + ":" + entity.getComponents());
+      pooledEngine.addEntity(entity);
     }
+    for (EntitySystem entitySystem : entitySystems) {
+      Gdx.app.log("PoolEngineManager", "AddSystem: " + entitySystem);
+      pooledEngine.addSystem(entitySystem);
+    }
+  }
 
   /**
    * Create entity entity.
@@ -65,8 +65,8 @@ public class EngineManager {
    * @return the entity
    */
   public Entity createEntity() {
-        return pooledEngine.createEntity();
-    }
+    return pooledEngine.createEntity();
+  }
 
   /**
    * Create component t.
@@ -76,8 +76,8 @@ public class EngineManager {
    * @return the t
    */
   public <T extends Component> T createComponent(Class<T> componentType) {
-        return pooledEngine.createComponent(componentType);
-    }
+    return pooledEngine.createComponent(componentType);
+  }
 
   /**
    * Engine pooled engine.
@@ -85,8 +85,8 @@ public class EngineManager {
    * @return the pooled engine
    */
   public PooledEngine engine() {
-        return pooledEngine;
-    }
+    return pooledEngine;
+  }
 
   /**
    * Add system.
@@ -94,9 +94,9 @@ public class EngineManager {
    * @param system the system
    */
   public void addSystem(EntitySystem system) {
-        pooledEngine.addSystem(system);
-        entitySystems.add(system);
-    }
+    pooledEngine.addSystem(system);
+    entitySystems.add(system);
+  }
 
   /**
    * Remove system.
@@ -104,9 +104,9 @@ public class EngineManager {
    * @param system the system
    */
   public void removeSystem(EntitySystem system) {
-        pooledEngine.addSystem(system);
-        entitySystems.remove(system);
-    }
+    pooledEngine.addSystem(system);
+    entitySystems.remove(system);
+  }
 
   /**
    * Add entity.
@@ -114,8 +114,8 @@ public class EngineManager {
    * @param entity the entity
    */
   public void addEntity(Entity entity) {
-        pooledEngine.addEntity(entity);
-    }
+    pooledEngine.addEntity(entity);
+  }
 
   /**
    * Remove entity.
@@ -123,9 +123,9 @@ public class EngineManager {
    * @param entity the entity
    */
   public void removeEntity(Entity entity) {
-        entity.removeAll();
-        pooledEngine.removeEntity(entity);
-    }
+    entity.removeAll();
+    pooledEngine.removeEntity(entity);
+  }
 
   /**
    * Update.
@@ -133,21 +133,21 @@ public class EngineManager {
    * @param delta the delta
    */
   public void update(float delta) {
-        pooledEngine.update(delta);
-    }
+    pooledEngine.update(delta);
+  }
 
   /**
    * Destroy.
    */
   public void destroy() {
-        pooledEngine.removeAllEntities();
-        for (EntitySystem entitySystem : entitySystems) {
-            Gdx.app.log("PoolEngineManager", "removeSystem: " + entitySystem);
-            pooledEngine.removeSystem(entitySystem);
-        }
-        pooledEngine.removeAllSystems();
-        entitySystems.clear();
+    pooledEngine.removeAllEntities();
+    for (EntitySystem entitySystem : entitySystems) {
+      Gdx.app.log("PoolEngineManager", "removeSystem: " + entitySystem);
+      pooledEngine.removeSystem(entitySystem);
     }
+    pooledEngine.removeAllSystems();
+    entitySystems.clear();
+  }
 
   /**
    * Gets entity systems.
@@ -155,13 +155,13 @@ public class EngineManager {
    * @return the entity systems
    */
   public Set<EntitySystem> getEntitySystems() {
-        return entitySystems;
-    }
+    return entitySystems;
+  }
 
   /**
    * Clear.
    */
   public void clear() {
-      pooledEngine.removeAllEntities();
-    }
+    pooledEngine.removeAllEntities();
+  }
 }

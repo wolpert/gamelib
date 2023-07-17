@@ -27,8 +27,8 @@ import java.util.function.Supplier;
  */
 public class SupplierHolder<T> {
 
-    private final Supplier<T> supplier;
-    private T object;
+  private final Supplier<T> supplier;
+  private T object;
 
   /**
    * Instantiates a new Supplier holder.
@@ -37,9 +37,9 @@ public class SupplierHolder<T> {
    * @param supplier the supplier
    */
   public SupplierHolder(final T object, final Supplier<T> supplier) {
-        this.object = object;
-        this.supplier = supplier;
-    }
+    this.object = object;
+    this.supplier = supplier;
+  }
 
   /**
    * With supplier holder.
@@ -49,8 +49,8 @@ public class SupplierHolder<T> {
    * @return the supplier holder
    */
   public static <T> SupplierHolder<T> with(final Supplier<T> supplier) {
-        return new SupplierHolder<>(null, supplier);
-    }
+    return new SupplierHolder<>(null, supplier);
+  }
 
   /**
    * Get t.
@@ -58,11 +58,11 @@ public class SupplierHolder<T> {
    * @return the t
    */
   public synchronized T get() {
-        if (object == null) {
-            object = supplier.get();
-        }
-        return object;
+    if (object == null) {
+      object = supplier.get();
     }
+    return object;
+  }
 
   /**
    * Set.
@@ -70,6 +70,6 @@ public class SupplierHolder<T> {
    * @param t the t
    */
   public synchronized void set(final T t) {
-        object = t;
-    }
+    object = t;
+  }
 }

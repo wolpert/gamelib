@@ -36,10 +36,10 @@ import javax.inject.Singleton;
 @Singleton
 public class HexComponentManager {
 
-    private static final Logger LOGGER = logger(HexComponentManager.class);
-    private final Pooler<HexComponent> pool;
-    private final HexManager hexManager;
-    private final LayoutManager layoutManager;
+  private static final Logger LOGGER = logger(HexComponentManager.class);
+  private final Pooler<HexComponent> pool;
+  private final HexManager hexManager;
+  private final LayoutManager layoutManager;
 
   /**
    * Instantiates a new Hex component manager.
@@ -48,13 +48,13 @@ public class HexComponentManager {
    * @param layoutManager the layout manager
    */
   @Inject
-    public HexComponentManager(final HexManager hexManager,
-                               final LayoutManager layoutManager) {
-        this.hexManager = hexManager;
-        this.layoutManager = layoutManager;
-        pool = Pooler.of(HexComponent::new);
-        LOGGER.debug("HexComponentManager()");
-    }
+  public HexComponentManager(final HexManager hexManager,
+                             final LayoutManager layoutManager) {
+    this.hexManager = hexManager;
+    this.layoutManager = layoutManager;
+    pool = Pooler.of(HexComponent::new);
+    LOGGER.debug("HexComponentManager()");
+  }
 
   /**
    * Generate set.
@@ -63,8 +63,8 @@ public class HexComponentManager {
    * @return the set
    */
   public Set<HexComponent> generate(final HexFieldLayout hexFieldLayout) {
-        return generate(hexFieldLayout.cols(), hexFieldLayout.rows(), hexFieldLayout.layout());
-    }
+    return generate(hexFieldLayout.cols(), hexFieldLayout.rows(), hexFieldLayout.layout());
+  }
 
   /**
    * Generate set.
@@ -75,11 +75,11 @@ public class HexComponentManager {
    * @return the set
    */
   public Set<HexComponent> generate(final int cols, final int rows, final Layout layout) {
-        return hexManager.generate(cols, rows)
-                .stream()
-                .map(h -> pool.obtain().initialize(h, layout, layoutManager))
-                .collect(Collectors.toSet());
-    }
+    return hexManager.generate(cols, rows)
+        .stream()
+        .map(h -> pool.obtain().initialize(h, layout, layoutManager))
+        .collect(Collectors.toSet());
+  }
 
   /**
    * Release.
@@ -87,8 +87,8 @@ public class HexComponentManager {
    * @param field the field
    */
   public void release(final Set<HexComponent> field) {
-        field.forEach(this::release);
-    }
+    field.forEach(this::release);
+  }
 
   /**
    * Release.
@@ -96,9 +96,9 @@ public class HexComponentManager {
    * @param component the component
    */
   public void release(final HexComponent component) {
-        hexManager.free(component.hex());
-        pool.free(component);
-    }
+    hexManager.free(component.hex());
+    pool.free(component);
+  }
 
   /**
    * Pool size int.
@@ -106,7 +106,7 @@ public class HexComponentManager {
    * @return the int
    */
   public int poolSize() {
-        return pool.poolSize();
-    }
+    return pool.poolSize();
+  }
 
 }

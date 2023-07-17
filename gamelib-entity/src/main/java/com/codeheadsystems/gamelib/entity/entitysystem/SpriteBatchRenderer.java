@@ -36,9 +36,9 @@ import javax.inject.Singleton;
 @Singleton
 public class SpriteBatchRenderer extends WrapperSortedIteratingSystem {
 
-    private static final Logger LOGGER = logger(SpriteBatchRenderer.class);
-    private final ComponentMapper<SpriteComponent> sm = ComponentMapper.getFor(SpriteComponent.class);
-    private final SpriteBatch spriteBatch;
+  private static final Logger LOGGER = logger(SpriteBatchRenderer.class);
+  private final ComponentMapper<SpriteComponent> sm = ComponentMapper.getFor(SpriteComponent.class);
+  private final SpriteBatch spriteBatch;
 
   /**
    * Instantiates a new Sprite batch renderer.
@@ -47,39 +47,39 @@ public class SpriteBatchRenderer extends WrapperSortedIteratingSystem {
    * @param sortComparator the sort comparator
    */
   @Inject
-    public SpriteBatchRenderer(final SpriteBatch spriteBatch,
-                               final SortComparator sortComparator) {
-        super(
-            Family.all(SpriteComponent.class, SortComponent.class).get(),
-            sortComparator,
-            Priorities.SPRITES.priority()); // run after everything else
-        this.spriteBatch = spriteBatch;
-    }
+  public SpriteBatchRenderer(final SpriteBatch spriteBatch,
+                             final SortComparator sortComparator) {
+    super(
+        Family.all(SpriteComponent.class, SortComponent.class).get(),
+        sortComparator,
+        Priorities.SPRITES.priority()); // run after everything else
+    this.spriteBatch = spriteBatch;
+  }
 
-    @Override
-    public void beforeIteration(float deltaTime) {
-        spriteBatch.begin();
-    }
+  @Override
+  public void beforeIteration(float deltaTime) {
+    spriteBatch.begin();
+  }
 
-    @Override
-    public void processEntity(Entity entity, float deltaTime) {
-        sm.get(entity).getSprite().draw(spriteBatch);
-    }
+  @Override
+  public void processEntity(Entity entity, float deltaTime) {
+    sm.get(entity).getSprite().draw(spriteBatch);
+  }
 
-    @Override
-    public void afterIteration(float deltaTime) {
-        spriteBatch.end();
-    }
+  @Override
+  public void afterIteration(float deltaTime) {
+    spriteBatch.end();
+  }
 
-    @Override
-    public void addedToEngine(final Engine engine) {
-        LOGGER.info("Added engine: " + engine);
-        super.addedToEngine(engine);
-    }
+  @Override
+  public void addedToEngine(final Engine engine) {
+    LOGGER.info("Added engine: " + engine);
+    super.addedToEngine(engine);
+  }
 
-    @Override
-    public void entityAdded(final Entity entity) {
-        LOGGER.info("Added entity: " + entity);
-        super.entityAdded(entity);
-    }
+  @Override
+  public void entityAdded(final Entity entity) {
+    LOGGER.info("Added entity: " + entity);
+    super.entityAdded(entity);
+  }
 }

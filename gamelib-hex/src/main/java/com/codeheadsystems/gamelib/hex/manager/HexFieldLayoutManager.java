@@ -20,9 +20,9 @@ package com.codeheadsystems.gamelib.hex.manager;
 import static com.codeheadsystems.gamelib.core.util.LoggerHelper.logger;
 
 import com.badlogic.gdx.utils.Logger;
+import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import com.codeheadsystems.gamelib.hex.model.HexFieldConfiguration;
 import com.codeheadsystems.gamelib.hex.model.HexFieldLayout;
-import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -32,8 +32,8 @@ import javax.inject.Singleton;
 @Singleton
 public class HexFieldLayoutManager extends PoolerImpl<HexFieldLayout> {
 
-    private static final Logger LOGGER = logger(HexFieldLayoutManager.class);
-    private final LayoutManager layoutManager;
+  private static final Logger LOGGER = logger(HexFieldLayoutManager.class);
+  private final LayoutManager layoutManager;
 
   /**
    * Instantiates a new Hex field layout manager.
@@ -41,11 +41,11 @@ public class HexFieldLayoutManager extends PoolerImpl<HexFieldLayout> {
    * @param layoutManager the layout manager
    */
   @Inject
-    public HexFieldLayoutManager(final LayoutManager layoutManager) {
-        super(HexFieldLayout::new);
-        this.layoutManager = layoutManager;
-        LOGGER.debug("HexFieldLayoutManager()");
-    }
+  public HexFieldLayoutManager(final LayoutManager layoutManager) {
+    super(HexFieldLayout::new);
+    this.layoutManager = layoutManager;
+    LOGGER.debug("HexFieldLayoutManager()");
+  }
 
   /**
    * Obtain hex field layout.
@@ -54,14 +54,15 @@ public class HexFieldLayoutManager extends PoolerImpl<HexFieldLayout> {
    * @return the hex field layout
    */
   public HexFieldLayout obtain(final HexFieldConfiguration configuration) {
-        return obtain()
-            .setLayout(layoutManager.generate(configuration))
-            .setCols(configuration.getCols())
-            .setRows(configuration.getRows());
-    }
+    return obtain()
+        .setLayout(layoutManager.generate(configuration))
+        .setCols(configuration.getCols())
+        .setRows(configuration.getRows());
+  }
 
-    @Override public void free(final HexFieldLayout tInstance) {
-        layoutManager.free(tInstance.layout());
-        super.free(tInstance);
-    }
+  @Override
+  public void free(final HexFieldLayout tInstance) {
+    layoutManager.free(tInstance.layout());
+    super.free(tInstance);
+  }
 }
