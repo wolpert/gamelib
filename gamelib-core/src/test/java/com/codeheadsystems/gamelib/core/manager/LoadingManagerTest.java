@@ -96,6 +96,7 @@ public class LoadingManagerTest extends GdxTest {
   }
 
   @Test
+  @SuppressWarnings("unchecked")
   void update_asset_loaders() {
     loadingManager.setCurrentStage(LoadingManager.Stages.ASSET_LOADERS);
     loadingManager.setAssets(assets);

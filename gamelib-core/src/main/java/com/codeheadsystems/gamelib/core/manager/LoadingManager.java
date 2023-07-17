@@ -77,17 +77,19 @@ public class LoadingManager {
   public boolean update() {
     LOGGER.info("Update() : " + currentStage);
     switch (currentStage) {
-      case INIT:
+      case INIT -> {
         setAssets(jsonManager.fromJson(Assets.class, fileHandleResolver.resolve(loadingConfiguration.getAssetsFilename())));
         setCurrentStage(Stages.ASSET_LOADERS);
         return false;
-      case ASSET_LOADERS:
+      }
+      case ASSET_LOADERS -> {
         setCurrentStage(Stages.QUEUE_ASSETS);
         assetManager.setLoader(TiledMap.class, ".tmx", new TmxMapLoader(fileHandleResolver));
         // Loop through the loaders.
         assets.loaders().forEach(this::buildLoader);
         return false;
-      case QUEUE_ASSETS:
+      }
+      case QUEUE_ASSETS -> {
         for (Map.Entry<String, ArrayList<String>> entry : assets.getAssetsToLoad().entrySet()) {
           final String clazzName = entry.getKey();
           LOGGER.info("Processing: " + clazzName);
@@ -103,14 +105,16 @@ public class LoadingManager {
         }
         setCurrentStage(Stages.LOAD_ASSETS);
         return false;
-      case LOAD_ASSETS:
+      }
+      case LOAD_ASSETS -> {
         if (assetManager.update()) {
           setCurrentStage(Stages.DONE);
         }
         return false;
-      case DONE:
-      default:
+      }
+      default -> {
         return true;
+      }
     }
   }
 
@@ -137,6 +141,7 @@ public class LoadingManager {
    * @return the class.
    * @throws ClassNotFoundException Which could also be due to the type not matching.
    */
+  @SuppressWarnings("unchecked")
   private <T> Class<T> getParemeterizedClass(final String classToLoad) throws ClassNotFoundException {
     return (Class<T>) Class.forName(classToLoad);
   }
@@ -147,19 +152,13 @@ public class LoadingManager {
    * @return progress bar.
    */
   public float getProgress() {
-    switch (currentStage) {
-      case INIT:
-        return 0f;
-      case ASSET_LOADERS:
-        return 0.1f;
-      case QUEUE_ASSETS:
-        return 0.2f;
-      case LOAD_ASSETS:
-        return 0.3f + (0.7f * assetManager.getProgress());
-      case DONE:
-      default:
-        return 1f;
-    }
+    return switch (currentStage) {
+      case INIT -> 0f;
+      case ASSET_LOADERS -> 0.1f;
+      case QUEUE_ASSETS -> 0.2f;
+      case LOAD_ASSETS -> 0.3f + (0.7f * assetManager.getProgress());
+      default -> 1f;
+    };
   }
 
   /**
