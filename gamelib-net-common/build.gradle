@@ -34,22 +34,8 @@ dependencies {
     // Immutables
     implementation(libs.immutables.value.annotations)
     annotationProcessor(libs.immutables.value)
-
-    testImplementation(libs.assertj.core)
-    testImplementation(libs.junit.jupiter.engine)
-    testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.junit.jupiter.params)
-    testImplementation(libs.mockito.junit.jupiter)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.gdx.backend.lwjgl3)
-    testImplementation(libs.gdx.backend.headless)
-    testImplementation(libs.commons.io)
-
-    testImplementation(libs.logback.classic)
-    testImplementation(libs.logback.core)
-    testImplementation("com.codeheadsystems:codehead-test:${codeheadTestVersion}")
-    testImplementation("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
 }
+
 publishing {
     publications {
         mavenJava(MavenPublication) {

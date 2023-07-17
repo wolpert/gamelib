@@ -41,18 +41,4 @@ dependencies {
 
     implementation(libs.logback.classic)
     implementation(libs.logback.core)
-
-    testImplementation(libs.assertj.core)
-    testImplementation(libs.junit.jupiter.engine)
-    testImplementation(libs.junit.jupiter.api)
-    testImplementation(libs.junit.jupiter.params)
-    testImplementation(libs.mockito.junit.jupiter)
-    testImplementation(libs.mockito.core)
-    testImplementation(libs.gdx.backend.lwjgl3)
-    testImplementation(libs.gdx.backend.headless)
-    testImplementation(libs.commons.io)
-    // Dagger
-    testImplementation libs.dagger // Common files for runtime
-    testAnnotationProcessor libs.dagger.compiler
-    testImplementation("com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop")
 }
