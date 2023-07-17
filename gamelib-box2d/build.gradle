@@ -15,14 +15,8 @@ base {
 dependencies {
     implementation project(":gamelib-core")
     implementation project(":gamelib-entity")
-    api libs.gdx
     api libs.ashley
     api libs.gdx.box2d
-
-    // Dagger
-    implementation libs.dagger
-    annotationProcessor libs.dagger.compiler
-
 }
 
 publishing {

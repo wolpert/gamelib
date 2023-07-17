@@ -14,14 +14,6 @@ base {
 
 //jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 
-dependencies {
-    api libs.gdx
-    api libs.gdx.backend.lwjgl3
-
-    // Dagger
-    implementation libs.dagger
-    annotationProcessor libs.dagger.compiler
-}
 publishing {
     publications {
         mavenJava(MavenPublication) {

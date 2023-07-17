@@ -52,6 +52,14 @@ allprojects {
         maven { url "https://oss.sonatype.org/content/repositories/releases/" }
         maven { url "https://s3-us-west-2.amazonaws.com/dynamodb-local/release/" }
     }
+    dependencies {
+        api libs.gdx
+        api libs.gdx.backend.lwjgl3
+
+        // Dagger
+        implementation libs.dagger
+        annotationProcessor libs.dagger.compiler
+    }
     test {
         finalizedBy jacocoTestReport
     }

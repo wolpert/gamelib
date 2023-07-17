@@ -17,12 +17,7 @@ jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 
 dependencies {
     implementation project(":gamelib-core")
-    api libs.gdx
     api libs.ashley
-
-    // Dagger
-    implementation libs.dagger // Common files for runtime
-    annotationProcessor libs.dagger.compiler
 }
 publishing {
     publications {

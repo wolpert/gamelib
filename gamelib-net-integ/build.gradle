@@ -18,8 +18,6 @@ dependencies {
     implementation project(':gamelib-net-common')
     implementation project(':gamelib-net-server')
     implementation project(':gamelib-net-client')
-    api libs.gdx
-    api libs.gdx.backend.lwjgl3
     api(libs.commons.io)
     implementation libs.netty.all
     implementation libs.bcprov
@@ -30,10 +28,6 @@ dependencies {
     implementation(libs.jackson.datatype.jdk8)
     implementation(libs.jackson.annotations)
     implementation(libs.jackson.databind)
-
-    // Dagger
-    implementation libs.dagger // Common files for runtime
-    annotationProcessor libs.dagger.compiler
 
     // Immutables
     implementation(libs.immutables.value.annotations)
