@@ -33,6 +33,11 @@ public class InternalPrefixedFileHandleResolver implements FileHandleResolver {
 
   private final String internalPath;
 
+  /**
+   * Instantiates a new Internal prefixed file handle resolver.
+   *
+   * @param internalPath the internal path
+   */
   public InternalPrefixedFileHandleResolver(final String internalPath) {
     if (internalPath == null) {
       this.internalPath = "";

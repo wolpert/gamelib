@@ -25,11 +25,18 @@ import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Vector 2 manager.
+ */
 @Singleton
 public class Vector2Manager extends PoolerImpl<Vector2> {
 
     private static final Logger LOGGER = logger(Vector2Manager.class);
-    @Inject
+
+  /**
+   * Instantiates a new Vector 2 manager.
+   */
+  @Inject
     public Vector2Manager() {
         super(Vector2::new);
         LOGGER.debug("Vector2Manager()");

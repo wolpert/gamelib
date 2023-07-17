@@ -30,6 +30,9 @@ import org.immutables.value.Value;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Value.Immutable
 public interface Notification extends TransferObject {
+  /**
+   * The constant TYPE.
+   */
   String TYPE = "note";
 
   @Value.Default

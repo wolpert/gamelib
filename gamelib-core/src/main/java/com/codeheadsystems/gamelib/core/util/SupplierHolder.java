@@ -22,28 +22,54 @@ import java.util.function.Supplier;
 /**
  * Purpose: This class has the option to hold an object or something that supplies is. Used for generating
  * components that could be held. Its allows for lazy loading.
+ *
+ * @param <T> the type parameter
  */
 public class SupplierHolder<T> {
 
     private final Supplier<T> supplier;
     private T object;
-    public SupplierHolder(final T object, final Supplier<T> supplier) {
+
+  /**
+   * Instantiates a new Supplier holder.
+   *
+   * @param object   the object
+   * @param supplier the supplier
+   */
+  public SupplierHolder(final T object, final Supplier<T> supplier) {
         this.object = object;
         this.supplier = supplier;
     }
 
-    public static <T> SupplierHolder<T> with(final Supplier<T> supplier) {
+  /**
+   * With supplier holder.
+   *
+   * @param <T>      the type parameter
+   * @param supplier the supplier
+   * @return the supplier holder
+   */
+  public static <T> SupplierHolder<T> with(final Supplier<T> supplier) {
         return new SupplierHolder<>(null, supplier);
     }
 
-    public synchronized T get() {
+  /**
+   * Get t.
+   *
+   * @return the t
+   */
+  public synchronized T get() {
         if (object == null) {
             object = supplier.get();
         }
         return object;
     }
 
-    public synchronized void set(final T t) {
+  /**
+   * Set.
+   *
+   * @param t the t
+   */
+  public synchronized void set(final T t) {
         object = t;
     }
 }

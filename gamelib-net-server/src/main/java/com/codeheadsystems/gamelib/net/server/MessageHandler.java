@@ -17,9 +17,18 @@
 
 package com.codeheadsystems.gamelib.net.server;
 
+/**
+ * The interface Message handler.
+ */
 @FunctionalInterface
 public interface MessageHandler {
 
+  /**
+   * Handle message.
+   *
+   * @param message the message
+   * @param client  the client
+   */
   void handleMessage(String message, NetClientHandler client);
 
 }

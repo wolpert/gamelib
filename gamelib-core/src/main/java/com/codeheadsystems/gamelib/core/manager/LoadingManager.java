@@ -48,7 +48,15 @@ public class LoadingManager {
     private Stages currentStage;
     private Assets assets;
 
-    @Inject
+  /**
+   * Instantiates a new Loading manager.
+   *
+   * @param assetManager         the asset manager
+   * @param fileHandleResolver   the file handle resolver
+   * @param loadingConfiguration the loading configuration
+   * @param jsonManager          the json manager
+   */
+  @Inject
     public LoadingManager(final AssetManager assetManager,
                           final FileHandleResolver fileHandleResolver,
                           final LoadingConfiguration loadingConfiguration,
@@ -61,12 +69,12 @@ public class LoadingManager {
         LOGGER.info("LoadingManager()");
     }
 
-    /**
-     * Returns false if no more updates are needed.
-     *
-     * @return boolean
-     */
-    public boolean update() {
+  /**
+   * Returns false if no more updates are needed.
+   *
+   * @return boolean boolean
+   */
+  public boolean update() {
         LOGGER.info("Update() : " + currentStage);
         switch (currentStage) {
             case INIT:
@@ -131,12 +139,12 @@ public class LoadingManager {
         return (Class<T>) Class.forName(classToLoad);
     }
 
-    /**
-     * Returns the current progress as float.
-     *
-     * @return progress bar.
-     */
-    public float getProgress() {
+  /**
+   * Returns the current progress as float.
+   *
+   * @return progress bar.
+   */
+  public float getProgress() {
         switch (currentStage) {
             case INIT:
                 return 0f;
@@ -152,36 +160,84 @@ public class LoadingManager {
         }
     }
 
-    public AssetManager assetManager() {
+  /**
+   * Asset manager asset manager.
+   *
+   * @return the asset manager
+   */
+  public AssetManager assetManager() {
         return this.assetManager;
     }
 
-    public Assets assets() {
+  /**
+   * Assets assets.
+   *
+   * @return the assets
+   */
+  public Assets assets() {
         return assets;
     }
 
-    public void setAssets(final Assets assets) {
+  /**
+   * Sets assets.
+   *
+   * @param assets the assets
+   */
+  public void setAssets(final Assets assets) {
         this.assets = assets;
     }
 
-    public String getStageTitle() {
+  /**
+   * Gets stage title.
+   *
+   * @return the stage title
+   */
+  public String getStageTitle() {
         return currentStage.title;
     }
 
-    Stages getCurrentStage() {
+  /**
+   * Gets current stage.
+   *
+   * @return the current stage
+   */
+  Stages getCurrentStage() {
         return currentStage;
     }
 
-    void setCurrentStage(final Stages currentStage) {
+  /**
+   * Sets current stage.
+   *
+   * @param currentStage the current stage
+   */
+  void setCurrentStage(final Stages currentStage) {
         this.currentStage = currentStage;
     }
 
-    enum Stages {
-        INIT("Initializing system"),
-        ASSET_LOADERS("Setting up asset loaders"),
-        QUEUE_ASSETS("Queueing assets"),
-        LOAD_ASSETS("Loading assets from system"),
-        DONE("Complete!");
+  /**
+   * The enum Stages.
+   */
+  enum Stages {
+    /**
+     * The Init.
+     */
+    INIT("Initializing system"),
+    /**
+     * The Asset loaders.
+     */
+    ASSET_LOADERS("Setting up asset loaders"),
+    /**
+     * The Queue assets.
+     */
+    QUEUE_ASSETS("Queueing assets"),
+    /**
+     * The Load assets.
+     */
+    LOAD_ASSETS("Loading assets from system"),
+    /**
+     * Done stages.
+     */
+    DONE("Complete!");
 
         private final String title;
 

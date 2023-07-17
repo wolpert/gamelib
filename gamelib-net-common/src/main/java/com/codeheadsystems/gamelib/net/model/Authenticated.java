@@ -31,6 +31,9 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface Authenticated extends TransferObject {
 
+  /**
+   * The constant TYPE.
+   */
   String TYPE = "auth";
 
   @Value.Default

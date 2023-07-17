@@ -24,9 +24,15 @@ import java.util.function.Supplier;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type World component builder.
+ */
 @Singleton
 public class WorldComponentBuilder {
 
+  /**
+   * Instantiates a new World component builder.
+   */
   @Inject
   public WorldComponentBuilder() {
 
@@ -35,6 +41,11 @@ public class WorldComponentBuilder {
   /**
    * Do this with the shape you want... makes sure to dispose of the shape properly.
    * Forces you to return a fixture from the shape, which we will dispose of.
+   *
+   * @param <T>             the type parameter
+   * @param shapeSupplier   the shape supplier
+   * @param fixtureFunction the fixture function
+   * @return the fixture
    */
   public <T extends Shape> Fixture doWithShape(final Supplier<T> shapeSupplier,
                                                final Function<T, Fixture> fixtureFunction) {

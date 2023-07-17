@@ -30,6 +30,9 @@ import java.util.concurrent.BlockingQueue;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The type Client handler.
+ */
 public class ClientHandler extends SimpleChannelInboundHandler<String> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(ClientHandler.class);
@@ -38,6 +41,13 @@ public class ClientHandler extends SimpleChannelInboundHandler<String> {
   private final ClientManager clientManager;
   private final JsonManager jsonManager;
 
+  /**
+   * Instantiates a new Client handler.
+   *
+   * @param queue         the queue
+   * @param clientManager the client manager
+   * @param jsonManager   the json manager
+   */
   @AssistedInject
   public ClientHandler(final BlockingQueue<String> queue,
                        final ClientManager clientManager,

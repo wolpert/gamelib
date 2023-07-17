@@ -17,16 +17,29 @@
 
 package com.codeheadsystems.gamelib.core.model;
 
+/**
+ * The type Loading configuration.
+ */
 public class LoadingConfiguration {
 
     private String assetsFilename;
     private String loadingImage;
 
-    public String getAssetsFilename() {
+  /**
+   * Gets assets filename.
+   *
+   * @return the assets filename
+   */
+  public String getAssetsFilename() {
         return assetsFilename;
     }
 
-    public String getLoadingImage() {
+  /**
+   * Gets loading image.
+   *
+   * @return the loading image
+   */
+  public String getLoadingImage() {
         return loadingImage;
     }
 }

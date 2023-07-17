@@ -31,6 +31,9 @@ import io.netty.handler.ssl.SslContext;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Initializer.
+ */
 @Singleton
 public class Initializer extends ChannelInitializer<SocketChannel> {
 
@@ -38,6 +41,13 @@ public class Initializer extends ChannelInitializer<SocketChannel> {
   private final ClientHandlerFactory clientHandlerFactory;
   private final NetClientConfiguration netClientConfiguration;
 
+  /**
+   * Instantiates a new Initializer.
+   *
+   * @param sslCtx                 the ssl ctx
+   * @param clientHandlerFactory   the client handler factory
+   * @param netClientConfiguration the net client configuration
+   */
   @Inject
   public Initializer(final SslContext sslCtx,
                      final ClientHandlerFactory clientHandlerFactory,

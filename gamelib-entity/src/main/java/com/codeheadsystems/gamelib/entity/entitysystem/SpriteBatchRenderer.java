@@ -40,7 +40,13 @@ public class SpriteBatchRenderer extends WrapperSortedIteratingSystem {
     private final ComponentMapper<SpriteComponent> sm = ComponentMapper.getFor(SpriteComponent.class);
     private final SpriteBatch spriteBatch;
 
-    @Inject
+  /**
+   * Instantiates a new Sprite batch renderer.
+   *
+   * @param spriteBatch    the sprite batch
+   * @param sortComparator the sort comparator
+   */
+  @Inject
     public SpriteBatchRenderer(final SpriteBatch spriteBatch,
                                final SortComparator sortComparator) {
         super(

@@ -31,31 +31,57 @@ import java.util.concurrent.LinkedBlockingQueue;
 import javax.inject.Singleton;
 import javax.net.ssl.SSLException;
 
+/**
+ * The type Net client module.
+ */
 @Module(includes = NetCommonModule.class)
 public class NetClientModule {
 
   private final NetClientConfiguration netClientConfiguration;
 
+  /**
+   * Instantiates a new Net client module.
+   */
   public NetClientModule() {
     this(ImmutableNetClientConfiguration.builder().build());
   }
 
+  /**
+   * Instantiates a new Net client module.
+   *
+   * @param netClientConfiguration the net client configuration
+   */
   public NetClientModule(final NetClientConfiguration netClientConfiguration) {
     this.netClientConfiguration = netClientConfiguration;
   }
 
+  /**
+   * Queue blocking queue.
+   *
+   * @return the blocking queue
+   */
   @Provides
   @Singleton
   public BlockingQueue<String> queue() {
     return new LinkedBlockingQueue<>();
   }
 
+  /**
+   * Net client configuration net client configuration.
+   *
+   * @return the net client configuration
+   */
   @Provides
   @Singleton
   public NetClientConfiguration netClientConfiguration() {
     return netClientConfiguration;
   }
 
+  /**
+   * Ssl context ssl context.
+   *
+   * @return the ssl context
+   */
   @Provides
   @Singleton
   public SslContext sslContext() {

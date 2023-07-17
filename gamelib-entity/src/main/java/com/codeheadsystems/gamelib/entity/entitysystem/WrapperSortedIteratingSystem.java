@@ -26,10 +26,23 @@ import java.util.Comparator;
  * Purpose: Work just like the SortedIteratingSystem, except we have the before/after methods.
  */
 abstract public class WrapperSortedIteratingSystem extends SortedIteratingSystem {
+  /**
+   * Instantiates a new Wrapper sorted iterating system.
+   *
+   * @param family     the family
+   * @param comparator the comparator
+   */
   public WrapperSortedIteratingSystem(Family family, Comparator<Entity> comparator) {
     super(family, comparator);
   }
 
+  /**
+   * Instantiates a new Wrapper sorted iterating system.
+   *
+   * @param family     the family
+   * @param comparator the comparator
+   * @param priority   the priority
+   */
   public WrapperSortedIteratingSystem(Family family, Comparator<Entity> comparator, int priority) {
     super(family, comparator, priority);
   }

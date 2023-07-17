@@ -20,9 +20,17 @@ package com.codeheadsystems.gamelib.net.server.factory;
 import com.codeheadsystems.gamelib.net.server.NetClientHandler;
 import dagger.assisted.AssistedFactory;
 
+/**
+ * The interface Net client handler factory.
+ */
 @AssistedFactory
 public interface NetClientHandlerFactory {
 
+  /**
+   * Instance net client handler.
+   *
+   * @return the net client handler
+   */
   NetClientHandler instance();
 
 }

@@ -33,11 +33,19 @@ import javax.inject.Named;
 @Module
 public interface GameResources {
 
+  /**
+   * The constant VIEWPORT_WIDTH.
+   */
   String VIEWPORT_WIDTH = "viewportWidth";
+  /**
+   * The constant RESOURCE_PATH.
+   */
   String RESOURCE_PATH = "resourcePath";
 
   /**
    * Optional top path for your configuration files.
+   *
+   * @return the string
    */
   @BindsOptionalOf
   @Named(RESOURCE_PATH)
@@ -45,6 +53,8 @@ public interface GameResources {
 
   /**
    * If you have a configuration, you can set it. Else, we use an empty one.
+   *
+   * @return the lwjgl 3 application configuration
    */
   @BindsOptionalOf
   Lwjgl3ApplicationConfiguration lwjgl3ApplicationConfiguration();
@@ -52,6 +62,8 @@ public interface GameResources {
   /**
    * How wide you want your screen for the camera. Note, we calculate the height based on the
    * real height of the screen.
+   *
+   * @return the float
    */
   @BindsOptionalOf
   @Named(VIEWPORT_WIDTH)
@@ -59,6 +71,8 @@ public interface GameResources {
 
   /**
    * If you use the MAIN_SCREEN approach, we will just call that with the existing dagger injection.
+   *
+   * @return the screen
    */
   @BindsOptionalOf
   @Named(MAIN_SCREEN)

@@ -25,14 +25,14 @@ import com.badlogic.gdx.utils.Logger;
  */
 public class LoggerHelper {
 
-    /**
-     * Just pass in your class and this will allow any debug message or higher. Remember, Application.setLevel()
-     * is what changes the displayable logging level. The level here doesn't really matter. It's overkill.
-     *
-     * @param clazz that is logging.
-     * @return a usable logger.
-     */
-    public static Logger logger(final Class<?> clazz) {
+  /**
+   * Just pass in your class and this will allow any debug message or higher. Remember, Application.setLevel()
+   * is what changes the displayable logging level. The level here doesn't really matter. It's overkill.
+   *
+   * @param clazz that is logging.
+   * @return a usable logger.
+   */
+  public static Logger logger(final Class<?> clazz) {
         return new Logger(clazz.getSimpleName(), Logger.DEBUG);
     }
 

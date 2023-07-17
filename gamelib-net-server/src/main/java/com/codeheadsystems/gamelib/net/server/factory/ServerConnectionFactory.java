@@ -34,6 +34,9 @@ import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The type Server connection factory.
+ */
 @Singleton
 public class ServerConnectionFactory {
 
@@ -43,6 +46,12 @@ public class ServerConnectionFactory {
   private final NetServerConfiguration netServerConfiguration;
   private final ChannelPipelineInitializer initializer;
 
+  /**
+   * Instantiates a new Server connection factory.
+   *
+   * @param netServerConfiguration the net server configuration
+   * @param initializer            the initializer
+   */
   @Inject
   public ServerConnectionFactory(final NetServerConfiguration netServerConfiguration,
                                  final ChannelPipelineInitializer initializer) {
@@ -50,6 +59,11 @@ public class ServerConnectionFactory {
     this.initializer = initializer;
   }
 
+  /**
+   * Instance server connection.
+   *
+   * @return the server connection
+   */
   public ServerConnection instance() {
     final EventLoopGroup bossGroup = new NioEventLoopGroup(1); // TODO: threads from config please
     final EventLoopGroup workerGroup = new NioEventLoopGroup(); // TODO: threads from config please

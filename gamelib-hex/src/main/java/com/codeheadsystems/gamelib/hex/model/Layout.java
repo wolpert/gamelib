@@ -21,39 +21,83 @@ import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Pool;
 import java.util.Objects;
 
+/**
+ * The type Layout.
+ */
 public class Layout implements Pool.Poolable {
 
     private Orientation orientation;
     private Vector2 size;
     private Vector2 origin;
 
-    public static Layout of(Orientation orientation, Vector2 size, Vector2 origin) {
+  /**
+   * Of layout.
+   *
+   * @param orientation the orientation
+   * @param size        the size
+   * @param origin      the origin
+   * @return the layout
+   */
+  public static Layout of(Orientation orientation, Vector2 size, Vector2 origin) {
         return new Layout().setOrientation(orientation).setSize(size).setOrigin(origin);
     }
 
-    public Orientation orientation() {
+  /**
+   * Orientation orientation.
+   *
+   * @return the orientation
+   */
+  public Orientation orientation() {
         return orientation;
     }
 
-    public Vector2 size() {
+  /**
+   * Size vector 2.
+   *
+   * @return the vector 2
+   */
+  public Vector2 size() {
         return size;
     }
 
-    public Vector2 origin() {
+  /**
+   * Origin vector 2.
+   *
+   * @return the vector 2
+   */
+  public Vector2 origin() {
         return origin;
     }
 
-    public Layout setOrientation(Orientation orientation) {
+  /**
+   * Sets orientation.
+   *
+   * @param orientation the orientation
+   * @return the orientation
+   */
+  public Layout setOrientation(Orientation orientation) {
         this.orientation = orientation;
         return this;
     }
 
-    public Layout setSize(Vector2 size) {
+  /**
+   * Sets size.
+   *
+   * @param size the size
+   * @return the size
+   */
+  public Layout setSize(Vector2 size) {
         this.size = size;
         return this;
     }
 
-    public Layout setOrigin(Vector2 origin) {
+  /**
+   * Sets origin.
+   *
+   * @param origin the origin
+   * @return the origin
+   */
+  public Layout setOrigin(Vector2 origin) {
         this.origin = origin;
         return this;
     }

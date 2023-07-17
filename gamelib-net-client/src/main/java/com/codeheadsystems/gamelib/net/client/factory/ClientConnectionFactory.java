@@ -29,12 +29,21 @@ import io.netty.channel.socket.nio.NioSocketChannel;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Client connection factory.
+ */
 @Singleton
 public class ClientConnectionFactory {
 
   private final NetClientConfiguration netClientConfiguration;
   private final Initializer initializer;
 
+  /**
+   * Instantiates a new Client connection factory.
+   *
+   * @param netClientConfiguration the net client configuration
+   * @param initializer            the initializer
+   */
   @Inject
   public ClientConnectionFactory(final NetClientConfiguration netClientConfiguration,
                                  final Initializer initializer) {
@@ -42,6 +51,11 @@ public class ClientConnectionFactory {
     this.initializer = initializer;
   }
 
+  /**
+   * Instance client connection.
+   *
+   * @return the client connection
+   */
   public ClientConnection instance() {
     final EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
     final Bootstrap bootstrap = new Bootstrap()

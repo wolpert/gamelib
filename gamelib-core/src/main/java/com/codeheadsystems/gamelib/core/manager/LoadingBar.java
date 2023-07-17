@@ -23,6 +23,9 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Loading bar.
+ */
 @Singleton
 public class LoadingBar {
 
@@ -32,6 +35,11 @@ public class LoadingBar {
   private float width;
   private float height;
 
+  /**
+   * Instantiates a new Loading bar.
+   *
+   * @param shapeRenderer the shape renderer
+   */
   @Inject
   public LoadingBar(final ShapeRenderer shapeRenderer) {
     this.shapeRenderer = shapeRenderer;

@@ -54,6 +54,16 @@ public class LoadingScreen implements Screen, GameListener {
 
   private boolean init = false;
 
+  /**
+   * Instantiates a new Loading screen.
+   *
+   * @param resourcePathManager the resource path manager
+   * @param spriteBatch         the sprite batch
+   * @param loadingManager      the loading manager
+   * @param loadingBar          the loading bar
+   * @param loadingImage        the loading image
+   * @param mainScreenManager   the main screen manager
+   */
   @Inject
   public LoadingScreen(final ResourcePathManager resourcePathManager,
                        final SpriteBatch spriteBatch,
@@ -68,18 +78,38 @@ public class LoadingScreen implements Screen, GameListener {
     this.mainScreenManager = mainScreenManager;
   }
 
+  /**
+   * Gets loading texture.
+   *
+   * @return the loading texture
+   */
   public Texture getLoadingTexture() {
     return loadingTexture;
   }
 
+  /**
+   * Sets loading texture.
+   *
+   * @param loadingTexture the loading texture
+   */
   public void setLoadingTexture(final Texture loadingTexture) {
     this.loadingTexture = loadingTexture;
   }
 
+  /**
+   * Gets loading sprite.
+   *
+   * @return the loading sprite
+   */
   public Sprite getLoadingSprite() {
     return loadingSprite;
   }
 
+  /**
+   * Sets loading sprite.
+   *
+   * @param loadingSprite the loading sprite
+   */
   public void setLoadingSprite(final Sprite loadingSprite) {
     this.loadingSprite = loadingSprite;
   }

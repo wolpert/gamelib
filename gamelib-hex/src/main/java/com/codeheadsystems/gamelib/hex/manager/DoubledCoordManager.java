@@ -26,51 +26,71 @@ import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Doubled coord manager.
+ */
 @Singleton
 public class DoubledCoordManager extends PoolerImpl<DoubledCoord> {
     private static final Logger LOGGER = logger(DoubledCoordManager.class);
 
     private final HexManager hexManager;
 
-    @Inject
+  /**
+   * Instantiates a new Doubled coord manager.
+   *
+   * @param hexManager the hex manager
+   */
+  @Inject
     public DoubledCoordManager(final HexManager hexManager) {
         super(DoubledCoord::new);
         this.hexManager = hexManager;
         LOGGER.debug("DoubledCoordManager()");
     }
 
-    /**
-     * Does not free old Hex.
-     */
-    public DoubledCoord qdoubledFromCube(final Hex h) {
+  /**
+   * Does not free old Hex.
+   *
+   * @param h the h
+   * @return the doubled coord
+   */
+  public DoubledCoord qdoubledFromCube(final Hex h) {
         final int col = h.q();
         final int row = 2 * h.r() + h.q();
         return obtain().setCol(col).setRow(row);
     }
 
-    /**
-     * Does not free old Hex.
-     */
-    public DoubledCoord rdoubledFromCube(final Hex h) {
+  /**
+   * Does not free old Hex.
+   *
+   * @param h the h
+   * @return the doubled coord
+   */
+  public DoubledCoord rdoubledFromCube(final Hex h) {
         final int col = 2 * h.q() + h.r();
         final int row = h.r();
         return obtain().setCol(col).setRow(row);
     }
 
-    /**
-     * Does not free old DoubledCoord.
-     */
-    public Hex qdoubledToCube(final DoubledCoord a) {
+  /**
+   * Does not free old DoubledCoord.
+   *
+   * @param a the a
+   * @return the hex
+   */
+  public Hex qdoubledToCube(final DoubledCoord a) {
         final int q = a.col();
         final int r = (a.row() - a.col()) / 2;
         final int s = -q - r;
         return hexManager.obtain().setQ(q).setR(r).setS(s).checkConstructorArguments();
     }
 
-    /**
-     * Does not free old DoubledCoord.
-     */
-    public Hex rdoubledToCube(final DoubledCoord a) {
+  /**
+   * Does not free old DoubledCoord.
+   *
+   * @param a the a
+   * @return the hex
+   */
+  public Hex rdoubledToCube(final DoubledCoord a) {
         final int q = (a.col() - a.row()) / 2;
         final int r = a.row();
         final int s = -q - r;

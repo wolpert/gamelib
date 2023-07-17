@@ -21,9 +21,18 @@ import com.codeheadsystems.gamelib.net.server.NetClientHandler;
 import com.codeheadsystems.gamelib.net.server.manager.AuthenticationManager;
 import dagger.assisted.AssistedFactory;
 
+/**
+ * The interface Authentication manager factory.
+ */
 @AssistedFactory
 public interface AuthenticationManagerFactory {
 
+  /**
+   * Instance authentication manager.
+   *
+   * @param handler the handler
+   * @return the authentication manager
+   */
   AuthenticationManager instance(final NetClientHandler handler);
 
 }

@@ -20,35 +20,71 @@ package com.codeheadsystems.gamelib.hex.model;
 import com.badlogic.gdx.utils.Pool;
 import java.util.Objects;
 
+/**
+ * The type Hex field layout.
+ */
 public class HexFieldLayout implements Pool.Poolable {
 
     private int rows;
     private int cols;
     private Layout layout;
 
-    public int rows() {
+  /**
+   * Rows int.
+   *
+   * @return the int
+   */
+  public int rows() {
         return rows;
     }
 
-    public int cols() {
+  /**
+   * Cols int.
+   *
+   * @return the int
+   */
+  public int cols() {
         return cols;
     }
 
-    public Layout layout() {
+  /**
+   * Layout layout.
+   *
+   * @return the layout
+   */
+  public Layout layout() {
         return layout;
     }
 
-    public HexFieldLayout setRows(int rows) {
+  /**
+   * Sets rows.
+   *
+   * @param rows the rows
+   * @return the rows
+   */
+  public HexFieldLayout setRows(int rows) {
         this.rows = rows;
         return this;
     }
 
-    public HexFieldLayout setCols(int cols) {
+  /**
+   * Sets cols.
+   *
+   * @param cols the cols
+   * @return the cols
+   */
+  public HexFieldLayout setCols(int cols) {
         this.cols = cols;
         return this;
     }
 
-    public HexFieldLayout setLayout(Layout layout) {
+  /**
+   * Sets layout.
+   *
+   * @param layout the layout
+   * @return the layout
+   */
+  public HexFieldLayout setLayout(Layout layout) {
         this.layout = layout;
         return this;
     }

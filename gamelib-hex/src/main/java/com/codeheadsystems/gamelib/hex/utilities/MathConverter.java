@@ -17,8 +17,17 @@
 
 package com.codeheadsystems.gamelib.hex.utilities;
 
+/**
+ * The type Math converter.
+ */
 public class MathConverter {
-    public static float toFloat(Double d) {
+  /**
+   * To float float.
+   *
+   * @param d the d
+   * @return the float
+   */
+  public static float toFloat(Double d) {
         return d.floatValue();
     }
 }

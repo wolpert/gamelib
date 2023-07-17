@@ -35,40 +35,75 @@ public class GdxRuntimeCacheModule {
 
   private final GdxRuntimeCache cache;
 
+  /**
+   * Instantiates a new Gdx runtime cache module.
+   *
+   * @param cache the cache
+   */
   public GdxRuntimeCacheModule(final GdxRuntimeCache cache) {
     this.cache = cache;
   }
 
+  /**
+   * Json json.
+   *
+   * @return the json
+   */
   @Provides
   @Singleton
   public Json json() {
     return cache.getJson();
   }
 
+  /**
+   * File handle resolver file handle resolver.
+   *
+   * @return the file handle resolver
+   */
   @Provides
   @Singleton
   public FileHandleResolver fileHandleResolver() {
     return cache.getFileHandleResolver();
   }
 
+  /**
+   * Asset manager asset manager.
+   *
+   * @return the asset manager
+   */
   @Provides
   @Singleton
   public AssetManager assetManager() {
     return cache.getAssetManager();
   }
 
+  /**
+   * Orthographic camera orthographic camera.
+   *
+   * @return the orthographic camera
+   */
   @Provides
   @Singleton
   public OrthographicCamera orthographicCamera() {
     return cache.getOrthographicCamera();
   }
 
+  /**
+   * Shape renderer shape renderer.
+   *
+   * @return the shape renderer
+   */
   @Provides
   @Singleton
   public ShapeRenderer shapeRenderer() {
     return cache.getShapeRenderer();
   }
 
+  /**
+   * Sprite batch sprite batch.
+   *
+   * @return the sprite batch
+   */
   @Provides
   @Singleton
   public SpriteBatch spriteBatch() {

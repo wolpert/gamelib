@@ -23,6 +23,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import java.util.UUID;
 import org.immutables.value.Value;
 
+/**
+ * The interface Transfer object.
+ */
 @JsonTypeInfo(
     use = JsonTypeInfo.Id.NAME,
     include = JsonTypeInfo.As.EXISTING_PROPERTY,
@@ -38,9 +41,19 @@ import org.immutables.value.Value;
 })
 public interface TransferObject {
 
+  /**
+   * Type string.
+   *
+   * @return the string
+   */
   @JsonProperty("type")
   String type();
 
+  /**
+   * Uuid uuid.
+   *
+   * @return the uuid
+   */
   @JsonProperty("uuid")
   @Value.Default
   default UUID uuid() {

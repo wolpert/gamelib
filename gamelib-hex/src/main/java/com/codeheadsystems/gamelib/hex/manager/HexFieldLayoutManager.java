@@ -26,20 +26,34 @@ import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Hex field layout manager.
+ */
 @Singleton
 public class HexFieldLayoutManager extends PoolerImpl<HexFieldLayout> {
 
     private static final Logger LOGGER = logger(HexFieldLayoutManager.class);
     private final LayoutManager layoutManager;
 
-    @Inject
+  /**
+   * Instantiates a new Hex field layout manager.
+   *
+   * @param layoutManager the layout manager
+   */
+  @Inject
     public HexFieldLayoutManager(final LayoutManager layoutManager) {
         super(HexFieldLayout::new);
         this.layoutManager = layoutManager;
         LOGGER.debug("HexFieldLayoutManager()");
     }
 
-    public HexFieldLayout obtain(final HexFieldConfiguration configuration) {
+  /**
+   * Obtain hex field layout.
+   *
+   * @param configuration the configuration
+   * @return the hex field layout
+   */
+  public HexFieldLayout obtain(final HexFieldConfiguration configuration) {
         return obtain()
             .setLayout(layoutManager.generate(configuration))
             .setCols(configuration.getCols())

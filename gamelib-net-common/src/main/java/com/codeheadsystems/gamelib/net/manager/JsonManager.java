@@ -23,22 +23,45 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Json manager.
+ */
 @Singleton
 public class JsonManager {
 
   private final ObjectMapper objectMapper;
 
+  /**
+   * Instantiates a new Json manager.
+   *
+   * @param objectMapper the object mapper
+   */
   @Inject
   public JsonManager(final ObjectMapper objectMapper) {
     this.objectMapper = objectMapper;
   }
 
 
+  /**
+   * To json string.
+   *
+   * @param <T>    the type parameter
+   * @param object the object
+   * @return the string
+   */
   public <T> String toJson(final T object) {
     return toJson(object, false);
   }
 
 
+  /**
+   * To json string.
+   *
+   * @param <T>         the type parameter
+   * @param object      the object
+   * @param withNewLine the with new line
+   * @return the string
+   */
   public <T> String toJson(final T object,
                            final boolean withNewLine) {
     try {
@@ -50,6 +73,14 @@ public class JsonManager {
     }
   }
 
+  /**
+   * From json t.
+   *
+   * @param <T>   the type parameter
+   * @param json  the json
+   * @param clazz the clazz
+   * @return the t
+   */
   public <T> T fromJson(final String json, final Class<T> clazz) {
     try {
       return objectMapper.readValue(json, clazz);

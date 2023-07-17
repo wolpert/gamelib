@@ -32,6 +32,9 @@ import org.immutables.value.Value;
 @Value.Immutable
 public interface Identity extends TransferObject {
 
+  /**
+   * The constant TYPE.
+   */
   String TYPE = "identity";
 
   @Value.Default
@@ -40,9 +43,19 @@ public interface Identity extends TransferObject {
     return TYPE;
   }
 
+  /**
+   * Id string.
+   *
+   * @return the string
+   */
   @JsonProperty("id")
   String id();
 
+  /**
+   * Token string.
+   *
+   * @return the string
+   */
   @JsonProperty("token")
   String token();
 

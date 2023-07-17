@@ -20,6 +20,9 @@ package com.codeheadsystems.gamelib.hex.model;
 import com.badlogic.gdx.utils.Pool;
 import java.util.Objects;
 
+/**
+ * The type Hex field configuration.
+ */
 public class HexFieldConfiguration implements Pool.Poolable {
 
     private int rows;
@@ -40,65 +43,142 @@ public class HexFieldConfiguration implements Pool.Poolable {
         originY = 0;
     }
 
-    public int getRows() {
+  /**
+   * Gets rows.
+   *
+   * @return the rows
+   */
+  public int getRows() {
         return rows;
     }
 
-    public HexFieldConfiguration setRows(final int rows) {
+  /**
+   * Sets rows.
+   *
+   * @param rows the rows
+   * @return the rows
+   */
+  public HexFieldConfiguration setRows(final int rows) {
         this.rows = rows;
         return this;
     }
 
-    public int getCols() {
+  /**
+   * Gets cols.
+   *
+   * @return the cols
+   */
+  public int getCols() {
         return cols;
     }
 
-    public HexFieldConfiguration setCols(final int cols) {
+  /**
+   * Sets cols.
+   *
+   * @param cols the cols
+   * @return the cols
+   */
+  public HexFieldConfiguration setCols(final int cols) {
         this.cols = cols;
         return this;
     }
 
-    public Orientation getOrientation() {
+  /**
+   * Gets orientation.
+   *
+   * @return the orientation
+   */
+  public Orientation getOrientation() {
         return orientation;
     }
 
-    public HexFieldConfiguration setOrientation(final Orientation orientation) {
+  /**
+   * Sets orientation.
+   *
+   * @param orientation the orientation
+   * @return the orientation
+   */
+  public HexFieldConfiguration setOrientation(final Orientation orientation) {
         this.orientation = orientation;
         return this;
     }
 
-    public float getSizeX() {
+  /**
+   * Gets size x.
+   *
+   * @return the size x
+   */
+  public float getSizeX() {
         return sizeX;
     }
 
-    public HexFieldConfiguration setSizeX(final float sizeX) {
+  /**
+   * Sets size x.
+   *
+   * @param sizeX the size x
+   * @return the size x
+   */
+  public HexFieldConfiguration setSizeX(final float sizeX) {
         this.sizeX = sizeX;
         return this;
     }
 
-    public float getSizeY() {
+  /**
+   * Gets size y.
+   *
+   * @return the size y
+   */
+  public float getSizeY() {
         return sizeY;
     }
 
-    public HexFieldConfiguration setSizeY(final float sizeY) {
+  /**
+   * Sets size y.
+   *
+   * @param sizeY the size y
+   * @return the size y
+   */
+  public HexFieldConfiguration setSizeY(final float sizeY) {
         this.sizeY = sizeY;
         return this;
     }
 
-    public float getOriginX() {
+  /**
+   * Gets origin x.
+   *
+   * @return the origin x
+   */
+  public float getOriginX() {
         return originX;
     }
 
-    public HexFieldConfiguration setOriginX(final float originX) {
+  /**
+   * Sets origin x.
+   *
+   * @param originX the origin x
+   * @return the origin x
+   */
+  public HexFieldConfiguration setOriginX(final float originX) {
         this.originX = originX;
         return this;
     }
 
-    public float getOriginY() {
+  /**
+   * Gets origin y.
+   *
+   * @return the origin y
+   */
+  public float getOriginY() {
         return originY;
     }
 
-    public HexFieldConfiguration setOriginY(final float originY) {
+  /**
+   * Sets origin y.
+   *
+   * @param originY the origin y
+   * @return the origin y
+   */
+  public HexFieldConfiguration setOriginY(final float originY) {
         this.originY = originY;
         return this;
     }

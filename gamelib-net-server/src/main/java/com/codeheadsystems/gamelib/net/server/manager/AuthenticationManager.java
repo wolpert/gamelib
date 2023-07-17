@@ -34,7 +34,13 @@ import org.slf4j.LoggerFactory;
  */
 public class AuthenticationManager {
 
+  /**
+   * The constant AUTH_FAIL.
+   */
   public static final String AUTH_FAIL = "Auth Fail";
+  /**
+   * The constant AUTH_TIMER_EXPIRED.
+   */
   public static final String AUTH_TIMER_EXPIRED = "Auth timer expired";
   private static final Logger LOGGER = LoggerFactory.getLogger(AuthenticationManager.class);
   private final Authenticator authenticator;
@@ -46,6 +52,14 @@ public class AuthenticationManager {
 
   private Future authTimer;
 
+  /**
+   * Instantiates a new Authentication manager.
+   *
+   * @param authenticator the authenticator
+   * @param timerManager  the timer manager
+   * @param jsonManager   the json manager
+   * @param handler       the handler
+   */
   @AssistedInject
   public AuthenticationManager(final Authenticator authenticator,
                                final TimerManager timerManager,
@@ -58,6 +72,9 @@ public class AuthenticationManager {
     this.jsonManager = jsonManager;
   }
 
+  /**
+   * Timer expired.
+   */
   public void timerExpired() {
     if (timerExpired.compareAndSet(false, true)) { // if it was false and now true, shutdown.
       handler.shutdown(AUTH_TIMER_EXPIRED);
@@ -67,6 +84,11 @@ public class AuthenticationManager {
     }
   }
 
+  /**
+   * Authenticate.
+   *
+   * @param message the message
+   */
   public void authenticate(final String message) {
     if (timerExpired.compareAndSet(true, true)) {
       // Timer has expired and we did not beat it out. So we are expecting everything to shutdown.

@@ -31,6 +31,13 @@ import javax.inject.Singleton;
 @Module(includes = {GameResources.class, GdxModule.class, LoadingModule.class})
 public class GameLibModule {
 
+  /**
+   * Lwjgl 3 application lwjgl 3 application.
+   *
+   * @param configuration the configuration
+   * @param gameLauncher  the game launcher
+   * @return the lwjgl 3 application
+   */
   @Provides
   @Singleton
   public Lwjgl3Application lwjgl3Application(final Optional<Lwjgl3ApplicationConfiguration> configuration,

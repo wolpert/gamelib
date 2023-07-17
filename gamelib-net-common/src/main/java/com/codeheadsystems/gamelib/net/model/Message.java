@@ -30,6 +30,9 @@ import org.immutables.value.Value;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Value.Immutable
 public interface Message extends TransferObject {
+  /**
+   * The constant TYPE.
+   */
   String TYPE = "mesg";
 
   @Value.Default
@@ -38,5 +41,10 @@ public interface Message extends TransferObject {
     return TYPE;
   }
 
+  /**
+   * Value string.
+   *
+   * @return the string
+   */
   String value();
 }

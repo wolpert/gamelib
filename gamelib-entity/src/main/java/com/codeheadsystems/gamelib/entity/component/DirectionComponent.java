@@ -20,6 +20,9 @@ package com.codeheadsystems.gamelib.entity.component;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool;
 
+/**
+ * The type Direction component.
+ */
 public class DirectionComponent implements Pool.Poolable, Component {
 
   private Direction direction;
@@ -28,14 +31,44 @@ public class DirectionComponent implements Pool.Poolable, Component {
   public void reset() {
   }
 
+  /**
+   * Gets direction.
+   *
+   * @return the direction
+   */
   public Direction getDirection() {
     return direction;
   }
 
+  /**
+   * Direction direction component.
+   *
+   * @param direction the direction
+   * @return the direction component
+   */
   public DirectionComponent direction(Direction direction) {
     this.direction = direction;
     return this;
   }
 
-  public enum Direction {EAST, WEST, SOUTH, NORTH}
+  /**
+   * The enum Direction.
+   */
+  public enum Direction {
+    /**
+     * East direction.
+     */
+    EAST,
+    /**
+     * West direction.
+     */
+    WEST,
+    /**
+     * South direction.
+     */
+    SOUTH,
+    /**
+     * North direction.
+     */
+    NORTH}
 }

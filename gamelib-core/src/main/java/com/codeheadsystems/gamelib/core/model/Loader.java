@@ -17,21 +17,39 @@
 
 package com.codeheadsystems.gamelib.core.model;
 
+/**
+ * The type Loader.
+ */
 public class Loader {
 
     private String classToLoad;
     private String suffix;
     private String loaderClass;
 
-    public String classToLoad() {
+  /**
+   * Class to load string.
+   *
+   * @return the string
+   */
+  public String classToLoad() {
         return classToLoad;
     }
 
-    public String suffix() {
+  /**
+   * Suffix string.
+   *
+   * @return the string
+   */
+  public String suffix() {
         return suffix;
     }
 
-    public String loaderClass() {
+  /**
+   * Loader class string.
+   *
+   * @return the string
+   */
+  public String loaderClass() {
         return loaderClass;
     }
 }

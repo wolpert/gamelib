@@ -27,25 +27,32 @@ import java.util.function.Consumer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Hex field configuration manager.
+ */
 @Singleton
 public class HexFieldConfigurationManager extends PoolerImpl<HexFieldConfiguration> {
 
     private static final Logger LOGGER = logger(HexFieldConfigurationManager.class);
-    @Inject
+
+  /**
+   * Instantiates a new Hex field configuration manager.
+   */
+  @Inject
     public HexFieldConfigurationManager() {
         super(HexFieldConfiguration::new);
     }
 
-    /**
-     * Standardize way to create a hex field that must fit in the width/height.
-     *
-     * @param rows
-     * @param cols
-     * @param width
-     * @param height
-     * @return
-     */
-    public HexFieldConfiguration generate(final int rows,
+  /**
+   * Standardize way to create a hex field that must fit in the width/height.
+   *
+   * @param rows   the rows
+   * @param cols   the cols
+   * @param width  the width
+   * @param height the height
+   * @return hex field configuration
+   */
+  public HexFieldConfiguration generate(final int rows,
                                           final int cols,
                                           final float width,
                                           final float height) {
@@ -63,7 +70,16 @@ public class HexFieldConfigurationManager extends PoolerImpl<HexFieldConfigurati
                 .setSizeY(hexSize);
     }
 
-    public void with(final int rows,
+  /**
+   * With.
+   *
+   * @param rows     the rows
+   * @param cols     the cols
+   * @param width    the width
+   * @param height   the height
+   * @param consumer the consumer
+   */
+  public void with(final int rows,
                      final int cols,
                      final float width,
                      final float height,

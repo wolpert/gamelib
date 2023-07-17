@@ -20,29 +20,61 @@ package com.codeheadsystems.gamelib.hex.model;
 import com.badlogic.gdx.utils.Pool;
 import java.util.Objects;
 
+/**
+ * The type Doubled coord.
+ */
 public class DoubledCoord implements Pool.Poolable {
 
     private int col;
     private int row;
 
-    public static DoubledCoord of(int col, int row) {
+  /**
+   * Of doubled coord.
+   *
+   * @param col the col
+   * @param row the row
+   * @return the doubled coord
+   */
+  public static DoubledCoord of(int col, int row) {
         return new DoubledCoord().setCol(col).setRow(row);
     }
 
-    public int col() {
+  /**
+   * Col int.
+   *
+   * @return the int
+   */
+  public int col() {
         return col;
     }
 
-    public int row() {
+  /**
+   * Row int.
+   *
+   * @return the int
+   */
+  public int row() {
         return row;
     }
 
-    public DoubledCoord setCol(int col) {
+  /**
+   * Sets col.
+   *
+   * @param col the col
+   * @return the col
+   */
+  public DoubledCoord setCol(int col) {
         this.col = col;
         return this;
     }
 
-    public DoubledCoord setRow(int row) {
+  /**
+   * Sets row.
+   *
+   * @param row the row
+   * @return the row
+   */
+  public DoubledCoord setRow(int row) {
         this.row = row;
         return this;
     }

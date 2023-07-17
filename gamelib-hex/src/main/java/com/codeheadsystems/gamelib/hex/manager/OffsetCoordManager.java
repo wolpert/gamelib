@@ -26,39 +26,75 @@ import com.codeheadsystems.gamelib.core.util.PoolerImpl;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Offset coord manager.
+ */
 @Singleton
 public class OffsetCoordManager extends PoolerImpl<OffsetCoord> {
 
     private static final Logger LOGGER = logger(OffsetCoordManager.class);
     private final HexManager hexManager;
 
-    @Inject
+  /**
+   * Instantiates a new Offset coord manager.
+   *
+   * @param hexManager the hex manager
+   */
+  @Inject
     public OffsetCoordManager(HexManager hexManager) {
         super(OffsetCoord::new);
         this.hexManager = hexManager;
         LOGGER.debug("OffsetCoordManager()");
     }
 
-    public OffsetCoord qoffsetFromCube(OffsetCoord.Offset offset, Hex h) {
+  /**
+   * Qoffset from cube offset coord.
+   *
+   * @param offset the offset
+   * @param h      the h
+   * @return the offset coord
+   */
+  public OffsetCoord qoffsetFromCube(OffsetCoord.Offset offset, Hex h) {
         int col = h.q();
         int row = h.r() + ((h.q() + offset.value * (h.q() & 1)) / 2);
         return obtain().setCol(col).setRow(row);
     }
 
-    public Hex qoffsetToCube(OffsetCoord.Offset offset, OffsetCoord h) {
+  /**
+   * Qoffset to cube hex.
+   *
+   * @param offset the offset
+   * @param h      the h
+   * @return the hex
+   */
+  public Hex qoffsetToCube(OffsetCoord.Offset offset, OffsetCoord h) {
         int q = h.col();
         int r = h.row() - ((h.col() + offset.value * (h.col() & 1)) / 2);
         int s = -q - r;
         return hexManager.obtain().setQ(q).setR(r).setS(s);
     }
 
-    public OffsetCoord roffsetFromCube(OffsetCoord.Offset offset, Hex h) {
+  /**
+   * Roffset from cube offset coord.
+   *
+   * @param offset the offset
+   * @param h      the h
+   * @return the offset coord
+   */
+  public OffsetCoord roffsetFromCube(OffsetCoord.Offset offset, Hex h) {
         int col = h.q() + ((h.r() + offset.value * (h.r() & 1)) / 2);
         int row = h.r();
         return obtain().setCol(col).setRow(row);
     }
 
-    public Hex roffsetToCube(OffsetCoord.Offset offset, OffsetCoord h) {
+  /**
+   * Roffset to cube hex.
+   *
+   * @param offset the offset
+   * @param h      the h
+   * @return the hex
+   */
+  public Hex roffsetToCube(OffsetCoord.Offset offset, OffsetCoord h) {
         int q = h.col() - ((h.row() + offset.value * (h.row() & 1)) / 2);
         int r = h.row();
         int s = -q - r;

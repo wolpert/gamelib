@@ -23,12 +23,25 @@ import dagger.Component;
 import java.util.concurrent.BlockingQueue;
 import javax.inject.Singleton;
 
+/**
+ * The interface Client component.
+ */
 @Singleton
 @Component(modules = NetClientModule.class)
 public interface ClientComponent {
 
+  /**
+   * Client manager client manager.
+   *
+   * @return the client manager
+   */
   ClientManager clientManager();
 
+  /**
+   * Queue blocking queue.
+   *
+   * @return the blocking queue
+   */
   BlockingQueue<String> queue();
 
 }

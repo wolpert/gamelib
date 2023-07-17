@@ -21,6 +21,9 @@ import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.graphics.g2d.Sprite;
 import com.badlogic.gdx.utils.Pool;
 
+/**
+ * The type Sprite component.
+ */
 public class SpriteComponent implements Pool.Poolable, Component {
 
   private Sprite sprite;
@@ -30,10 +33,21 @@ public class SpriteComponent implements Pool.Poolable, Component {
     sprite = null;
   }
 
+  /**
+   * Gets sprite.
+   *
+   * @return the sprite
+   */
   public Sprite getSprite() {
     return sprite;
   }
 
+  /**
+   * Sprite sprite component.
+   *
+   * @param sprite the sprite
+   * @return the sprite component
+   */
   public SpriteComponent sprite(Sprite sprite) {
     this.sprite = sprite;
     return this;

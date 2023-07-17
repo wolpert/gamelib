@@ -27,13 +27,23 @@ import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Engine manager.
+ */
 @Singleton
 public class EngineManager {
 
     private final Set<EntitySystem> entitySystems = new HashSet<>();
     private final PooledEngine pooledEngine;
 
-    @Inject
+  /**
+   * Instantiates a new Engine manager.
+   *
+   * @param entities      the entities
+   * @param entitySystems the entity systems
+   * @param pooledEngine  the pooled engine
+   */
+  @Inject
     public EngineManager(final Set<Entity> entities,
                          final Set<EntitySystem> entitySystems,
                          final PooledEngine pooledEngine) {
@@ -49,42 +59,87 @@ public class EngineManager {
         }
     }
 
-    public Entity createEntity() {
+  /**
+   * Create entity entity.
+   *
+   * @return the entity
+   */
+  public Entity createEntity() {
         return pooledEngine.createEntity();
     }
 
-    public <T extends Component> T createComponent(Class<T> componentType) {
+  /**
+   * Create component t.
+   *
+   * @param <T>           the type parameter
+   * @param componentType the component type
+   * @return the t
+   */
+  public <T extends Component> T createComponent(Class<T> componentType) {
         return pooledEngine.createComponent(componentType);
     }
 
-    public PooledEngine engine() {
+  /**
+   * Engine pooled engine.
+   *
+   * @return the pooled engine
+   */
+  public PooledEngine engine() {
         return pooledEngine;
     }
 
-    public void addSystem(EntitySystem system) {
+  /**
+   * Add system.
+   *
+   * @param system the system
+   */
+  public void addSystem(EntitySystem system) {
         pooledEngine.addSystem(system);
         entitySystems.add(system);
     }
 
-    public void removeSystem(EntitySystem system) {
+  /**
+   * Remove system.
+   *
+   * @param system the system
+   */
+  public void removeSystem(EntitySystem system) {
         pooledEngine.addSystem(system);
         entitySystems.remove(system);
     }
 
-    public void addEntity(Entity entity) {
+  /**
+   * Add entity.
+   *
+   * @param entity the entity
+   */
+  public void addEntity(Entity entity) {
         pooledEngine.addEntity(entity);
     }
 
-    public void removeEntity(Entity entity) {
+  /**
+   * Remove entity.
+   *
+   * @param entity the entity
+   */
+  public void removeEntity(Entity entity) {
         entity.removeAll();
         pooledEngine.removeEntity(entity);
     }
 
-    public void update(float delta) {
+  /**
+   * Update.
+   *
+   * @param delta the delta
+   */
+  public void update(float delta) {
         pooledEngine.update(delta);
     }
 
-    public void destroy() {
+  /**
+   * Destroy.
+   */
+  public void destroy() {
         pooledEngine.removeAllEntities();
         for (EntitySystem entitySystem : entitySystems) {
             Gdx.app.log("PoolEngineManager", "removeSystem: " + entitySystem);
@@ -94,11 +149,19 @@ public class EngineManager {
         entitySystems.clear();
     }
 
-    public Set<EntitySystem> getEntitySystems() {
+  /**
+   * Gets entity systems.
+   *
+   * @return the entity systems
+   */
+  public Set<EntitySystem> getEntitySystems() {
         return entitySystems;
     }
 
-    public void clear() {
+  /**
+   * Clear.
+   */
+  public void clear() {
       pooledEngine.removeAllEntities();
     }
 }

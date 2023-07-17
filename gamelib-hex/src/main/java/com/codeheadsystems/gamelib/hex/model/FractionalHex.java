@@ -20,50 +20,102 @@ package com.codeheadsystems.gamelib.hex.model;
 import com.badlogic.gdx.utils.Pool;
 import java.util.Objects;
 
+/**
+ * The type Fractional hex.
+ */
 public class FractionalHex implements Pool.Poolable {
 
     private double q;
     private double r;
     private double s;
 
-    public static FractionalHex of(double q, double r, double s) {
+  /**
+   * Of fractional hex.
+   *
+   * @param q the q
+   * @param r the r
+   * @param s the s
+   * @return the fractional hex
+   */
+  public static FractionalHex of(double q, double r, double s) {
         return new FractionalHex().setQ(q).setR(r).setS(s).checkConstructorArguments();
     }
 
-    public FractionalHex() {
+  /**
+   * Instantiates a new Fractional hex.
+   */
+  public FractionalHex() {
 
     }
 
-    public FractionalHex checkConstructorArguments() {
+  /**
+   * Check constructor arguments fractional hex.
+   *
+   * @return the fractional hex
+   */
+  public FractionalHex checkConstructorArguments() {
         if (Math.round(q() + r() + s()) != 0) {
             throw new IllegalArgumentException("q + r + s must equal 0");
         }
         return this;
     }
 
-    public double q() {
+  /**
+   * Q double.
+   *
+   * @return the double
+   */
+  public double q() {
         return q;
     }
 
-    public double r() {
+  /**
+   * R double.
+   *
+   * @return the double
+   */
+  public double r() {
         return r;
     }
 
-    public double s() {
+  /**
+   * S double.
+   *
+   * @return the double
+   */
+  public double s() {
         return s;
     }
 
-    public FractionalHex setQ(double q) {
+  /**
+   * Sets q.
+   *
+   * @param q the q
+   * @return the q
+   */
+  public FractionalHex setQ(double q) {
         this.q = q;
         return this;
     }
 
-    public FractionalHex setR(double r) {
+  /**
+   * Sets r.
+   *
+   * @param r the r
+   * @return the r
+   */
+  public FractionalHex setR(double r) {
         this.r = r;
         return this;
     }
 
-    public FractionalHex setS(double s) {
+  /**
+   * Sets s.
+   *
+   * @param s the s
+   * @return the s
+   */
+  public FractionalHex setS(double s) {
         this.s = s;
         return this;
     }

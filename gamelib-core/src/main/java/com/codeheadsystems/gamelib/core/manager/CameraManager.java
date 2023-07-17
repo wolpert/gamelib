@@ -34,31 +34,46 @@ public class CameraManager {
     private final ThreadLocal<Vector3> vector3ThreadLocal = ThreadLocal.withInitial(Vector3::new);
     private final OrthographicCamera camera;
 
-    @Inject
+  /**
+   * Instantiates a new Camera manager.
+   *
+   * @param camera the camera
+   */
+  @Inject
     public CameraManager(final OrthographicCamera camera) {
         LOGGER.info("CameraManager()");
         this.camera = camera;
     }
 
-    public float width() {
+  /**
+   * Width float.
+   *
+   * @return the float
+   */
+  public float width() {
         return camera.viewportWidth;
     }
 
-    public float height() {
+  /**
+   * Height float.
+   *
+   * @return the float
+   */
+  public float height() {
         return camera.viewportHeight;
     }
 
-    /**
-     * Use this method to covert the points on the screen to the location in the camera field.
-     * The vector returned is unique to this thread. Retrieve the values from it and ignore it. (Do not
-     * cache it.) This mechanism reduces the need to create Vector3 objects, and reuses the internals of
-     * the camera. Garbage collection bad.
-     *
-     * @param screenX from mouse click.
-     * @param screenY from mouse click.
-     * @return thread local vector3.
-     */
-    public Vector3 unproject(final int screenX, final int screenY) {
+  /**
+   * Use this method to covert the points on the screen to the location in the camera field.
+   * The vector returned is unique to this thread. Retrieve the values from it and ignore it. (Do not
+   * cache it.) This mechanism reduces the need to create Vector3 objects, and reuses the internals of
+   * the camera. Garbage collection bad.
+   *
+   * @param screenX from mouse click.
+   * @param screenY from mouse click.
+   * @return thread local vector3.
+   */
+  public Vector3 unproject(final int screenX, final int screenY) {
         return camera.unproject(vector3ThreadLocal.get().set(screenX, screenY, 0));
     }
 

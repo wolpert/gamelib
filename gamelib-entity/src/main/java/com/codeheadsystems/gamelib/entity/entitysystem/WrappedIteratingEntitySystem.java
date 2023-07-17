@@ -31,6 +31,12 @@ public abstract class WrappedIteratingEntitySystem extends EntitySystem implemen
   private final Family family;
   private final Array<Entity> entities;
 
+  /**
+   * Instantiates a new Wrapped iterating entity system.
+   *
+   * @param family   the family
+   * @param priority the priority
+   */
   public WrappedIteratingEntitySystem(final Family family,
                                       final int priority) {
     super(priority);

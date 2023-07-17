@@ -31,6 +31,9 @@ import org.immutables.value.Value;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Value.Immutable
 public interface ServerDetails extends TransferObject {
+  /**
+   * The constant TYPE.
+   */
   String TYPE = "server";
 
   @Value.Default
@@ -39,15 +42,35 @@ public interface ServerDetails extends TransferObject {
     return TYPE;
   }
 
+  /**
+   * Name string.
+   *
+   * @return the string
+   */
   @JsonProperty("name")
   String name();
 
+  /**
+   * Crypto string.
+   *
+   * @return the string
+   */
   @JsonProperty("crypto")
   String crypto();
 
+  /**
+   * Version int.
+   *
+   * @return the int
+   */
   @JsonProperty("version")
   int version();
 
+  /**
+   * Build number long.
+   *
+   * @return the long
+   */
   @JsonProperty("buildNumber")
   long buildNumber();
 

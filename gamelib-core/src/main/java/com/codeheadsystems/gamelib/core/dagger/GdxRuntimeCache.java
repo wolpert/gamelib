@@ -40,6 +40,16 @@ public class GdxRuntimeCache {
   private final ShapeRenderer shapeRenderer;
   private final SpriteBatch spriteBatch;
 
+  /**
+   * Instantiates a new Gdx runtime cache.
+   *
+   * @param json               the json
+   * @param fileHandleResolver the file handle resolver
+   * @param assetManager       the asset manager
+   * @param orthographicCamera the orthographic camera
+   * @param shapeRenderer      the shape renderer
+   * @param spriteBatch        the sprite batch
+   */
   @Inject
   public GdxRuntimeCache(final Json json,
                          final FileHandleResolver fileHandleResolver,
@@ -55,26 +65,56 @@ public class GdxRuntimeCache {
     this.spriteBatch = spriteBatch;
   }
 
+  /**
+   * Gets json.
+   *
+   * @return the json
+   */
   public Json getJson() {
     return json;
   }
 
+  /**
+   * Gets file handle resolver.
+   *
+   * @return the file handle resolver
+   */
   public FileHandleResolver getFileHandleResolver() {
     return fileHandleResolver;
   }
 
+  /**
+   * Gets asset manager.
+   *
+   * @return the asset manager
+   */
   public AssetManager getAssetManager() {
     return assetManager;
   }
 
+  /**
+   * Gets orthographic camera.
+   *
+   * @return the orthographic camera
+   */
   public OrthographicCamera getOrthographicCamera() {
     return orthographicCamera;
   }
 
+  /**
+   * Gets shape renderer.
+   *
+   * @return the shape renderer
+   */
   public ShapeRenderer getShapeRenderer() {
     return shapeRenderer;
   }
 
+  /**
+   * Gets sprite batch.
+   *
+   * @return the sprite batch
+   */
   public SpriteBatch getSpriteBatch() {
     return spriteBatch;
   }

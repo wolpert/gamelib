@@ -19,11 +19,24 @@ package com.codeheadsystems.gamelib.net.server;
 
 import org.immutables.value.Value;
 
+/**
+ * The interface Game listener.
+ */
 @Value.Immutable
 public interface GameListener {
 
+  /**
+   * Authenticated message handler message handler.
+   *
+   * @return the message handler
+   */
   MessageHandler authenticatedMessageHandler();
 
+  /**
+   * Available message handler message handler.
+   *
+   * @return the message handler
+   */
   MessageHandler availableMessageHandler();
 
 }

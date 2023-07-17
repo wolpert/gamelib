@@ -22,10 +22,18 @@ import com.codeheadsystems.gamelib.net.server.module.NetServerModule;
 import dagger.Component;
 import javax.inject.Singleton;
 
+/**
+ * The interface Server component.
+ */
 @Singleton
 @Component(modules = {NetServerModule.class})
 public interface ServerComponent {
 
+  /**
+   * Server manager server manager.
+   *
+   * @return the server manager
+   */
   ServerManager serverManager();
 
 }

@@ -40,20 +40,42 @@ public class HexField implements Pool.Poolable {
         }
     }
 
-    public Map<Hex, Entity> hexEntityHashMap() {
+  /**
+   * Hex entity hash map map.
+   *
+   * @return the map
+   */
+  public Map<Hex, Entity> hexEntityHashMap() {
         return this.hexEntityHashMap;
     }
 
-    public HexField setHexEntityHashMap(final Map<Hex, Entity> hexEntityHashMap) {
+  /**
+   * Sets hex entity hash map.
+   *
+   * @param hexEntityHashMap the hex entity hash map
+   * @return the hex entity hash map
+   */
+  public HexField setHexEntityHashMap(final Map<Hex, Entity> hexEntityHashMap) {
         this.hexEntityHashMap = hexEntityHashMap;
         return this;
     }
 
-    public HexFieldLayout getHexFieldLayout() {
+  /**
+   * Gets hex field layout.
+   *
+   * @return the hex field layout
+   */
+  public HexFieldLayout getHexFieldLayout() {
         return hexFieldLayout;
     }
 
-    public HexField setHexFieldLayout(final HexFieldLayout hexFieldLayout) {
+  /**
+   * Sets hex field layout.
+   *
+   * @param hexFieldLayout the hex field layout
+   * @return the hex field layout
+   */
+  public HexField setHexFieldLayout(final HexFieldLayout hexFieldLayout) {
         this.hexFieldLayout = hexFieldLayout;
         return this;
     }

@@ -23,30 +23,53 @@ import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import org.immutables.value.Value;
 
+/**
+ * The interface Net server configuration.
+ */
 @JsonSerialize(as = ImmutableNetServerConfiguration.class)
 @JsonDeserialize(builder = ImmutableNetServerConfiguration.Builder.class)
 @JsonIgnoreProperties(ignoreUnknown = true)
 @Value.Immutable
 public interface NetServerConfiguration {
 
+  /**
+   * Name string.
+   *
+   * @return the string
+   */
   @JsonProperty("name")
   @Value.Default
   default String name() {
     return "GameLibServer";
   }
 
+  /**
+   * Version int.
+   *
+   * @return the int
+   */
   @JsonProperty("version")
   @Value.Default
   default int version() {
     return 0;
   }
 
+  /**
+   * Build number long.
+   *
+   * @return the long
+   */
   @JsonProperty("buildNumber")
   @Value.Default
   default long buildNumber() {
     return 1;
   }
 
+  /**
+   * Port int.
+   *
+   * @return the int
+   */
   @JsonProperty("port")
   @Value.Default
   default int port() {
@@ -56,7 +79,7 @@ public interface NetServerConfiguration {
   /**
    * Default pool size fot the timer executor.
    *
-   * @return poolsize.
+   * @return poolsize. int
    */
   @JsonProperty
   @Value.Default

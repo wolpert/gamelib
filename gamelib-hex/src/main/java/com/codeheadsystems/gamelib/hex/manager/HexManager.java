@@ -31,10 +31,16 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Hex manager.
+ */
 @Singleton
 public class HexManager extends PoolerImpl<Hex> {
     private static final Logger LOGGER = logger(HexManager.class);
-    public static List<Hex> directions = new ArrayList<Hex>() {{
+  /**
+   * The constant directions.
+   */
+  public static List<Hex> directions = new ArrayList<Hex>() {{
         add(Hex.of(1, 0, -1)); // NE
         add(Hex.of(1, -1, 0)); // SE
         add(Hex.of(0, -1, 1));
@@ -42,7 +48,10 @@ public class HexManager extends PoolerImpl<Hex> {
         add(Hex.of(-1, 1, 0));
         add(Hex.of(0, 1, -1));
     }};
-    public static List<Hex> diagonals = new ArrayList<Hex>() {{
+  /**
+   * The constant diagonals.
+   */
+  public static List<Hex> diagonals = new ArrayList<Hex>() {{
         add(Hex.of(2, -1, -1));
         add(Hex.of(1, -2, 1));
         add(Hex.of(-1, -1, 2));
@@ -51,27 +60,47 @@ public class HexManager extends PoolerImpl<Hex> {
         add(Hex.of(1, 1, -2));
     }};
 
-    @Inject
+  /**
+   * Instantiates a new Hex manager.
+   */
+  @Inject
     public HexManager() {
         super(Hex::new);
         LOGGER.debug("HexManager()");
     }
 
-    public Hex direction(final int direction) {
+  /**
+   * Direction hex.
+   *
+   * @param direction the direction
+   * @return the hex
+   */
+  public Hex direction(final int direction) {
         return directions.get(direction);
     }
 
-    public Hex axial(final int x, final int y) {
+  /**
+   * Axial hex.
+   *
+   * @param x the x
+   * @param y the y
+   * @return the hex
+   */
+  public Hex axial(final int x, final int y) {
         return obtain().setQ(x).setR(y).setS(-x - y).checkConstructorArguments();
     }
 
-    /**
-     * Generates a set of hexes. Note that its exact rows/cols given, but assumes each row
-     * zig/zag to the right. (Starts at bottom left corner. Each row goes up.)
-     * <p>
-     * FlatTop only. Generates new hexes.
-     */
-    public HashSet<Hex> generate(final int cols, final int rows) {
+  /**
+   * Generates a set of hexes. Note that its exact rows/cols given, but assumes each row
+   * zig/zag to the right. (Starts at bottom left corner. Each row goes up.)
+   * <p>
+   * FlatTop only. Generates new hexes.
+   *
+   * @param cols the cols
+   * @param rows the rows
+   * @return the hash set
+   */
+  public HashSet<Hex> generate(final int cols, final int rows) {
         final HashSet<Hex> hashSet = new HashSet<>();
         for (int y = 0; y < rows; y++) { // flat top
             Hex currentHex = axial(0, y);
@@ -85,70 +114,103 @@ public class HexManager extends PoolerImpl<Hex> {
         return hashSet;
     }
 
-    /**
-     * Does not free old hexes.
-     */
-    public Hex add(final Hex a, final Hex b) {
+  /**
+   * Does not free old hexes.
+   *
+   * @param a the a
+   * @param b the b
+   * @return the hex
+   */
+  public Hex add(final Hex a, final Hex b) {
         return obtain().setQ(a.q() + b.q()).setR(a.r() + b.r()).setS(a.s() + b.s());
     }
 
-    /**
-     * Does not free old hexes.
-     */
-    public Hex subtract(final Hex a, final Hex b) {
+  /**
+   * Does not free old hexes.
+   *
+   * @param a the a
+   * @param b the b
+   * @return the hex
+   */
+  public Hex subtract(final Hex a, final Hex b) {
         return obtain().setQ(a.q() - b.q()).setR(a.r() - b.r()).setS(a.s() - b.s());
     }
 
-    /**
-     * Does not free old hexes.
-     */
-    public Hex scale(final Hex a, final int k) {
+  /**
+   * Does not free old hexes.
+   *
+   * @param a the a
+   * @param k the k
+   * @return the hex
+   */
+  public Hex scale(final Hex a, final int k) {
         return obtain().setQ(a.q() * k).setR(a.r() * k).setS(a.s() * k);
     }
 
-    /**
-     * Does not free old hexes.
-     */
-    public Hex rotateLeft(final Hex a) {
+  /**
+   * Does not free old hexes.
+   *
+   * @param a the a
+   * @return the hex
+   */
+  public Hex rotateLeft(final Hex a) {
         return obtain().setQ(-a.s()).setR(-a.q()).setS(-a.r());
     }
 
-    /**
-     * Does not free old hexes.
-     */
-    public Hex rotateRight(final Hex a) {
+  /**
+   * Does not free old hexes.
+   *
+   * @param a the a
+   * @return the hex
+   */
+  public Hex rotateRight(final Hex a) {
         return obtain().setQ(-a.r()).setR(-a.s()).setS(-a.q());
     }
 
-    /**
-     * Does not free old hexes.
-     */
-    public Hex neighbor(final Hex a, final int direction) {
+  /**
+   * Does not free old hexes.
+   *
+   * @param a         the a
+   * @param direction the direction
+   * @return the hex
+   */
+  public Hex neighbor(final Hex a, final int direction) {
         return add(a, direction(direction));
     }
 
-    /**
-     * Does not free old hexes.
-     */
-    public Hex diagonalNeighbor(final Hex a, final int direction) {
+  /**
+   * Does not free old hexes.
+   *
+   * @param a         the a
+   * @param direction the direction
+   * @return the hex
+   */
+  public Hex diagonalNeighbor(final Hex a, final int direction) {
         return add(a, diagonals.get(direction));
     }
 
-    public int distance(final Hex a, final Hex b) {
+  /**
+   * Distance int.
+   *
+   * @param a the a
+   * @param b the b
+   * @return the int
+   */
+  public int distance(final Hex a, final Hex b) {
         final Hex tempHex = subtract(a, b);
         final int result = tempHex.length();
         free(tempHex);
         return result;
     }
 
-    /**
-     * Checks the distance between the two hex entities. If they have no entities, this will blow up.
-     *
-     * @param first  entity.
-     * @param second entity.
-     * @return the distance.
-     */
-    public int distance(final Entity first,
+  /**
+   * Checks the distance between the two hex entities. If they have no entities, this will blow up.
+   *
+   * @param first  entity.
+   * @param second entity.
+   * @return the distance.
+   */
+  public int distance(final Entity first,
                         final Entity second) {
         final Hex firstHex = Optional.ofNullable(first.getComponent(HexComponent.class))
                 .map(HexComponent::hex)

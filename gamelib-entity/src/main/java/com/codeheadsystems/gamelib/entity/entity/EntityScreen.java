@@ -45,7 +45,15 @@ public class EntityScreen extends ScreenAdapter {
     private final Optional<Consumer<EntityScreen>> hideConsumer;
     private final Set<EntityGenerator> entityGenerators;
 
-    @Inject
+  /**
+   * Instantiates a new Entity screen.
+   *
+   * @param engineManager    the engine manager
+   * @param showConsumer     the show consumer
+   * @param hideConsumer     the hide consumer
+   * @param entityGenerators the entity generators
+   */
+  @Inject
     public EntityScreen(final EngineManager engineManager,
                         @Named(ENTITY_SCREEN_SHOW_CONSUMER) final Optional<Consumer<EntityScreen>> showConsumer,
                         @Named(ENTITY_SCREEN_HIDE_CONSUMER) final Optional<Consumer<EntityScreen>> hideConsumer,

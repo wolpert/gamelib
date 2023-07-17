@@ -25,14 +25,31 @@ import dagger.BindsOptionalOf;
 import dagger.Module;
 import dagger.multibindings.IntoSet;
 
+/**
+ * The type Game lib box 2 d module.
+ */
 @Module(includes = {GameLibBox2dModule.Binder.class})
 public class GameLibBox2dModule {
 
+  /**
+   * The interface Binder.
+   */
   @Module
   interface Binder {
+    /**
+     * World configuration world configuration.
+     *
+     * @return the world configuration
+     */
     @BindsOptionalOf
     WorldConfiguration worldConfiguration();
 
+    /**
+     * World entity system entity system.
+     *
+     * @param system the system
+     * @return the entity system
+     */
     @Binds
     @IntoSet
     EntitySystem worldEntitySystem(WorldEntitySystem system);

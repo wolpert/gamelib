@@ -44,24 +44,46 @@ import javax.inject.Singleton;
 @Module
 public class GdxModule {
 
+  /**
+   * Sprite batch sprite batch.
+   *
+   * @return the sprite batch
+   */
   @Provides
   @Singleton
   public SpriteBatch spriteBatch() {
     return new SpriteBatch();
   }
 
+  /**
+   * Shape renderer shape renderer.
+   *
+   * @return the shape renderer
+   */
   @Provides
   @Singleton
   public ShapeRenderer shapeRenderer() {
     return new ShapeRenderer();
   }
 
+  /**
+   * Orthographic camera orthographic camera.
+   *
+   * @return the orthographic camera
+   */
   @Provides
   @Singleton
   public OrthographicCamera orthographicCamera() {
     return new OrthographicCamera();
   }
 
+  /**
+   * Resize camera listener resize manager . listener.
+   *
+   * @param viewportWidth the viewport width
+   * @param camera        the camera
+   * @return the resize manager . listener
+   */
   @Provides
   @Singleton
   @IntoSet
@@ -74,18 +96,36 @@ public class GdxModule {
     };
   }
 
+  /**
+   * Asset manager asset manager.
+   *
+   * @param fileHandleResolver the file handle resolver
+   * @return the asset manager
+   */
   @Provides
   @Singleton
   public AssetManager assetManager(final FileHandleResolver fileHandleResolver) {
     return new AssetManager(fileHandleResolver);
   }
 
+  /**
+   * File handle resolver file handle resolver.
+   *
+   * @param resourcePath the resource path
+   * @return the file handle resolver
+   */
   @Provides
   @Singleton
   public FileHandleResolver fileHandleResolver(@Named(RESOURCE_PATH) Optional<String> resourcePath) {
     return new InternalPrefixedFileHandleResolver(resourcePath.orElse(""));
   }
 
+  /**
+   * Json json.
+   *
+   * @param jsonFactory the json factory
+   * @return the json
+   */
   @Provides
   @Singleton
   public Json json(final JsonFactory jsonFactory) {

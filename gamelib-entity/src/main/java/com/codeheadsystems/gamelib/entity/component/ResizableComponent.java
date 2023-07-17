@@ -20,6 +20,9 @@ package com.codeheadsystems.gamelib.entity.component;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool;
 
+/**
+ * The type Resizable component.
+ */
 public class ResizableComponent implements Pool.Poolable, Component {
 
   private float width;
@@ -29,11 +32,22 @@ public class ResizableComponent implements Pool.Poolable, Component {
     width = 0;
   }
 
+  /**
+   * Sets width.
+   *
+   * @param w the w
+   * @return the width
+   */
   public ResizableComponent setWidth(float w) {
     this.width = w;
     return this;
   }
 
+  /**
+   * Width float.
+   *
+   * @return the float
+   */
   public float width() {
     return width;
   }

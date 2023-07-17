@@ -20,9 +20,17 @@ package com.codeheadsystems.gamelib.net.client.factory;
 import com.codeheadsystems.gamelib.net.client.ClientHandler;
 import dagger.assisted.AssistedFactory;
 
+/**
+ * The interface Client handler factory.
+ */
 @AssistedFactory
 public interface ClientHandlerFactory {
 
+  /**
+   * Instance client handler.
+   *
+   * @return the client handler
+   */
   ClientHandler instance();
 
 }

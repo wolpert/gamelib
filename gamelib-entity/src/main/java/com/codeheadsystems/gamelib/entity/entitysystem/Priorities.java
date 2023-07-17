@@ -22,16 +22,49 @@ package com.codeheadsystems.gamelib.entity.entitysystem;
  */
 public enum Priorities {
 
+  /**
+   * Base priorities.
+   */
   BASE(0),
+  /**
+   * Movement priorities.
+   */
   MOVEMENT(20),
+  /**
+   * Camera priorities.
+   */
   CAMERA(500), // Nothing drawn until after this.
+  /**
+   * Background priorities.
+   */
   BACKGROUND(600),
+  /**
+   * Background layer 1 priorities.
+   */
   BACKGROUND_LAYER1(610),
+  /**
+   * Background layer 2 priorities.
+   */
   BACKGROUND_LAYER2(620),
+  /**
+   * Background layer 3 priorities.
+   */
   BACKGROUND_LAYER3(630),
+  /**
+   * Sprites priorities.
+   */
   SPRITES(900),
+  /**
+   * Physics priorities.
+   */
   PHYSICS(950),
+  /**
+   * Player priorities.
+   */
   PLAYER(1000),
+  /**
+   * Ui priorities.
+   */
   UI(1100);
 
   private final int priority;
@@ -40,6 +73,11 @@ public enum Priorities {
     this.priority = priority;
   }
 
+  /**
+   * Priority int.
+   *
+   * @return the int
+   */
   public int priority() {
     return priority;
   }

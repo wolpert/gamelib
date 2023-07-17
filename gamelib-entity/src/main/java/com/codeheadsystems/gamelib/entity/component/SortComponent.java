@@ -25,6 +25,9 @@ import com.badlogic.gdx.utils.Pool;
  */
 public class SortComponent implements Pool.Poolable, Component {
 
+  /**
+   * The Z.
+   */
   public int z = 50;
 
   @Override
@@ -32,6 +35,12 @@ public class SortComponent implements Pool.Poolable, Component {
     z = 50;
   }
 
+  /**
+   * Z sort component.
+   *
+   * @param z the z
+   * @return the sort component
+   */
   public SortComponent z(int z) {
     this.z = z;
     return this;

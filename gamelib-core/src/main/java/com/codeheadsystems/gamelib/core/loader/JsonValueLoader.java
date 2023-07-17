@@ -36,6 +36,11 @@ public class JsonValueLoader extends AsynchronousAssetLoader<JsonValue, JsonValu
 
   private JsonReader jsonReader = new JsonReader();
 
+  /**
+   * Instantiates a new Json value loader.
+   *
+   * @param resolver the resolver
+   */
   public JsonValueLoader(final FileHandleResolver resolver) {
     super(resolver);
   }
@@ -54,6 +59,9 @@ public class JsonValueLoader extends AsynchronousAssetLoader<JsonValue, JsonValu
     return null;
   }
 
+  /**
+   * The type Json value loader parameter.
+   */
   public static class JsonValueLoaderParameter extends AssetLoaderParameters<JsonValue> {
   }
 }

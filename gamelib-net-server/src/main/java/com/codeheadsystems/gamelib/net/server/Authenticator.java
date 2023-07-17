@@ -19,9 +19,18 @@ package com.codeheadsystems.gamelib.net.server;
 
 import com.codeheadsystems.gamelib.net.model.Identity;
 
+/**
+ * The interface Authenticator.
+ */
 @FunctionalInterface
 public interface Authenticator {
 
+  /**
+   * Is authenticated boolean.
+   *
+   * @param identity the identity
+   * @return the boolean
+   */
   boolean isAuthenticated(final Identity identity);
 
 }

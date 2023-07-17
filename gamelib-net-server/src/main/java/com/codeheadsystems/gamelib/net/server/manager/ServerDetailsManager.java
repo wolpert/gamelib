@@ -25,16 +25,30 @@ import io.netty.handler.ssl.SslHandler;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Server details manager.
+ */
 @Singleton
 public class ServerDetailsManager {
 
   private final NetServerConfiguration configuration;
 
+  /**
+   * Instantiates a new Server details manager.
+   *
+   * @param configuration the configuration
+   */
   @Inject
   public ServerDetailsManager(final NetServerConfiguration configuration) {
     this.configuration = configuration;
   }
 
+  /**
+   * Server details server details.
+   *
+   * @param ctx the ctx
+   * @return the server details
+   */
   public ServerDetails serverDetails(final ChannelHandlerContext ctx) {
     return ImmutableServerDetails.builder()
         .buildNumber(configuration.buildNumber())

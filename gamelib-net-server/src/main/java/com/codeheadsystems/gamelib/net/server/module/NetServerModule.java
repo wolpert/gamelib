@@ -39,21 +39,46 @@ import javax.inject.Named;
 import javax.inject.Singleton;
 import javax.net.ssl.SSLException;
 
+/**
+ * The type Net server module.
+ */
 @Module(includes = NetCommonModule.class)
 public class NetServerModule {
 
+  /**
+   * The constant TLS_CERTIFICATE.
+   */
   public static final String TLS_CERTIFICATE = "TLS_CERTIFICATE";
+  /**
+   * The constant TLS_PRIVATE_KEY.
+   */
   public static final String TLS_PRIVATE_KEY = "TLS_PRIVATE_KEY";
+  /**
+   * The constant TIMER_EXECUTOR_SERVICE.
+   */
   public static final String TIMER_EXECUTOR_SERVICE = "TimerExecutorService";
   private final NetServerConfiguration netServerConfiguration;
   private final Authenticator authenticator;
   private final GameListener gameListener;
 
+  /**
+   * Instantiates a new Net server module.
+   *
+   * @param authenticator the authenticator
+   * @param gameListener  the game listener
+   */
   public NetServerModule(final Authenticator authenticator,
                          final GameListener gameListener) {
     this(ImmutableNetServerConfiguration.builder().build(), authenticator, gameListener);
   }
 
+  /**
+   * Instantiates a new Net server module.
+   *
+   * @param netServerConfiguration the net server configuration
+   * @param authenticator          the authenticator
+   * @param gameListener           the game listener
+   */
   public NetServerModule(final ImmutableNetServerConfiguration netServerConfiguration,
                          final Authenticator authenticator,
                          final GameListener gameListener) {
@@ -62,24 +87,45 @@ public class NetServerModule {
     this.gameListener = gameListener;
   }
 
+  /**
+   * Game listener game listener.
+   *
+   * @return the game listener
+   */
   @Provides
   @Singleton
   public GameListener gameListener() {
     return gameListener;
   }
 
+  /**
+   * Net server configuration net server configuration.
+   *
+   * @return the net server configuration
+   */
   @Provides
   @Singleton
   public NetServerConfiguration netServerConfiguration() {
     return netServerConfiguration;
   }
 
+  /**
+   * Channel group channel group.
+   *
+   * @param eventExecutor the event executor
+   * @return the channel group
+   */
   @Provides
   @Singleton
   public ChannelGroup channelGroup(final EventExecutor eventExecutor) {
     return new DefaultChannelGroup(eventExecutor);
   }
 
+  /**
+   * Event executor event executor.
+   *
+   * @return the event executor
+   */
   @Provides
   @Singleton
   public EventExecutor eventExecutor() {
@@ -87,12 +133,22 @@ public class NetServerModule {
     return GlobalEventExecutor.INSTANCE;
   }
 
+  /**
+   * Authenticator authenticator.
+   *
+   * @return the authenticator
+   */
   @Provides
   @Singleton
   public Authenticator authenticator() {
     return authenticator;
   }
 
+  /**
+   * Self signed certificate self signed certificate.
+   *
+   * @return the self signed certificate
+   */
   @Provides
   @Singleton
   public SelfSignedCertificate selfSignedCertificate() {
@@ -103,6 +159,12 @@ public class NetServerModule {
     }
   }
 
+  /**
+   * Tls certificate file.
+   *
+   * @param ssc the ssc
+   * @return the file
+   */
   @Provides
   @Singleton
   @Named(TLS_CERTIFICATE)
@@ -110,6 +172,12 @@ public class NetServerModule {
     return ssc.certificate();
   }
 
+  /**
+   * Tls private key file.
+   *
+   * @param ssc the ssc
+   * @return the file
+   */
   @Provides
   @Singleton
   @Named(TLS_PRIVATE_KEY)
@@ -117,6 +185,13 @@ public class NetServerModule {
     return ssc.privateKey();
   }
 
+  /**
+   * Ssl context ssl context.
+   *
+   * @param certificate the certificate
+   * @param privateKey  the private key
+   * @return the ssl context
+   */
   @Provides
   @Singleton
   public SslContext sslContext(@Named(TLS_CERTIFICATE) final File certificate,
@@ -131,6 +206,12 @@ public class NetServerModule {
     }
   }
 
+  /**
+   * Timer executor service scheduled thread pool executor.
+   *
+   * @param configuration the configuration
+   * @return the scheduled thread pool executor
+   */
   @Provides
   @Singleton
   @Named(TIMER_EXECUTOR_SERVICE)

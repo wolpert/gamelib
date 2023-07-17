@@ -47,11 +47,26 @@ import javax.inject.Singleton;
 @Module(includes = {GameLibEntityModule.Binder.class})
 public class GameLibEntityModule {
 
+  /**
+   * The constant CONFIGURATION_JSON.
+   */
   public static final String CONFIGURATION_JSON = "ashleyGameConfiguration.json";
+  /**
+   * The constant ENTITY_SCREEN_SHOW_CONSUMER.
+   */
   public static final String ENTITY_SCREEN_SHOW_CONSUMER = "EntityScreenShowConsumer";
+  /**
+   * The constant ENTITY_SCREEN_HIDE_CONSUMER.
+   */
   public static final String ENTITY_SCREEN_HIDE_CONSUMER = "EntityScreenHideConsumer";
   private static final Logger LOGGER = logger(GameLibEntityModule.class);
 
+  /**
+   * Background entity.
+   *
+   * @param pooledEngine the pooled engine
+   * @return the entity
+   */
   @IntoSet
   @Provides
   @Singleton
@@ -59,6 +74,12 @@ public class GameLibEntityModule {
     return pooledEngine.createEntity();
   }
 
+  /**
+   * Sprite render entity system entity system.
+   *
+   * @param system the system
+   * @return the entity system
+   */
   @IntoSet
   @Provides
   @Singleton
@@ -66,6 +87,12 @@ public class GameLibEntityModule {
     return system;
   }
 
+  /**
+   * Camera entity system entity system.
+   *
+   * @param entitySystem the entity system
+   * @return the entity system
+   */
   @IntoSet
   @Provides
   @Singleton
@@ -73,6 +100,12 @@ public class GameLibEntityModule {
     return entitySystem;
   }
 
+  /**
+   * Pooled engine pooled engine.
+   *
+   * @param configuration the configuration
+   * @return the pooled engine
+   */
   @Provides
   @Singleton
   public PooledEngine pooledEngine(final AshleyGameConfiguration configuration) {
@@ -84,6 +117,13 @@ public class GameLibEntityModule {
     return pooledEngine;
   }
 
+  /**
+   * Ashley game configuration ashley game configuration.
+   *
+   * @param fileHandleResolver the file handle resolver
+   * @param json               the json
+   * @return the ashley game configuration
+   */
   @Provides
   @Singleton
   public AshleyGameConfiguration ashleyGameConfiguration(final FileHandleResolver fileHandleResolver,
@@ -92,6 +132,9 @@ public class GameLibEntityModule {
     return json.fromJson(AshleyGameConfiguration.class, fileHandle);
   }
 
+  /**
+   * The interface Binder.
+   */
   @Module
   interface Binder {
     /**

@@ -30,6 +30,9 @@ import com.codeheadsystems.gamelib.hex.component.HexComponent;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Hex shape renderer.
+ */
 @Singleton
 public class HexShapeRenderer extends IteratingSystem {
 
@@ -37,7 +40,12 @@ public class HexShapeRenderer extends IteratingSystem {
     private final ComponentMapper<HexComponent> hm = ComponentMapper.getFor(HexComponent.class);
     private final ShapeRenderer shapeRenderer;
 
-    @Inject
+  /**
+   * Instantiates a new Hex shape renderer.
+   *
+   * @param shapeRenderer the shape renderer
+   */
+  @Inject
     public HexShapeRenderer(final ShapeRenderer shapeRenderer) {
         super(Family.all(HexComponent.class).get(), Priorities.BACKGROUND_LAYER1.priority());
         this.shapeRenderer = shapeRenderer;
@@ -56,22 +64,22 @@ public class HexShapeRenderer extends IteratingSystem {
         shapeRenderer.polygon(hm.get(entity).vertices());
     }
 
-    /**
-     * Override this if you need something to execute before the start of the
-     * batch.
-     *
-     * @param deltaTime time since last execution.
-     */
-    public void beforeIteration(final float deltaTime) {
+  /**
+   * Override this if you need something to execute before the start of the
+   * batch.
+   *
+   * @param deltaTime time since last execution.
+   */
+  public void beforeIteration(final float deltaTime) {
         shapeRenderer.begin(ShapeRenderer.ShapeType.Line);
     }
 
-    /**
-     * Override this if you want to handle the end of the entity.
-     *
-     * @param deltaTime time since last execution.
-     */
-    public void afterIteration(final float deltaTime) {
+  /**
+   * Override this if you want to handle the end of the entity.
+   *
+   * @param deltaTime time since last execution.
+   */
+  public void afterIteration(final float deltaTime) {
         shapeRenderer.end();
     }
 }

@@ -20,11 +20,21 @@ package com.codeheadsystems.gamelib.core.util;
 import com.badlogic.gdx.utils.Pool;
 import java.util.function.Supplier;
 
+/**
+ * The type Pooler.
+ *
+ * @param <T> the type parameter
+ */
 public class PoolerImpl<T> implements Pooler<T> {
 
     final private Pool<T> pool;
 
-    protected PoolerImpl(final Supplier<T> supplier) {
+  /**
+   * Instantiates a new Pooler.
+   *
+   * @param supplier the supplier
+   */
+  protected PoolerImpl(final Supplier<T> supplier) {
         this.pool = new Pool<>() {
             @Override
             protected T newObject() {

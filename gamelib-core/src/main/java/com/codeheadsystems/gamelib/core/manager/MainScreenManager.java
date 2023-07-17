@@ -30,6 +30,9 @@ import javax.inject.Inject;
 import javax.inject.Named;
 import javax.inject.Singleton;
 
+/**
+ * The type Main screen manager.
+ */
 @Singleton
 public class MainScreenManager {
 
@@ -39,6 +42,13 @@ public class MainScreenManager {
   private final Optional<Function<GdxRuntimeCache, Screen>> optionalScreenProvider;
   private final GdxRuntimeCache gdxRuntimeCache;
 
+  /**
+   * Instantiates a new Main screen manager.
+   *
+   * @param optionalScreen         the optional screen
+   * @param optionalScreenProvider the optional screen provider
+   * @param gdxRuntimeCache        the gdx runtime cache
+   */
   @Inject
   public MainScreenManager(@Named(MAIN_SCREEN) final Optional<Screen> optionalScreen,
                            @Named(MAIN_SCREEN_PROVIDER) final Optional<Function<GdxRuntimeCache, Screen>> optionalScreenProvider,
@@ -48,6 +58,11 @@ public class MainScreenManager {
     this.gdxRuntimeCache = gdxRuntimeCache;
   }
 
+  /**
+   * Main screen screen.
+   *
+   * @return the screen
+   */
   public Screen mainScreen() {
     if (optionalScreen.isPresent() && optionalScreenProvider.isPresent()) {
       LOGGER.info("WARNING: you defined both a MAIN_SCREEN and a MAIN_SCREEN_PROVIDER. Will default to MAIN_SCREEN");

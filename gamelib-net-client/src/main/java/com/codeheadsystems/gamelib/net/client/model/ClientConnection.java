@@ -21,13 +21,31 @@ import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import org.immutables.value.Value;
 
+/**
+ * The interface Client connection.
+ */
 @Value.Immutable
 public interface ClientConnection {
 
+  /**
+   * Channel channel.
+   *
+   * @return the channel
+   */
   Channel channel();
 
+  /**
+   * Event loop group event loop group.
+   *
+   * @return the event loop group
+   */
   EventLoopGroup eventLoopGroup();
 
+  /**
+   * Id string.
+   *
+   * @return the string
+   */
   String id();
 
 }

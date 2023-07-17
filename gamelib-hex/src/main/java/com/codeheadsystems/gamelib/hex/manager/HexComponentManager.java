@@ -41,7 +41,13 @@ public class HexComponentManager {
     private final HexManager hexManager;
     private final LayoutManager layoutManager;
 
-    @Inject
+  /**
+   * Instantiates a new Hex component manager.
+   *
+   * @param hexManager    the hex manager
+   * @param layoutManager the layout manager
+   */
+  @Inject
     public HexComponentManager(final HexManager hexManager,
                                final LayoutManager layoutManager) {
         this.hexManager = hexManager;
@@ -50,27 +56,56 @@ public class HexComponentManager {
         LOGGER.debug("HexComponentManager()");
     }
 
-    public Set<HexComponent> generate(final HexFieldLayout hexFieldLayout) {
+  /**
+   * Generate set.
+   *
+   * @param hexFieldLayout the hex field layout
+   * @return the set
+   */
+  public Set<HexComponent> generate(final HexFieldLayout hexFieldLayout) {
         return generate(hexFieldLayout.cols(), hexFieldLayout.rows(), hexFieldLayout.layout());
     }
 
-    public Set<HexComponent> generate(final int cols, final int rows, final Layout layout) {
+  /**
+   * Generate set.
+   *
+   * @param cols   the cols
+   * @param rows   the rows
+   * @param layout the layout
+   * @return the set
+   */
+  public Set<HexComponent> generate(final int cols, final int rows, final Layout layout) {
         return hexManager.generate(cols, rows)
                 .stream()
                 .map(h -> pool.obtain().initialize(h, layout, layoutManager))
                 .collect(Collectors.toSet());
     }
 
-    public void release(final Set<HexComponent> field) {
+  /**
+   * Release.
+   *
+   * @param field the field
+   */
+  public void release(final Set<HexComponent> field) {
         field.forEach(this::release);
     }
 
-    public void release(final HexComponent component) {
+  /**
+   * Release.
+   *
+   * @param component the component
+   */
+  public void release(final HexComponent component) {
         hexManager.free(component.hex());
         pool.free(component);
     }
 
-    public int poolSize() {
+  /**
+   * Pool size int.
+   *
+   * @return the int
+   */
+  public int poolSize() {
         return pool.poolSize();
     }
 

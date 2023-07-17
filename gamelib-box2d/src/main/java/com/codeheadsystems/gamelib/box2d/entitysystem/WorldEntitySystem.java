@@ -23,11 +23,19 @@ import com.codeheadsystems.gamelib.entity.entitysystem.Priorities;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type World entity system.
+ */
 @Singleton
 public class WorldEntitySystem extends EntitySystem {
 
   private final WorldManager worldManager;
 
+  /**
+   * Instantiates a new World entity system.
+   *
+   * @param worldManager the world manager
+   */
   @Inject
   public WorldEntitySystem(final WorldManager worldManager) {
     super(Priorities.PHYSICS.priority());

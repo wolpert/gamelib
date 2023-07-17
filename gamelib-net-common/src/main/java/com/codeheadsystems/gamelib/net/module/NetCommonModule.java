@@ -23,9 +23,18 @@ import dagger.Module;
 import dagger.Provides;
 import javax.inject.Singleton;
 
+/**
+ * The type Net common module.
+ */
 @Module
 public class NetCommonModule {
 
+  /**
+   * Object mapper object mapper.
+   *
+   * @param factory the factory
+   * @return the object mapper
+   */
   @Provides
   @Singleton
   public ObjectMapper objectMapper(final ObjectMapperFactory factory) {

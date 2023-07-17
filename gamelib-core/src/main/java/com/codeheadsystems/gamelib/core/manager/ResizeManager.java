@@ -29,17 +29,37 @@ public class ResizeManager {
 
   private final Set<Listener> listeners;
 
+  /**
+   * Instantiates a new Resize manager.
+   *
+   * @param listeners the listeners
+   */
   @Inject
   public ResizeManager(final Set<Listener> listeners) {
     this.listeners = listeners;
   }
 
+  /**
+   * Resize.
+   *
+   * @param width  the width
+   * @param height the height
+   */
   public void resize(int width, int height) {
     listeners.forEach(l -> l.resize(width, height));
   }
 
+  /**
+   * The interface Listener.
+   */
   @FunctionalInterface
   public interface Listener {
+    /**
+     * Resize.
+     *
+     * @param width  the width
+     * @param height the height
+     */
     void resize(int width, int height);
   }
 

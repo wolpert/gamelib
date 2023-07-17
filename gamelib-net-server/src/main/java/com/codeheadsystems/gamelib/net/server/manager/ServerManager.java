@@ -25,6 +25,9 @@ import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The type Server manager.
+ */
 @Singleton
 public class ServerManager {
   private static final Logger LOGGER = LoggerFactory.getLogger(ServerManager.class);
@@ -33,6 +36,11 @@ public class ServerManager {
   private ServerConnection serverConnection;
   private State state;
 
+  /**
+   * Instantiates a new Server manager.
+   *
+   * @param serverConnectionFactory the server connection factory
+   */
   @Inject
   public ServerManager(final ServerConnectionFactory serverConnectionFactory) {
     this.serverConnectionFactory = serverConnectionFactory;
@@ -40,6 +48,11 @@ public class ServerManager {
     setState(State.OFFLINE);
   }
 
+  /**
+   * Execute server boolean.
+   *
+   * @return the boolean
+   */
   public boolean executeServer() {
     LOGGER.info("executeServer()");
     if (!state.equals(State.OFFLINE)) {
@@ -57,6 +70,11 @@ public class ServerManager {
     return true;
   }
 
+  /**
+   * Wait on close boolean.
+   *
+   * @return the boolean
+   */
   public boolean waitOnClose() {
     if (state.equals(State.RUNNING)) {
       try {
@@ -70,6 +88,11 @@ public class ServerManager {
     }
   }
 
+  /**
+   * Gets state.
+   *
+   * @return the state
+   */
   public State getState() {
     return state;
   }
@@ -81,6 +104,8 @@ public class ServerManager {
 
   /**
    * Tell ourselves to close.
+   *
+   * @return the channel future
    */
   public ChannelFuture stop() {
     LOGGER.info("stop()");
@@ -88,10 +113,34 @@ public class ServerManager {
     return serverConnection.channel().close();
   }
 
+  /**
+   * Close future channel future.
+   *
+   * @return the channel future
+   */
   public ChannelFuture closeFuture() {
     return serverConnection.channel().closeFuture();
   }
 
-  public enum State {OFFLINE, STARTING, RUNNING, STOPPING}
+  /**
+   * The enum State.
+   */
+  public enum State {
+    /**
+     * Offline state.
+     */
+    OFFLINE,
+    /**
+     * Starting state.
+     */
+    STARTING,
+    /**
+     * Running state.
+     */
+    RUNNING,
+    /**
+     * Stopping state.
+     */
+    STOPPING}
 
 }

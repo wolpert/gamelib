@@ -27,11 +27,19 @@ import javax.inject.Singleton;
 @Singleton
 public class JsonFactory {
 
+  /**
+   * Instantiates a new Json factory.
+   */
   @Inject
   public JsonFactory() {
 
   }
 
+  /**
+   * Json json.
+   *
+   * @return the json
+   */
   public Json json() {
     return new Json();
   }

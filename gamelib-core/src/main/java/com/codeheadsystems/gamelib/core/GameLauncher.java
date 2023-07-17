@@ -47,7 +47,15 @@ public class GameLauncher extends Game {
     private final Lazy<ResizeManager> resizeManager;
     private final AssetManager assetManager;
 
-    @Inject
+  /**
+   * Instantiates a new Game launcher.
+   *
+   * @param loadingScreen the loading screen
+   * @param gameListeners the game listeners
+   * @param resizeManager the resize manager
+   * @param assetManager  the asset manager
+   */
+  @Inject
     public GameLauncher(final Lazy<LoadingScreen> loadingScreen,
                         final Lazy<Set<GameListener>> gameListeners,
                         final Lazy<ResizeManager> resizeManager,

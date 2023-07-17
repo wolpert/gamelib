@@ -33,6 +33,9 @@ import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The type Client manager.
+ */
 @Singleton
 public class ClientManager {
 
@@ -48,6 +51,13 @@ public class ClientManager {
   private CompletableFuture<ServerDetails> serverDetailsFuture;
   private CompletableFuture<Authenticated> authenticatedFuture;
 
+  /**
+   * Instantiates a new Client manager.
+   *
+   * @param clientConnectionFactory the client connection factory
+   * @param jsonManager             the json manager
+   * @param queue                   the queue
+   */
   @Inject
   public ClientManager(final ClientConnectionFactory clientConnectionFactory,
                        final JsonManager jsonManager,
@@ -61,14 +71,29 @@ public class ClientManager {
     authenticatedFuture = new CompletableFuture<>();
   }
 
+  /**
+   * Gets server details future.
+   *
+   * @return the server details future
+   */
   public java.util.concurrent.Future<ServerDetails> getServerDetailsFuture() {
     return serverDetailsFuture;
   }
 
+  /**
+   * Gets authenticated future.
+   *
+   * @return the authenticated future
+   */
   public java.util.concurrent.Future<Authenticated> getAuthenticatedFuture() {
     return authenticatedFuture;
   }
 
+  /**
+   * Gets status.
+   *
+   * @return the status
+   */
   public Status getStatus() {
     return status;
   }
@@ -78,6 +103,12 @@ public class ClientManager {
     this.status = status;
   }
 
+  /**
+   * Send message channel future.
+   *
+   * @param msg the msg
+   * @return the channel future
+   */
   public ChannelFuture sendMessage(String msg) {
     if (status.equals(Status.OFFLINE)) {
       return null;
@@ -85,6 +116,12 @@ public class ClientManager {
     return client.channel().writeAndFlush(msg + "\r\n");
   }
 
+  /**
+   * Connect boolean.
+   *
+   * @param identity the identity
+   * @return the boolean
+   */
   public boolean connect(final Identity identity) {
     LOGGER.info("connect({})", identity.id());
     if (status.equals(Status.OFFLINE)) {
@@ -115,6 +152,11 @@ public class ClientManager {
     authenticatedFuture = new CompletableFuture<>();
   }
 
+  /**
+   * Server details.
+   *
+   * @param serverDetails the server details
+   */
   public void serverDetails(final ServerDetails serverDetails) {
     LOGGER.info("serverDetails({})", serverDetails);
     setStatus(Status.UNAUTH);
@@ -122,12 +164,22 @@ public class ClientManager {
     serverDetailsFuture.complete(serverDetails);
   }
 
+  /**
+   * Authenticated.
+   *
+   * @param authenticated the authenticated
+   */
   public void authenticated(final Authenticated authenticated) {
     LOGGER.info("authenticated({})", authenticated);
     setStatus(Status.CONNECTED);
     authenticatedFuture.complete(authenticated);
   }
 
+  /**
+   * Disconnect optional.
+   *
+   * @return the optional
+   */
   public Optional<Future<?>> disconnect() {
     LOGGER.info("disconnect()");
     if (status != Status.OFFLINE && status != Status.STOPPING) {
@@ -138,9 +190,37 @@ public class ClientManager {
     }
   }
 
+  /**
+   * Close future channel future.
+   *
+   * @return the channel future
+   */
   public ChannelFuture closeFuture() {
     return client.channel().closeFuture();
   }
 
-  public enum Status {OFFLINE, CONNECTING, UNAUTH, CONNECTED, STOPPING}
+  /**
+   * The enum Status.
+   */
+  public enum Status {
+    /**
+     * Offline status.
+     */
+    OFFLINE,
+    /**
+     * Connecting status.
+     */
+    CONNECTING,
+    /**
+     * Unauth status.
+     */
+    UNAUTH,
+    /**
+     * Connected status.
+     */
+    CONNECTED,
+    /**
+     * Stopping status.
+     */
+    STOPPING}
 }

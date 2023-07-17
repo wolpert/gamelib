@@ -21,32 +21,63 @@ import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Arrow manager.
+ */
 @Singleton
 public class ArrowManager {
 
     private static final double DEGREES = Math.toRadians(30);
     private static final float COS_0 = (float) Math.cos(DEGREES);
     private static final float SIN_0 = (float) Math.sin(DEGREES);
-    public static final int DEFAULT_WIDTH = 4;
+  /**
+   * The constant DEFAULT_WIDTH.
+   */
+  public static final int DEFAULT_WIDTH = 4;
 
     private final ShapeRenderer shapeRenderer;
 
-    @Inject
+  /**
+   * Instantiates a new Arrow manager.
+   *
+   * @param shapeRenderer the shape renderer
+   */
+  @Inject
     public ArrowManager(final ShapeRenderer shapeRenderer) {
         this.shapeRenderer = shapeRenderer;
     }
 
-    public void render(final float[] points) {
+  /**
+   * Render.
+   *
+   * @param points the points
+   */
+  public void render(final float[] points) {
         render(points, DEFAULT_WIDTH);
     }
 
-    public void render(final float[] points, final int width) {
+  /**
+   * Render.
+   *
+   * @param points the points
+   * @param width  the width
+   */
+  public void render(final float[] points, final int width) {
         shapeRenderer.rectLine(points[0], points[1], points[2], points[3], width);
         shapeRenderer.rectLine(points[2], points[3], points[4], points[5], width);
         shapeRenderer.rectLine(points[2], points[3], points[6], points[7], width);
     }
 
-    public float[] getArrow(final float x1, final float y1,
+  /**
+   * Get arrow float [ ].
+   *
+   * @param x1 the x 1
+   * @param y1 the y 1
+   * @param x2 the x 2
+   * @param y2 the y 2
+   * @return the float [ ]
+   */
+  public float[] getArrow(final float x1, final float y1,
                             final float x2, final float y2) {
         final float l1 = (float) Math.sqrt(Math.pow(x2 - x1, 2) + Math.pow(y2 - y1, 2));
         final float l2 = l1 / 3f;

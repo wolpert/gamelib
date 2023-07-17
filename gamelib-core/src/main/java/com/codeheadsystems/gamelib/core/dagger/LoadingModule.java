@@ -39,12 +39,30 @@ import javax.inject.Singleton;
 @Module
 public class LoadingModule {
 
+  /**
+   * The constant CONFIGURATION_JSON.
+   */
   public static final String CONFIGURATION_JSON = "loadingConfiguration.json";
+  /**
+   * The constant LOADING_IMAGE.
+   */
   public static final String LOADING_IMAGE = "loadingImage";
+  /**
+   * The constant MAIN_SCREEN.
+   */
   public static final String MAIN_SCREEN = "mainScreen";
+  /**
+   * The constant MAIN_SCREEN_PROVIDER.
+   */
   public static final String MAIN_SCREEN_PROVIDER = "mainScreenProvider";
   private static final Logger LOGGER = logger(LoadingModule.class);
 
+  /**
+   * Loading image string.
+   *
+   * @param loadingConfiguration the loading configuration
+   * @return the string
+   */
   @Named(LOADING_IMAGE)
   @Provides
   @Singleton
@@ -52,6 +70,13 @@ public class LoadingModule {
     return loadingConfiguration.getLoadingImage();
   }
 
+  /**
+   * Loading configuration loading configuration.
+   *
+   * @param fileHandleResolver the file handle resolver
+   * @param json               the json
+   * @return the loading configuration
+   */
   @Provides
   @Singleton
   public LoadingConfiguration loadingConfiguration(final FileHandleResolver fileHandleResolver,
@@ -60,6 +85,12 @@ public class LoadingModule {
     return json.fromJson(LoadingConfiguration.class, fileHandle);
   }
 
+  /**
+   * Loading screen game listener game listener.
+   *
+   * @param loadingScreen the loading screen
+   * @return the game listener
+   */
   @Provides
   @Singleton
   @IntoSet

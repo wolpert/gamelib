@@ -32,6 +32,9 @@ public class SortComparator implements Comparator<Entity> {
 
   private final ComponentMapper<SortComponent> sm;
 
+  /**
+   * Instantiates a new Sort comparator.
+   */
   @Inject
   public SortComparator() {
     sm = ComponentMapper.getFor(SortComponent.class);

@@ -8,6 +8,11 @@ import com.badlogic.ashley.core.Entity;
 @FunctionalInterface
 public interface EntityGenerator {
 
+  /**
+   * Generate entity.
+   *
+   * @return the entity
+   */
   Entity generate();
 
 }

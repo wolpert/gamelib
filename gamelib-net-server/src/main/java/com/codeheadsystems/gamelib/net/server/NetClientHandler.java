@@ -38,6 +38,9 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The type Net client handler.
+ */
 public class NetClientHandler extends SimpleChannelInboundHandler<String> {
 
   private static final Logger LOGGER = LoggerFactory.getLogger(NetClientHandler.class);
@@ -51,6 +54,15 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
   private Status status;
   private Optional<MessageHandler> messageHandler;
 
+  /**
+   * Instantiates a new Net client handler.
+   *
+   * @param channels                     the channels
+   * @param jsonManager                  the json manager
+   * @param authenticationManagerFactory the authentication manager factory
+   * @param serverDetailsManager         the server details manager
+   * @param gameListener                 the game listener
+   */
   @AssistedInject
   public NetClientHandler(final ChannelGroup channels,
                           final JsonManager jsonManager,
@@ -66,6 +78,11 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     this.setStatus(Status.OFFLINE);
   }
 
+  /**
+   * Gets status.
+   *
+   * @return the status
+   */
   public Status getStatus() {
     return status;
   }
@@ -100,10 +117,19 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     ctx.channel().closeFuture().addListener(future -> setStatus(Status.OFFLINE));
   }
 
+  /**
+   * Write message channel future.
+   *
+   * @param message the message
+   * @return the channel future
+   */
   public ChannelFuture writeMessage(final String message) {
     return channel.writeAndFlush(message + "\r\n");
   }
 
+  /**
+   * Authenticated.
+   */
   public void authenticated() {
     LOGGER.info("authenticated({},{})", channel.id(), status);
     if (status.equals(Status.AUTH_REQUEST)) {
@@ -115,6 +141,11 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     }
   }
 
+  /**
+   * Shutdown.
+   *
+   * @param reason the reason
+   */
   public void shutdown(final String reason) {
     LOGGER.info("shutdown({})", reason);
     this.setStatus(Status.STOPPING);
@@ -150,8 +181,34 @@ public class NetClientHandler extends SimpleChannelInboundHandler<String> {
     this.setStatus(Status.OFFLINE);
   }
 
+  /**
+   * The enum Status.
+   */
   public enum Status {
-    OFFLINE, UNAUTH, AUTH_REQUEST, AUTHENTICATED(true), AVAILABLE(true), STOPPING;
+    /**
+     * Offline status.
+     */
+    OFFLINE,
+    /**
+     * Unauth status.
+     */
+    UNAUTH,
+    /**
+     * Auth request status.
+     */
+    AUTH_REQUEST,
+    /**
+     * Authenticated status.
+     */
+    AUTHENTICATED(true),
+    /**
+     * Available status.
+     */
+    AVAILABLE(true),
+    /**
+     * Stopping status.
+     */
+    STOPPING;
 
     private final boolean communicable;
 

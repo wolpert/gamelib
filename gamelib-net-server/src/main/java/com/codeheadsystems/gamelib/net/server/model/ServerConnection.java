@@ -21,13 +21,31 @@ import io.netty.channel.Channel;
 import io.netty.channel.EventLoopGroup;
 import org.immutables.value.Value;
 
+/**
+ * The interface Server connection.
+ */
 @Value.Immutable
 public interface ServerConnection {
 
+  /**
+   * Channel channel.
+   *
+   * @return the channel
+   */
   Channel channel();
 
+  /**
+   * Boss group event loop group.
+   *
+   * @return the event loop group
+   */
   EventLoopGroup bossGroup();
 
+  /**
+   * Worker group event loop group.
+   *
+   * @return the event loop group
+   */
   EventLoopGroup workerGroup();
 
 }

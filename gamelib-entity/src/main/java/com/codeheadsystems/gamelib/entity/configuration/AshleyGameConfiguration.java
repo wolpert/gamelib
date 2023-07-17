@@ -22,9 +22,21 @@ package com.codeheadsystems.gamelib.entity.configuration;
  */
 public class AshleyGameConfiguration {
 
+  /**
+   * The Entity pool initial size.
+   */
   public int entityPoolInitialSize;
+  /**
+   * The Entity pool max size.
+   */
   public int entityPoolMaxSize;
+  /**
+   * The Component pool initial size.
+   */
   public int componentPoolInitialSize;
+  /**
+   * The Component pool max size.
+   */
   public int componentPoolMaxSize;
 
 }

@@ -26,6 +26,11 @@ import com.badlogic.gdx.Game;
 @FunctionalInterface
 public interface GameListener {
 
+  /**
+   * Sets game.
+   *
+   * @param game the game
+   */
   void setGame(Game game);
 
 }

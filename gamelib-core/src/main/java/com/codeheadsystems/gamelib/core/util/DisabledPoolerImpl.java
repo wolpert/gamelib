@@ -28,6 +28,11 @@ public class DisabledPoolerImpl<T> implements Pooler<T> {
 
   private final Supplier<T> supplier;
 
+  /**
+   * Instantiates a new Disabled pooler.
+   *
+   * @param supplier the supplier
+   */
   protected DisabledPoolerImpl(final Supplier<T> supplier) {
     this.supplier = supplier;
   }

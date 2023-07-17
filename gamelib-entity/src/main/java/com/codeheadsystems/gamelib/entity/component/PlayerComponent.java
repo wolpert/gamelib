@@ -20,6 +20,9 @@ package com.codeheadsystems.gamelib.entity.component;
 import com.badlogic.ashley.core.Component;
 import com.badlogic.gdx.utils.Pool;
 
+/**
+ * The type Player component.
+ */
 public class PlayerComponent implements Pool.Poolable, Component {
   @Override
   public void reset() {

@@ -29,12 +29,21 @@ import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The type Timer manager.
+ */
 @Singleton
 public class TimerManager {
   private static final Logger LOGGER = LoggerFactory.getLogger(TimerManager.class);
   private final ScheduledThreadPoolExecutor executorService;
   private final NetServerConfiguration configuration;
 
+  /**
+   * Instantiates a new Timer manager.
+   *
+   * @param executorService the executor service
+   * @param configuration   the configuration
+   */
   @Inject
   public TimerManager(@Named(TIMER_EXECUTOR_SERVICE) final ScheduledThreadPoolExecutor executorService,
                       final NetServerConfiguration configuration) {
@@ -43,6 +52,12 @@ public class TimerManager {
     this.configuration = configuration;
   }
 
+  /**
+   * Enabled auth timeout handler future.
+   *
+   * @param manager the manager
+   * @return the future
+   */
   public Future enabledAuthTimeoutHandler(final AuthenticationManager manager) {
     return executorService.schedule(manager::timerExpired,
         configuration.authTimeoutMilliseconds(), TimeUnit.MILLISECONDS);

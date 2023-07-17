@@ -28,10 +28,20 @@ public class Assets {
   private HashMap<String, ArrayList<String>> assetsToLoad;
   private ArrayList<Loader> loaders;
 
+  /**
+   * Gets assets to load.
+   *
+   * @return the assets to load
+   */
   public HashMap<String, ArrayList<String>> getAssetsToLoad() {
     return assetsToLoad;
   }
 
+  /**
+   * Loaders array list.
+   *
+   * @return the array list
+   */
   public ArrayList<Loader> loaders() {
     return loaders;
   }

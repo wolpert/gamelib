@@ -33,6 +33,9 @@ import javax.inject.Singleton;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+/**
+ * The type Channel pipeline initializer.
+ */
 @Singleton
 public class ChannelPipelineInitializer extends ChannelInitializer<SocketChannel> {
   private static final Logger LOGGER = LoggerFactory.getLogger(ChannelPipelineInitializer.class);
@@ -41,6 +44,13 @@ public class ChannelPipelineInitializer extends ChannelInitializer<SocketChannel
   private final ChannelGroup channels;
   private final NetClientHandlerFactory factory;
 
+  /**
+   * Instantiates a new Channel pipeline initializer.
+   *
+   * @param sslCtx   the ssl ctx
+   * @param channels the channels
+   * @param factory  the factory
+   */
   @Inject
   public ChannelPipelineInitializer(final SslContext sslCtx,
                                     final ChannelGroup channels,

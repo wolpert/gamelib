@@ -33,25 +33,38 @@ public class JsonManager {
 
     private final Json json;
 
-    @Inject
+  /**
+   * Instantiates a new Json manager.
+   *
+   * @param json the json
+   */
+  @Inject
     public JsonManager(final Json json) {
         this.json = json;
     }
 
-    /**
-     * Wrappper for the fromJson method to ease testing.
-     *
-     * @param clazz we are looking for.
-     * @param file  file handler.
-     * @param <T>   the type.
-     * @return an instance of clazz based on the type.
-     */
-    public <T> T fromJson(final Class<T> clazz,
+  /**
+   * Wrappper for the fromJson method to ease testing.
+   *
+   * @param <T>   the type.
+   * @param clazz we are looking for.
+   * @param file  file handler.
+   * @return an instance of clazz based on the type.
+   */
+  public <T> T fromJson(final Class<T> clazz,
                           final FileHandle file) {
         return json.fromJson(clazz, file);
     }
 
-    public <T> T fromJson(final Class<T> clazz,
+  /**
+   * From json t.
+   *
+   * @param <T>        the type parameter
+   * @param clazz      the clazz
+   * @param jsonString the json string
+   * @return the t
+   */
+  public <T> T fromJson(final Class<T> clazz,
                           final String jsonString) {
         return json.fromJson(clazz, jsonString);
     }

@@ -29,6 +29,9 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Layout manager.
+ */
 @Singleton
 public class LayoutManager extends PoolerImpl<Layout> {
 
@@ -36,7 +39,13 @@ public class LayoutManager extends PoolerImpl<Layout> {
     private final Vector2Manager vector2Manager;
     private final FractionalHexManager fractionalHexManager;
 
-    @Inject
+  /**
+   * Instantiates a new Layout manager.
+   *
+   * @param vector2Manager       the vector 2 manager
+   * @param fractionalHexManager the fractional hex manager
+   */
+  @Inject
     public LayoutManager(final Vector2Manager vector2Manager,
                          final FractionalHexManager fractionalHexManager) {
         super(Layout::new);
@@ -45,7 +54,13 @@ public class LayoutManager extends PoolerImpl<Layout> {
         LOGGER.debug("LayoutManager()");
     }
 
-    public Layout generate(final HexFieldConfiguration configuration) {
+  /**
+   * Generate layout.
+   *
+   * @param configuration the configuration
+   * @return the layout
+   */
+  public Layout generate(final HexFieldConfiguration configuration) {
         return this.obtain()
             .setOrientation(configuration.getOrientation())
             .setSize(vector2Manager.obtain().set(configuration.getSizeX(), configuration.getSizeY()))
@@ -59,14 +74,29 @@ public class LayoutManager extends PoolerImpl<Layout> {
         super.free(tInstance);
     }
 
-    public Vector2 hexToPixel(final Layout layout, final Hex h) {
+  /**
+   * Hex to pixel vector 2.
+   *
+   * @param layout the layout
+   * @param h      the h
+   * @return the vector 2
+   */
+  public Vector2 hexToPixel(final Layout layout, final Hex h) {
         final Orientation M = layout.orientation();
         final float x = (M.f0() * h.q() + M.f1() * h.r()) * layout.size().x;
         final float y = (M.f2() * h.q() + M.f3() * h.r()) * layout.size().y;
         return vector2Manager.obtain().set(x + layout.origin().x, y + layout.origin().y);
     }
 
-    public FractionalHex pixelToHex(final Layout layout, final float x, final float y) {
+  /**
+   * Pixel to hex fractional hex.
+   *
+   * @param layout the layout
+   * @param x      the x
+   * @param y      the y
+   * @return the fractional hex
+   */
+  public FractionalHex pixelToHex(final Layout layout, final float x, final float y) {
         final Orientation m = layout.orientation();
         final Vector2 pt = new Vector2().set((x - layout.origin().x) / layout.size().x, (y - layout.origin().y) / layout.size().y);
         final float q = m.b0() * pt.x + m.b1() * pt.y;
@@ -74,17 +104,38 @@ public class LayoutManager extends PoolerImpl<Layout> {
         return fractionalHexManager.obtain().setQ(q).setR(r).setS(-q - r);
     }
 
-    public FractionalHex pixelToHex(final Layout layout, final Vector2 p) {
+  /**
+   * Pixel to hex fractional hex.
+   *
+   * @param layout the layout
+   * @param p      the p
+   * @return the fractional hex
+   */
+  public FractionalHex pixelToHex(final Layout layout, final Vector2 p) {
         return pixelToHex(layout, p.x, p.y);
     }
 
-    public Vector2 hexCornerOffset(final Layout layout, final int corner) {
+  /**
+   * Hex corner offset vector 2.
+   *
+   * @param layout the layout
+   * @param corner the corner
+   * @return the vector 2
+   */
+  public Vector2 hexCornerOffset(final Layout layout, final int corner) {
         final Orientation m = layout.orientation();
         final double angle = 2.0 * Math.PI * (m.startAngle() - corner) / 6.0;
         return vector2Manager.obtain().set(layout.size().x * toFloat(Math.cos(angle)), layout.size().y * toFloat(Math.sin(angle)));
     }
 
-    public List<Vector2> polygonCorners(final Layout layout, final Hex h) {
+  /**
+   * Polygon corners list.
+   *
+   * @param layout the layout
+   * @param h      the h
+   * @return the list
+   */
+  public List<Vector2> polygonCorners(final Layout layout, final Hex h) {
         final List<Vector2> corners = new ArrayList<>();
         final Vector2 center = hexToPixel(layout, h);
         for (int i = 0; i < 6; i++) {
@@ -94,7 +145,14 @@ public class LayoutManager extends PoolerImpl<Layout> {
         return corners;
     }
 
-    public float[] vertices(final Layout layout, final Hex hex) {
+  /**
+   * Vertices float [ ].
+   *
+   * @param layout the layout
+   * @param hex    the hex
+   * @return the float [ ]
+   */
+  public float[] vertices(final Layout layout, final Hex hex) {
         final List<Vector2> Vector2s = polygonCorners(layout, hex);
         final float[] result = new float[Vector2s.size() * 2];
         int idx = 0;

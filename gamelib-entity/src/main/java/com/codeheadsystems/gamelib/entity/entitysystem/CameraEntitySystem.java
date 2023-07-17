@@ -39,7 +39,14 @@ public class CameraEntitySystem extends EntitySystem {
     private final SpriteBatch spriteBatch;
     private final ShapeRenderer shapeRenderer;
 
-    @Inject
+  /**
+   * Instantiates a new Camera entity system.
+   *
+   * @param orthographicCamera the orthographic camera
+   * @param spriteBatch        the sprite batch
+   * @param shapeRenderer      the shape renderer
+   */
+  @Inject
     public CameraEntitySystem(final OrthographicCamera orthographicCamera,
                               final SpriteBatch spriteBatch,
                               final ShapeRenderer shapeRenderer) {

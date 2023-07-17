@@ -17,24 +17,54 @@
 
 package com.codeheadsystems.gamelib.net.exception;
 
+/**
+ * The type Json exception.
+ */
 public class JsonException extends RuntimeException {
 
+  /**
+   * Instantiates a new Json exception.
+   */
   public JsonException() {
     super();
   }
 
+  /**
+   * Instantiates a new Json exception.
+   *
+   * @param message the message
+   */
   public JsonException(final String message) {
     super(message);
   }
 
+  /**
+   * Instantiates a new Json exception.
+   *
+   * @param message the message
+   * @param cause   the cause
+   */
   public JsonException(final String message, final Throwable cause) {
     super(message, cause);
   }
 
+  /**
+   * Instantiates a new Json exception.
+   *
+   * @param cause the cause
+   */
   public JsonException(final Throwable cause) {
     super(cause);
   }
 
+  /**
+   * Instantiates a new Json exception.
+   *
+   * @param message            the message
+   * @param cause              the cause
+   * @param enableSuppression  the enable suppression
+   * @param writableStackTrace the writable stack trace
+   */
   protected JsonException(final String message, final Throwable cause, final boolean enableSuppression, final boolean writableStackTrace) {
     super(message, cause, enableSuppression, writableStackTrace);
   }

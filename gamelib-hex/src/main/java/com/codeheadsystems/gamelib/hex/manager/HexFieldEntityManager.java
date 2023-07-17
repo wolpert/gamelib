@@ -50,7 +50,16 @@ public class HexFieldEntityManager {
     private final Pooler<HexField> pool;
     private final HexFieldSearchManager hexFieldSearchManager;
 
-    @Inject
+  /**
+   * Instantiates a new Hex field entity manager.
+   *
+   * @param engineManager         the engine manager
+   * @param hexManager            the hex manager
+   * @param layoutManager         the layout manager
+   * @param hexFieldLayoutManager the hex field layout manager
+   * @param hexFieldSearchManager the hex field search manager
+   */
+  @Inject
     public HexFieldEntityManager(final EngineManager engineManager,
                                  final HexManager hexManager,
                                  final LayoutManager layoutManager,
@@ -65,7 +74,14 @@ public class HexFieldEntityManager {
         LOGGER.debug("HexFieldEntityManager()");
     }
 
-    public HexField generate(final HexFieldConfiguration configuration,
+  /**
+   * Generate hex field.
+   *
+   * @param configuration        the configuration
+   * @param additionalComponents the additional components
+   * @return the hex field
+   */
+  public HexField generate(final HexFieldConfiguration configuration,
                              final Function<HexComponent, Set<Component>> additionalComponents) {
         final HexFieldLayout hexFieldLayout = hexFieldLayoutManager.obtain(configuration);
         final Set<Entity> entities = hexManager.generate(hexFieldLayout.cols(), hexFieldLayout.rows())
@@ -87,7 +103,12 @@ public class HexFieldEntityManager {
         return entity;
     }
 
-    public void release(final HexField hexField) {
+  /**
+   * Release.
+   *
+   * @param hexField the hex field
+   */
+  public void release(final HexField hexField) {
         hexFieldLayoutManager.free(hexField.getHexFieldLayout()); // free the layout first.
         engineManager.engine().getEntitiesFor(HEXS).forEach(e->{
             final HexComponent component = e.getComponent(HexComponent.class);

@@ -25,6 +25,9 @@ import com.codeheadsystems.gamelib.hex.manager.LayoutManager;
 import com.codeheadsystems.gamelib.hex.model.Hex;
 import com.codeheadsystems.gamelib.hex.model.Layout;
 
+/**
+ * The type Hex component.
+ */
 public class HexComponent implements Pool.Poolable, Component {
 
     private Hex hex;
@@ -47,7 +50,15 @@ public class HexComponent implements Pool.Poolable, Component {
         }
     }
 
-    public HexComponent initialize(final Hex hex,
+  /**
+   * Initialize hex component.
+   *
+   * @param hex           the hex
+   * @param layout        the layout
+   * @param layoutManager the layout manager
+   * @return the hex component
+   */
+  public HexComponent initialize(final Hex hex,
                                    final Layout layout,
                                    final LayoutManager layoutManager) {
         final float[] vertices = layoutManager.vertices(layout, hex);
@@ -69,11 +80,21 @@ public class HexComponent implements Pool.Poolable, Component {
         return this;
     }
 
-    public float[][] triangles() {
+  /**
+   * Triangles float [ ] [ ].
+   *
+   * @return the float [ ] [ ]
+   */
+  public float[][] triangles() {
         return triangles;
     }
 
-    public float[] vertices() {
+  /**
+   * Vertices float [ ].
+   *
+   * @return the float [ ]
+   */
+  public float[] vertices() {
         if (polygon != null) {
             return polygon.getVertices();
         } else {
@@ -81,15 +102,31 @@ public class HexComponent implements Pool.Poolable, Component {
         }
     }
 
-    public Hex hex() {
+  /**
+   * Hex hex.
+   *
+   * @return the hex
+   */
+  public Hex hex() {
         return hex;
     }
 
-    public Polygon polygon() {
+  /**
+   * Polygon polygon.
+   *
+   * @return the polygon
+   */
+  public Polygon polygon() {
         return polygon;
     }
 
-    public boolean isHex(final Hex otherHex) {
+  /**
+   * Is hex boolean.
+   *
+   * @param otherHex the other hex
+   * @return the boolean
+   */
+  public boolean isHex(final Hex otherHex) {
         if (hex != null) {
             return hex.equals(otherHex);
         } else {
@@ -97,7 +134,15 @@ public class HexComponent implements Pool.Poolable, Component {
         }
     }
 
-    public boolean isHex(final int q, final int r, final int s) {
+  /**
+   * Is hex boolean.
+   *
+   * @param q the q
+   * @param r the r
+   * @param s the s
+   * @return the boolean
+   */
+  public boolean isHex(final int q, final int r, final int s) {
         if (hex != null) {
             return hex.sameHex(q, r, s);
         } else {
@@ -105,15 +150,30 @@ public class HexComponent implements Pool.Poolable, Component {
         }
     }
 
-    public float getOriginX() {
+  /**
+   * Gets origin x.
+   *
+   * @return the origin x
+   */
+  public float getOriginX() {
         return originX;
     }
 
-    public float getOriginY() {
+  /**
+   * Gets origin y.
+   *
+   * @return the origin y
+   */
+  public float getOriginY() {
         return originY;
     }
 
-    public float getWidth() {
+  /**
+   * Gets width.
+   *
+   * @return the width
+   */
+  public float getWidth() {
         return width;
     }
 }

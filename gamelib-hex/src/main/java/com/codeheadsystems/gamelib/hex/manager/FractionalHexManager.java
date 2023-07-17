@@ -29,23 +29,35 @@ import java.util.stream.IntStream;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type Fractional hex manager.
+ */
 @Singleton
 public class FractionalHexManager extends PoolerImpl<FractionalHex> {
 
     private static final Logger LOGGER = logger(FractionalHexManager.class);
     private final HexManager hexManager;
 
-    @Inject
+  /**
+   * Instantiates a new Fractional hex manager.
+   *
+   * @param hexManager the hex manager
+   */
+  @Inject
     public FractionalHexManager(final HexManager hexManager) {
         super(FractionalHex::new);
         this.hexManager = hexManager;
         LOGGER.debug("FractionalHexManager()");
     }
 
-    /**
-     * Does not free old hexes.
-     */
-    public List<Hex> hexLinedraw(final Hex a, final Hex b) {
+  /**
+   * Does not free old hexes.
+   *
+   * @param a the a
+   * @param b the b
+   * @return the list
+   */
+  public List<Hex> hexLinedraw(final Hex a, final Hex b) {
         final int n = hexManager.distance(a, b);
         final FractionalHex a_nudge = obtain().setQ(a.q() + 1e-06).setR(a.r() + 1e-06).setS(a.s() - 2e-06).checkConstructorArguments();
         final FractionalHex b_nudge = obtain().setQ(b.q() + 1e-06).setR(b.r() + 1e-06).setS(b.s() - 2e-06).checkConstructorArguments();
@@ -58,7 +70,14 @@ public class FractionalHexManager extends PoolerImpl<FractionalHex> {
         return collect;
     }
 
-    public Hex hexRound(final FractionalHex fractionalHex, boolean freeOld) {
+  /**
+   * Hex round hex.
+   *
+   * @param fractionalHex the fractional hex
+   * @param freeOld       the free old
+   * @return the hex
+   */
+  public Hex hexRound(final FractionalHex fractionalHex, boolean freeOld) {
         int qi = (int) (Math.round(fractionalHex.q()));
         int ri = (int) (Math.round(fractionalHex.r()));
         int si = (int) (Math.round(fractionalHex.s()));
@@ -79,10 +98,15 @@ public class FractionalHexManager extends PoolerImpl<FractionalHex> {
         return result;
     }
 
-    /**
-     * Does not free old FractionalHex.
-     */
-    public FractionalHex hexLerp(final FractionalHex a, final FractionalHex b, final double t) {
+  /**
+   * Does not free old FractionalHex.
+   *
+   * @param a the a
+   * @param b the b
+   * @param t the t
+   * @return the fractional hex
+   */
+  public FractionalHex hexLerp(final FractionalHex a, final FractionalHex b, final double t) {
         return obtain()
                 .setQ(a.q() * (1.0 - t) + b.q() * t)
                 .setR(a.r() * (1.0 - t) + b.r() * t)

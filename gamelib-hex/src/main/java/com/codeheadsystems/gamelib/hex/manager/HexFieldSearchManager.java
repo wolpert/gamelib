@@ -45,31 +45,49 @@ public class HexFieldSearchManager {
     private final ComponentMapper<HexComponent> hm = ComponentMapper.getFor(HexComponent.class);
     private final HexManager hexManager;
 
-    @Inject
+  /**
+   * Instantiates a new Hex field search manager.
+   *
+   * @param hexManager the hex manager
+   */
+  @Inject
     public HexFieldSearchManager(final HexManager hexManager) {
         this.hexManager = hexManager;
         LOGGER.debug("HexFieldSearchManager()");
     }
 
-    public Map<Hex, Entity> hexEntityHashMap(final Set<Entity> entities) {
+  /**
+   * Hex entity hash map map.
+   *
+   * @param entities the entities
+   * @return the map
+   */
+  public Map<Hex, Entity> hexEntityHashMap(final Set<Entity> entities) {
         return entities.stream()
             .collect(Collectors.toMap(this::hexForEntity, e -> e));
     }
 
-    public Hex hexForEntity(final Entity entity) {
+  /**
+   * Hex for entity hex.
+   *
+   * @param entity the entity
+   * @return the hex
+   */
+  public Hex hexForEntity(final Entity entity) {
         return hm.get(entity).hex();
     }
 
-    /**
-     * Provides a way to convert a point to a hex that can then be used for a search function.
-     *
-     * @param x              from the layout. Must be unprojected from the screen. (See camera manager)
-     * @param y              from the layout. Must be unprojected from the screen. (See camera manager).
-     * @param layout         to be used.
-     * @param searchFunction the search function.
-     * @return whatever type they found.
-     */
-    protected <T> Optional<T> fromPoint(final float x,
+  /**
+   * Provides a way to convert a point to a hex that can then be used for a search function.
+   *
+   * @param <T>            the type parameter
+   * @param x              from the layout. Must be unprojected from the screen. (See camera manager)
+   * @param y              from the layout. Must be unprojected from the screen. (See camera manager).
+   * @param layout         to be used.
+   * @param searchFunction the search function.
+   * @return whatever type they found.
+   */
+  protected <T> Optional<T> fromPoint(final float x,
                                         final float y,
                                         final Layout layout,
                                         final Function<Hex, Optional<T>> searchFunction) {
@@ -108,17 +126,17 @@ public class HexFieldSearchManager {
         }
     }
 
-    /**
-     * Note, the x/y here must be in the same space that was used for the hex map. This likely needs conversion
-     * from the layout to work correctly.
-     *
-     * @param x               mouse point.
-     * @param y               mouse point.
-     * @param layout          the layout of the hex field.
-     * @param hexComponentSet we are looking at.
-     * @return
-     */
-    public Optional<HexComponent> fromPoint(final float x,
+  /**
+   * Note, the x/y here must be in the same space that was used for the hex map. This likely needs conversion
+   * from the layout to work correctly.
+   *
+   * @param x               mouse point.
+   * @param y               mouse point.
+   * @param layout          the layout of the hex field.
+   * @param hexComponentSet we are looking at.
+   * @return optional
+   */
+  public Optional<HexComponent> fromPoint(final float x,
                                             final float y,
                                             final Layout layout,
                                             final Set<HexComponent> hexComponentSet) {
@@ -127,16 +145,16 @@ public class HexFieldSearchManager {
             .findFirst());
     }
 
-    /**
-     * Note, the x/y here must be in the same space that was used for the hex map. This likely needs conversion
-     * from the layout to work correctly.
-     *
-     * @param x        mouse point.
-     * @param y        mouse point.
-     * @param hexField we are looking at.
-     * @return
-     */
-    public Optional<Entity> fromPoint(final float x,
+  /**
+   * Note, the x/y here must be in the same space that was used for the hex map. This likely needs conversion
+   * from the layout to work correctly.
+   *
+   * @param x        mouse point.
+   * @param y        mouse point.
+   * @param hexField we are looking at.
+   * @return optional
+   */
+  public Optional<Entity> fromPoint(final float x,
                                       final float y,
                                       final HexField hexField) {
         return fromPoint(x, y, hexField.getHexFieldLayout().layout(), h ->

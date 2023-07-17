@@ -25,6 +25,9 @@ import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
+/**
+ * The type World manager.
+ */
 @Singleton
 public class WorldManager {
 
@@ -37,6 +40,12 @@ public class WorldManager {
 
   private float timeSince = 0; // used for step counting.
 
+  /**
+   * Instantiates a new World manager.
+   *
+   * @param worldConfiguration the world configuration
+   * @param camera             the camera
+   */
   @Inject
   public WorldManager(final Optional<WorldConfiguration> worldConfiguration,
                       final OrthographicCamera camera) {
@@ -56,6 +65,8 @@ public class WorldManager {
 
   /**
    * Last step in the render workflow according to LIBGDX docs.
+   *
+   * @param delta the delta
    */
   public void step(float delta) {
     debug.ifPresent(Runnable::run);
@@ -67,6 +78,11 @@ public class WorldManager {
     }
   }
 
+  /**
+   * World world.
+   *
+   * @return the world
+   */
   public World world() {
     return world;
   }
