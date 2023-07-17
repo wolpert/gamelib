@@ -7,9 +7,9 @@ ext {
     appName = "gamelib-net-common"
 }
 
-configurations {
-    project.archivesBaseName = "${appName}"
-    jar.archiveBaseName = "${appName}"
+base {
+    archivesName = "${appName}"
+    version = "${version}"
 }
 
 //jacocoTestReport.finalizedBy jacocoTestCoverageVerification

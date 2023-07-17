@@ -25,7 +25,8 @@ buildscript {
 allprojects {
     group 'com.codeheadsystems'
     version '1.0.3-SNAPSHOT'
-
+    apply plugin: "base"
+    apply plugin: "jvm-test-suite"
     apply plugin: "java-library"
     apply plugin: "idea"
     apply plugin: 'jacoco'
@@ -47,8 +48,15 @@ allprojects {
         maven { url "https://s3-us-west-2.amazonaws.com/dynamodb-local/release/" }
     }
     test {
-        useJUnitPlatform() // needed for junit5
         finalizedBy jacocoTestReport
+    }
+    testing {
+        suites {
+            test {
+                useJUnitJupiter()
+                //finalizedBy jacocoTestReport
+            }
+        }
     }
     jacocoTestReport {
         dependsOn test

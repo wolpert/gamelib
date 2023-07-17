@@ -7,9 +7,9 @@ ext {
     appName = "gamelib-hex"
 }
 
-configurations {
-    project.archivesBaseName = "${appName}"
-    jar.archiveBaseName = "${appName}"
+base {
+    archivesName = "${appName}"
+    version = "${version}"
 }
 // Testing report disabled for now
 //jacocoTestReport.finalizedBy jacocoTestCoverageVerification
