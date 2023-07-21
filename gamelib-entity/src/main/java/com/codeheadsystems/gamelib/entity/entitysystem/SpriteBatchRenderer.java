@@ -54,6 +54,7 @@ public class SpriteBatchRenderer extends WrapperSortedIteratingSystem {
         sortComparator,
         Priorities.SPRITES.priority()); // run after everything else
     this.spriteBatch = spriteBatch;
+    LOGGER.info("Created");
   }
 
   @Override
@@ -73,13 +74,13 @@ public class SpriteBatchRenderer extends WrapperSortedIteratingSystem {
 
   @Override
   public void addedToEngine(final Engine engine) {
-    LOGGER.info("Added engine: " + engine);
+    LOGGER.debug("Added engine: " + engine);
     super.addedToEngine(engine);
   }
 
   @Override
   public void entityAdded(final Entity entity) {
-    LOGGER.info("Added entity: " + entity);
+    LOGGER.debug("Added entity: " + entity);
     super.entityAdded(entity);
   }
 }
