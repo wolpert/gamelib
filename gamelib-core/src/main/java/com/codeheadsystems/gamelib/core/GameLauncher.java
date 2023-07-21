@@ -22,6 +22,7 @@ import static com.codeheadsystems.gamelib.core.util.LoggerHelper.logger;
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.utils.Logger;
+import com.codeheadsystems.gamelib.core.manager.DisposableManager;
 import com.codeheadsystems.gamelib.core.manager.ResizeManager;
 import com.codeheadsystems.gamelib.core.screen.LoadingScreen;
 import com.codeheadsystems.gamelib.core.util.GameListener;
@@ -45,25 +46,29 @@ public class GameLauncher extends Game {
   private final Lazy<LoadingScreen> loadingScreen;
   private final Lazy<Set<GameListener>> gameListeners;
   private final Lazy<ResizeManager> resizeManager;
+  private final Lazy<DisposableManager> disposableManager;
   private final AssetManager assetManager;
 
   /**
    * Instantiates a new Game launcher.
    *
-   * @param loadingScreen the loading screen
-   * @param gameListeners the game listeners
-   * @param resizeManager the resize manager
-   * @param assetManager  the asset manager
+   * @param loadingScreen     the loading screen
+   * @param gameListeners     the game listeners
+   * @param resizeManager     the resize manager
+   * @param disposableManager the disposable manager
+   * @param assetManager      the asset manager
    */
   @Inject
   public GameLauncher(final Lazy<LoadingScreen> loadingScreen,
                       final Lazy<Set<GameListener>> gameListeners,
                       final Lazy<ResizeManager> resizeManager,
+                      final Lazy<DisposableManager> disposableManager,
                       final AssetManager assetManager) {
     this.loadingScreen = loadingScreen;
     this.gameListeners = gameListeners;
     this.resizeManager = resizeManager;
     this.assetManager = assetManager;
+    this.disposableManager = disposableManager;
   }
 
   @Override
@@ -89,6 +94,7 @@ public class GameLauncher extends Game {
     LOGGER.info("Disposing...");
     super.dispose();
     assetManager.dispose();
+    disposableManager.get().dispose();
     LOGGER.info("Disposed");
   }
 }

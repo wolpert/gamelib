@@ -22,6 +22,7 @@ import static org.mockito.Mockito.lenient;
 import static org.mockito.Mockito.verify;
 
 import com.badlogic.gdx.assets.AssetManager;
+import com.codeheadsystems.gamelib.core.manager.DisposableManager;
 import com.codeheadsystems.gamelib.core.manager.ResizeManager;
 import com.codeheadsystems.gamelib.core.screen.LoadingScreen;
 import com.codeheadsystems.gamelib.core.util.GameListener;
@@ -41,9 +42,11 @@ class GameLauncherTest extends GdxTest {
   @Mock private GameListener gameListener;
   @Mock private ResizeManager resizeManager;
   @Mock private AssetManager assetManager;
+  @Mock private DisposableManager disposableManager;
   @Mock private Lazy<LoadingScreen> lazyLoadingScreen;
   @Mock private Lazy<Set<GameListener>> lazyGameListener;
   @Mock private Lazy<ResizeManager> lazyResizeManager;
+  @Mock private Lazy<DisposableManager> lazyDsposableManager;
 
   private GameLauncher gameLauncher;
 
@@ -54,7 +57,8 @@ class GameLauncherTest extends GdxTest {
     lenient().when(lazyGameListener.get()).thenReturn(set);
     lenient().when(lazyLoadingScreen.get()).thenReturn(loadingScreen);
     lenient().when(lazyResizeManager.get()).thenReturn(resizeManager);
-    gameLauncher = new GameLauncher(lazyLoadingScreen, lazyGameListener, lazyResizeManager, assetManager);
+    lenient().when(lazyDsposableManager.get()).thenReturn(disposableManager);
+    gameLauncher = new GameLauncher(lazyLoadingScreen, lazyGameListener, lazyResizeManager, lazyDsposableManager, assetManager);
   }
 
   @Test
@@ -77,5 +81,6 @@ class GameLauncherTest extends GdxTest {
   void dispose() {
     gameLauncher.dispose();
     verify(assetManager).dispose();
+    verify(disposableManager).dispose();
   }
 }

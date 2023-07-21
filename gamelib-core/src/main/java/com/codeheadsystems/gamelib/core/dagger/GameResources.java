@@ -22,8 +22,11 @@ import static com.codeheadsystems.gamelib.core.dagger.LoadingModule.MAIN_SCREEN_
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
+import com.badlogic.gdx.utils.Disposable;
 import dagger.BindsOptionalOf;
 import dagger.Module;
+import dagger.multibindings.Multibinds;
+import java.util.Set;
 import java.util.function.Function;
 import javax.inject.Named;
 
@@ -87,4 +90,11 @@ public interface GameResources {
   @Named(MAIN_SCREEN_PROVIDER)
   Function<GdxRuntimeCache, Screen> mainScreenProvider();
 
+  /**
+   * If you want to add your own disposables, you can do that here.
+   *
+   * @return set of disposables.
+   */
+  @Multibinds
+  Set<Disposable> disposables();
 }
