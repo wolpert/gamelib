@@ -30,10 +30,10 @@ import com.badlogic.gdx.utils.Array;
  * adding entities, so we basically re-wrote it here, using the SortedIteratingSystem
  * as a guide.
  */
-public abstract class WrappedIteratingEntitySystem extends EntitySystem implements EntityListener {
+public abstract class WrappedIteratingEntitySystem extends EntitySystem {
 
   private final Family family;
-  private final Array<Entity> entities;
+  private Engine engine;
 
   /**
    * Instantiates a new Wrapped iterating entity system.
@@ -45,7 +45,6 @@ public abstract class WrappedIteratingEntitySystem extends EntitySystem implemen
                                       final int priority) {
     super(priority);
     this.family = family;
-    this.entities = new Array<>();
   }
 
   /**
@@ -80,8 +79,8 @@ public abstract class WrappedIteratingEntitySystem extends EntitySystem implemen
   @Override
   public void update(float deltaTime) {
     beforeIteration(deltaTime);
-    if (entities != null) {
-      for (Entity entity : entities) {
+    if (engine != null) {
+      for (Entity entity : engine.getEntitiesFor(family)) {
         processEntity(entity, deltaTime);
       }
     }
@@ -89,29 +88,12 @@ public abstract class WrappedIteratingEntitySystem extends EntitySystem implemen
   }
 
   @Override
-  public void entityAdded(Entity entity) {
-    if (family.matches(entity)) {
-      entities.add(entity);
-    }
-  }
-
-  @Override
-  public void entityRemoved(Entity entity) {
-    entities.removeValue(entity, true);
-  }
-
-  @Override
   public void addedToEngine(Engine thisEngine) {
-    entities.clear();
-    thisEngine.addEntityListener(this);
-    for (Entity entity : thisEngine.getEntitiesFor(family)) {
-      entities.add(entity);
-    }
+    this.engine = thisEngine;
   }
 
   @Override
   public void removedFromEngine(Engine engine) {
-    engine.removeEntityListener(this);
-    entities.clear();
+    this.engine = null;
   }
 }
