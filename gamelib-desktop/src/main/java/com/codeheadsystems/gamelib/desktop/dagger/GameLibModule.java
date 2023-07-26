@@ -48,6 +48,10 @@ public class GameLibModule {
                                              final GameLauncher gameLauncher) {
     return new Lwjgl3Application(gameLauncher, configuration.orElseGet(Lwjgl3ApplicationConfiguration::new));
   }
+
+  /**
+   * The interface Configuration.
+   */
   @Module
   public interface Configuration {
 
