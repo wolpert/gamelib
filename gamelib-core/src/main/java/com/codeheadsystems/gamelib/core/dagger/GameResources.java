@@ -21,7 +21,6 @@ import static com.codeheadsystems.gamelib.core.dagger.LoadingModule.MAIN_SCREEN;
 import static com.codeheadsystems.gamelib.core.dagger.LoadingModule.MAIN_SCREEN_PROVIDER;
 
 import com.badlogic.gdx.Screen;
-import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.badlogic.gdx.utils.Disposable;
 import dagger.BindsOptionalOf;
 import dagger.Module;
@@ -53,14 +52,6 @@ public interface GameResources {
   @BindsOptionalOf
   @Named(RESOURCE_PATH)
   String resourcePath();
-
-  /**
-   * If you have a configuration, you can set it. Else, we use an empty one.
-   *
-   * @return the lwjgl 3 application configuration
-   */
-  @BindsOptionalOf
-  Lwjgl3ApplicationConfiguration lwjgl3ApplicationConfiguration();
 
   /**
    * How wide you want your screen for the camera. Note, we calculate the height based on the

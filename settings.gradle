@@ -3,7 +3,7 @@
  * Ned Wolpert <ned.wolpert@codeheadsystems.com>
  */
 
-include ":gamelib-core", ":gamelib-entity", ":gamelib-box2d", ":gamelib-hex",
+include ":gamelib-core", ":gamelib-entity", ":gamelib-box2d", ":gamelib-hex", ":gamelib-desktop",
         ':gamelib-net-server', ':gamelib-net-client', 'gamelib-net-common', 'gamelib-net-integ'
 
 dependencyResolutionManagement {

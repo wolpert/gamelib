@@ -15,11 +15,15 @@
  *
  */
 
-package com.codeheadsystems.gamelib.core.dagger;
+package com.codeheadsystems.gamelib.desktop.dagger;
 
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3Application;
 import com.badlogic.gdx.backends.lwjgl3.Lwjgl3ApplicationConfiguration;
 import com.codeheadsystems.gamelib.core.GameLauncher;
+import com.codeheadsystems.gamelib.core.dagger.GameResources;
+import com.codeheadsystems.gamelib.core.dagger.GdxModule;
+import com.codeheadsystems.gamelib.core.dagger.LoadingModule;
+import dagger.BindsOptionalOf;
 import dagger.Module;
 import dagger.Provides;
 import java.util.Optional;
@@ -28,7 +32,7 @@ import javax.inject.Singleton;
 /**
  * Use this module to load all the gamelib-core features for a desktop application.
  */
-@Module(includes = {GameResources.class, GdxModule.class, LoadingModule.class})
+@Module(includes = {GameResources.class, GdxModule.class, LoadingModule.class, GameLibModule.Configuration.class})
 public class GameLibModule {
 
   /**
@@ -44,5 +48,15 @@ public class GameLibModule {
                                              final GameLauncher gameLauncher) {
     return new Lwjgl3Application(gameLauncher, configuration.orElseGet(Lwjgl3ApplicationConfiguration::new));
   }
+  @Module
+  public interface Configuration {
 
+    /**
+     * If you have a configuration, you can set it. Else, we use an empty one.
+     *
+     * @return the lwjgl 3 application configuration
+     */
+    @BindsOptionalOf
+    Lwjgl3ApplicationConfiguration lwjgl3ApplicationConfiguration();
+  }
 }
