@@ -23,7 +23,7 @@ buildscript {
 }
 
 ext {
-    codeheadTestVersion = '1.0.3'
+    codeheadTestVersion = '1.0.4'
     gdxVersion = '1.12.0' // https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx
 }
 
