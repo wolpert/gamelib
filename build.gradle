@@ -29,7 +29,8 @@ ext {
 
 allprojects {
     group 'com.codeheadsystems'
-    version '1.0.3-SNAPSHOT'
+//    version '1.0.3-SNAPSHOT'
+    version '1.0.4'
     apply plugin: "base"
     apply plugin: "jvm-test-suite"
     apply plugin: "java-library"

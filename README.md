@@ -24,10 +24,11 @@ They are only available as `1.0.1-SNAPSHOT` versions
 ```groovy
 
 ext {
-    gamelibVersion = '1.0.1'
+    gamelibVersion = '1.0.4'
 }
 dependencies {
     implementation "com.codeheadsystems:gamelib-core:${gamelibVersion}"
+    implementation "com.codeheadsystems:gamelib-desktop:${gamelibVersion}"
     implementation "com.codeheadsystems:gamelib-box2d:${gamelibVersion}"
     implementation "com.codeheadsystems:gamelib-entity:${gamelibVersion}"
     implementation "com.codeheadsystems:gamelib-hex:${gamelibVersion}"
