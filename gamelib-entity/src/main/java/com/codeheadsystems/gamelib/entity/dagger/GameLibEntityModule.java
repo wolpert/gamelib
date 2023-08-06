@@ -31,6 +31,7 @@ import com.codeheadsystems.gamelib.entity.entity.EntityGenerator;
 import com.codeheadsystems.gamelib.entity.entity.EntityScreen;
 import com.codeheadsystems.gamelib.entity.entitysystem.CameraEntitySystem;
 import com.codeheadsystems.gamelib.entity.entitysystem.SpriteBatchRenderer;
+import com.codeheadsystems.gamelib.entity.manager.RenderClearManager;
 import dagger.BindsOptionalOf;
 import dagger.Module;
 import dagger.Provides;
@@ -160,6 +161,14 @@ public class GameLibEntityModule {
     Consumer<EntityScreen> hideConsumer();
 
     /**
+     * Define this to change out the entity clean manager.
+     *
+     * @return a entity clean manager.
+     */
+    @BindsOptionalOf
+    RenderClearManager renderCleanManager();
+
+    /**
      * Entities that should be created when the screen is shown are placed here.
      * Note, hiding the screen and showing it again can result in fun!
      *
@@ -168,4 +177,5 @@ public class GameLibEntityModule {
     @Multibinds
     Set<EntityGenerator> entityGenerators();
   }
+
 }

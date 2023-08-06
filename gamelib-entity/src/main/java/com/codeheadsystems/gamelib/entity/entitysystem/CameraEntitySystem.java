@@ -26,6 +26,8 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Logger;
+import com.codeheadsystems.gamelib.entity.manager.RenderClearManager;
+import java.util.Optional;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -38,6 +40,7 @@ public class CameraEntitySystem extends EntitySystem {
   private final OrthographicCamera orthographicCamera;
   private final SpriteBatch spriteBatch;
   private final ShapeRenderer shapeRenderer;
+  private final RenderClearManager renderClearManager;
 
   /**
    * Instantiates a new Camera entity system.
@@ -45,24 +48,31 @@ public class CameraEntitySystem extends EntitySystem {
    * @param orthographicCamera the orthographic camera
    * @param spriteBatch        the sprite batch
    * @param shapeRenderer      the shape renderer
+   * @param renderClearManager the optional clean manager.
    */
   @Inject
   public CameraEntitySystem(final OrthographicCamera orthographicCamera,
                             final SpriteBatch spriteBatch,
-                            final ShapeRenderer shapeRenderer) {
+                            final ShapeRenderer shapeRenderer,
+                            final Optional<RenderClearManager> renderClearManager) {
     super(Priorities.CAMERA.priority());
     this.orthographicCamera = orthographicCamera;
     this.spriteBatch = spriteBatch;
     this.shapeRenderer = shapeRenderer;
+    this.renderClearManager = renderClearManager.orElse(this::defaultCleanScreen);
   }
 
   @Override
   public void update(float deltaTime) {
-    Gdx.gl.glClearColor(0, 0, 0.2f, 1);
-    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
+    renderClearManager.doRenderClean();
     orthographicCamera.update();
     spriteBatch.setProjectionMatrix(orthographicCamera.combined);
     shapeRenderer.setProjectionMatrix(orthographicCamera.combined);
+  }
+
+  private void defaultCleanScreen() {
+    Gdx.gl.glClearColor(0, 0, 0.2f, 1);
+    Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
   }
 
 }
