@@ -23,6 +23,7 @@ import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Json;
+import com.codeheadsystems.gamelib.core.manager.ResizeManager;
 import javax.inject.Inject;
 import javax.inject.Singleton;
 
@@ -39,6 +40,7 @@ public class GdxRuntimeCache {
   private final OrthographicCamera orthographicCamera;
   private final ShapeRenderer shapeRenderer;
   private final SpriteBatch spriteBatch;
+  private final ResizeManager resizeManager;
 
   /**
    * Instantiates a new Gdx runtime cache.
@@ -49,6 +51,7 @@ public class GdxRuntimeCache {
    * @param orthographicCamera the orthographic camera
    * @param shapeRenderer      the shape renderer
    * @param spriteBatch        the sprite batch
+   * @param resizeManager      the resize manager
    */
   @Inject
   public GdxRuntimeCache(final Json json,
@@ -56,13 +59,15 @@ public class GdxRuntimeCache {
                          final AssetManager assetManager,
                          final OrthographicCamera orthographicCamera,
                          final ShapeRenderer shapeRenderer,
-                         final SpriteBatch spriteBatch) {
+                         final SpriteBatch spriteBatch,
+                         final ResizeManager resizeManager) {
     this.json = json;
     this.fileHandleResolver = fileHandleResolver;
     this.assetManager = assetManager;
     this.orthographicCamera = orthographicCamera;
     this.shapeRenderer = shapeRenderer;
     this.spriteBatch = spriteBatch;
+    this.resizeManager = resizeManager;
   }
 
   /**
@@ -117,5 +122,14 @@ public class GdxRuntimeCache {
    */
   public SpriteBatch getSpriteBatch() {
     return spriteBatch;
+  }
+
+  /**
+   * Gets resize manager.
+   *
+   * @return the resize manager
+   */
+  public ResizeManager getResizeManager() {
+    return resizeManager;
   }
 }

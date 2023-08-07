@@ -17,6 +17,7 @@
 
 package com.codeheadsystems.gamelib.core.manager;
 
+import java.util.HashSet;
 import java.util.Set;
 import javax.inject.Inject;
 import javax.inject.Singleton;
@@ -27,7 +28,7 @@ import javax.inject.Singleton;
 @Singleton
 public class ResizeManager {
 
-  private final Set<Listener> listeners;
+  private final HashSet<Listener> listeners;
 
   /**
    * Instantiates a new Resize manager.
@@ -36,7 +37,26 @@ public class ResizeManager {
    */
   @Inject
   public ResizeManager(final Set<Listener> listeners) {
-    this.listeners = listeners;
+    this.listeners = new HashSet<>();
+    this.listeners.addAll(listeners);
+  }
+
+  /**
+   * Add listener.
+   *
+   * @param listener the listener
+   */
+  public void addListener(Listener listener) {
+    listeners.add(listener);
+  }
+
+  /**
+   * Remove listener.
+   *
+   * @param listener the listener
+   */
+  public void removeListener(Listener listener) {
+    listeners.remove(listener);
   }
 
   /**

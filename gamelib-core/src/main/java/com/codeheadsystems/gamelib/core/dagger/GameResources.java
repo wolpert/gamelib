@@ -22,6 +22,7 @@ import static com.codeheadsystems.gamelib.core.dagger.LoadingModule.MAIN_SCREEN_
 
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
+import com.codeheadsystems.gamelib.core.manager.ResizeManager;
 import dagger.BindsOptionalOf;
 import dagger.Module;
 import dagger.multibindings.Multibinds;
@@ -88,4 +89,12 @@ public interface GameResources {
    */
   @Multibinds
   Set<Disposable> disposables();
+
+  /**
+   * The set of resize listeners.
+   *
+   * @return the set.
+   */
+  @Multibinds
+  Set<ResizeManager.Listener> resizeListeners();
 }

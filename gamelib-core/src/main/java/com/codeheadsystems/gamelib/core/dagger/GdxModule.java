@@ -78,25 +78,6 @@ public class GdxModule {
   }
 
   /**
-   * Resize camera listener resize manager . listener.
-   *
-   * @param viewportWidth the viewport width
-   * @param camera        the camera
-   * @return the resize manager . listener
-   */
-  @Provides
-  @Singleton
-  @IntoSet
-  public ResizeManager.Listener resizeCameraListener(@Named(VIEWPORT_WIDTH) Optional<Float> viewportWidth,
-                                                     OrthographicCamera camera) {
-    return (w, h) -> {
-      final float width = viewportWidth.orElseGet(() -> (float) Gdx.graphics.getWidth());
-      final float height = width / w * h;
-      camera.setToOrtho(false, width, height);
-    };
-  }
-
-  /**
    * Asset manager asset manager.
    *
    * @param fileHandleResolver the file handle resolver

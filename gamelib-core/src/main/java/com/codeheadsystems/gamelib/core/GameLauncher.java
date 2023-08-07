@@ -81,7 +81,7 @@ public class GameLauncher extends Game {
 
   @Override
   public void resize(final int width, final int height) {
-    LOGGER.info("resize: X:" + width + " Y:" + height);
+    LOGGER.debug("resize: X:" + width + " Y:" + height);
     resizeManager.get().resize(width, height);
     super.resize(width, height);
   }
