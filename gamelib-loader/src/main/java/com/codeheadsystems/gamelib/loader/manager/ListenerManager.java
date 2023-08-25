@@ -25,7 +25,7 @@ import java.util.function.Consumer;
  *
  * @param <T> the type parameter
  */
-public class ListenerManager <T> {
+public class ListenerManager<T> {
 
   private final Array<T> listeners;
 
@@ -60,14 +60,9 @@ public class ListenerManager <T> {
    * @param consumer the consumer
    */
   public void forEach(Consumer<T> consumer) {
-    for (T listener : listeners) {
-      try {
-        consumer.accept(listener);
-      } catch (Exception e) {
-        throw new RuntimeException(e);
-      }
+    for (int i = listeners.size - 1; i >= 0; i--) {
+      consumer.accept(listeners.get(i)); // listeners can remove themselves from the list.
     }
   }
-
 
 }

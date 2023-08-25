@@ -18,7 +18,6 @@
 package com.codeheadsystems.gamelib.loader.screen;
 
 
-import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
@@ -45,12 +44,12 @@ import java.util.Map;
 public class LoadingScreen extends ScreenAdapter {
 
   private static final Logger LOGGER = new Logger(LoadingScreen.class.getSimpleName(), Logger.DEBUG);
+  private static final String ASSETS_FILE_NAME = "assets.json";
   private final GameInfrastructure gameInfrastructure;
-
   private final AssetManager assetManager;
   private final FileHandleResolver fileHandleResolver;
   private final Json json;
-  private Stages currentStage;
+  private LoadingStage currentStage;
   private Assets assets;
 
   public LoadingScreen(final GameInfrastructure infrastructure) {
@@ -59,7 +58,7 @@ public class LoadingScreen extends ScreenAdapter {
     this.assetManager = infrastructure.getAssetManager();
     this.fileHandleResolver = infrastructure.getFileHandleResolver();
     this.json = infrastructure.getJson();
-    setCurrentStage(Stages.INIT);
+    setCurrentStage(LoadingStage.INIT);
   }
 
   @Override
@@ -85,12 +84,12 @@ public class LoadingScreen extends ScreenAdapter {
       case INIT -> {
         setAssets(json.fromJson(
             Assets.class,
-            fileHandleResolver.resolve("assets.json")));
-        setCurrentStage(Stages.ASSET_LOADERS);
+            fileHandleResolver.resolve(ASSETS_FILE_NAME)));
+        setCurrentStage(LoadingStage.ASSET_LOADERS);
         return false;
       }
       case ASSET_LOADERS -> {
-        setCurrentStage(Stages.QUEUE_ASSETS);
+        setCurrentStage(LoadingStage.QUEUE_ASSETS);
         assetManager.setLoader(TiledMap.class, ".tmx", new TmxMapLoader(fileHandleResolver));
         // Loop through the loaders.
         assets.loaders().forEach(this::buildLoader);
@@ -99,23 +98,22 @@ public class LoadingScreen extends ScreenAdapter {
       case QUEUE_ASSETS -> {
         for (Map.Entry<String, ArrayList<String>> entry : assets.getAssetsToLoad().entrySet()) {
           final String clazzName = entry.getKey();
-          LOGGER.info("Processing: " + clazzName);
           try {
             final Class<?> clazz = Class.forName(clazzName);
             for (String filename : entry.getValue()) {
-              LOGGER.info("  adding to queue: " + clazz.getSimpleName() + ":" + filename);
+              LOGGER.info("Queueing " + clazz.getSimpleName() + ":" + filename);
               assetManager.load(filename, clazz);
             }
           } catch (ClassNotFoundException e) {
             throw new IllegalStateException(e);
           }
         }
-        setCurrentStage(Stages.LOAD_ASSETS);
+        setCurrentStage(LoadingStage.LOAD_ASSETS);
         return false;
       }
       case LOAD_ASSETS -> {
         if (assetManager.update()) {
-          setCurrentStage(Stages.GENERATE_SCREEN);
+          setCurrentStage(LoadingStage.GENERATE_SCREEN);
         }
         return false;
       }
@@ -130,7 +128,7 @@ public class LoadingScreen extends ScreenAdapter {
         } catch (Exception e) {
           throw new IllegalStateException(e);
         }
-        setCurrentStage(Stages.DONE);
+        setCurrentStage(LoadingStage.DONE);
         return false;
       }
       default -> {
@@ -175,9 +173,10 @@ public class LoadingScreen extends ScreenAdapter {
   public float getProgress() {
     return switch (currentStage) {
       case INIT -> 0f;
-      case ASSET_LOADERS -> 0.1f;
-      case QUEUE_ASSETS -> 0.2f;
-      case LOAD_ASSETS -> 0.3f + (0.7f * assetManager.getProgress());
+      case ASSET_LOADERS -> 0.05f;
+      case QUEUE_ASSETS -> 0.1f;
+      case LOAD_ASSETS -> 0.2f + (0.7f * assetManager.getProgress());
+      case GENERATE_SCREEN -> 0.99f;
       default -> 1f;
     };
   }
@@ -194,17 +193,17 @@ public class LoadingScreen extends ScreenAdapter {
   /**
    * Sets current stage.
    *
-   * @param currentStage the current stage
+   * @param loadingStage the current stage
    */
-  void setCurrentStage(final Stages currentStage) {
-    LOGGER.info("Setting stage: " + currentStage + " : " + currentStage.getTitle());
-    this.currentStage = currentStage;
+  void setCurrentStage(final LoadingStage loadingStage) {
+    LOGGER.info("stage: " + currentStage + " => " + loadingStage + " : " + loadingStage.getTitle());
+    this.currentStage = loadingStage;
   }
 
   /**
-   * The enum Stages.
+   * The enum LoadingStage.
    */
-  enum Stages {
+  enum LoadingStage {
     /**
      * The Init.
      */
@@ -232,7 +231,7 @@ public class LoadingScreen extends ScreenAdapter {
 
     private final String title;
 
-    Stages(String title) {
+    LoadingStage(String title) {
       this.title = title;
     }
 

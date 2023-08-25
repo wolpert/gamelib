@@ -17,11 +17,12 @@
 
 package com.codeheadsystems.gamelib.loader.model;
 
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
-import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.utils.Json;
+import com.badlogic.gdx.utils.Logger;
 
 /**
  * The type Game infrastructure.
@@ -31,16 +32,13 @@ public class GameInfrastructure {
   private final AssetManager assetManager;
   private final Json json;
   private final FileHandleResolver fileHandleResolver;
-  private final SpriteBatch spriteBatch;
 
   private GameInfrastructure(final AssetManager assetManager,
                              final Json json,
-                             final FileHandleResolver fileHandleResolver,
-                             final SpriteBatch spriteBatch) {
+                             final FileHandleResolver fileHandleResolver) {
     this.assetManager = assetManager;
     this.json = json;
     this.fileHandleResolver = fileHandleResolver;
-    this.spriteBatch = spriteBatch;
   }
 
   /**
@@ -52,8 +50,7 @@ public class GameInfrastructure {
     return new GameInfrastructure(
         new AssetManager(),
         new Json(),
-        new InternalFileHandleResolver(),
-        new SpriteBatch());
+        new DefaultFileHandleResolver());
   }
 
   /**
@@ -83,12 +80,14 @@ public class GameInfrastructure {
     return fileHandleResolver;
   }
 
-  /**
-   * Gets sprite batch.
-   *
-   * @return the sprite batch
-   */
-  public SpriteBatch getSpriteBatch() {
-    return spriteBatch;
+  private static class DefaultFileHandleResolver implements FileHandleResolver {
+
+    private static final Logger LOGGER = new Logger(GameInfrastructure.class.getSimpleName(), Logger.DEBUG);
+
+    @Override
+    public FileHandle resolve(final String fileName) {
+      LOGGER.info("Resolving: " + fileName);
+      return Gdx.files.internal(fileName);
+    }
   }
 }

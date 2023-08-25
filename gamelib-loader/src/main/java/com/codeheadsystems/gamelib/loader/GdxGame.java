@@ -24,6 +24,7 @@ import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
 import com.codeheadsystems.gamelib.loader.manager.ListenerManager;
 import com.codeheadsystems.gamelib.loader.model.GameInfrastructure;
+import com.codeheadsystems.gamelib.loader.screen.LoadingScreen;
 
 /**
  * The type Gdx game.
@@ -95,7 +96,7 @@ public class GdxGame implements ApplicationListener {
   public void create() {
     LOGGER.info("create()");
     gameInfrastructure = GameInfrastructure.build();
-
+    setScreen(new LoadingScreen(gameInfrastructure));
   }
 
   @Override
