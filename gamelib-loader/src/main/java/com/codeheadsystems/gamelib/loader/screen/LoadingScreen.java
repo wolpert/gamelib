@@ -15,8 +15,12 @@
  *
  */
 
-package com.codeheadsystems.gamelib.loader.manager;
+package com.codeheadsystems.gamelib.loader.screen;
 
+
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.ScreenAdapter;
 import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
@@ -25,6 +29,8 @@ import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
+import com.codeheadsystems.gamelib.loader.GdxGame;
+import com.codeheadsystems.gamelib.loader.ScreenProvider;
 import com.codeheadsystems.gamelib.loader.model.Assets;
 import com.codeheadsystems.gamelib.loader.model.GameInfrastructure;
 import com.codeheadsystems.gamelib.loader.model.Loader;
@@ -33,28 +39,39 @@ import java.util.ArrayList;
 import java.util.Map;
 
 /**
- * Purpose: Provide steps for the loading screen.
+ * Minimal loading screen needed for the base game. Note, he does not use the asset manager... rather
+ * via the screen and the loading manager, the asset manager gets set.
  */
-public class LoadingManager {
+public class LoadingScreen extends ScreenAdapter {
 
-  private static final Logger LOGGER = new Logger(LoadingManager.class.getSimpleName(), Logger.DEBUG);
+  private static final Logger LOGGER = new Logger(LoadingScreen.class.getSimpleName(), Logger.DEBUG);
+  private final GameInfrastructure gameInfrastructure;
+
   private final AssetManager assetManager;
   private final FileHandleResolver fileHandleResolver;
   private final Json json;
   private Stages currentStage;
   private Assets assets;
 
-  /**
-   * Instantiates a new Loading manager.
-   *
-   * @param infrastructure the infrastructure
-   */
-  public LoadingManager(final GameInfrastructure infrastructure) {
+  public LoadingScreen(final GameInfrastructure infrastructure) {
+    LOGGER.info("LoadingScreen()");
+    this.gameInfrastructure = infrastructure;
     this.assetManager = infrastructure.getAssetManager();
     this.fileHandleResolver = infrastructure.getFileHandleResolver();
     this.json = infrastructure.getJson();
-    LOGGER.info("LoadingManager()");
     setCurrentStage(Stages.INIT);
+  }
+
+  @Override
+  public void show() {
+  }
+
+  @Override
+  public void render(float delta) {
+    if (!update()) {
+      // render the loading screen
+      //loadingBar.render(loadingManager.getProgress());
+    }
   }
 
   /**
@@ -98,8 +115,22 @@ public class LoadingManager {
       }
       case LOAD_ASSETS -> {
         if (assetManager.update()) {
-          setCurrentStage(Stages.DONE);
+          setCurrentStage(Stages.GENERATE_SCREEN);
         }
+        return false;
+      }
+      case GENERATE_SCREEN -> {
+        try {
+          final ScreenProvider screenProvider = Class.forName(assets.getScreenProvider())
+              .asSubclass(ScreenProvider.class)
+              .getConstructor()
+              .newInstance();
+          final Screen mainScreen = screenProvider.screen(gameInfrastructure);
+          GdxGame.instance().setScreen(mainScreen); // This should end this screen being used.
+        } catch (Exception e) {
+          throw new IllegalStateException(e);
+        }
+        setCurrentStage(Stages.DONE);
         return false;
       }
       default -> {
@@ -191,6 +222,10 @@ public class LoadingManager {
      */
     LOAD_ASSETS("Loading assets from system"),
     /**
+     * We load the screen from the defined screen provider
+     */
+    GENERATE_SCREEN("Generating screen"),
+    /**
      * Done stages.
      */
     DONE("Complete!");
@@ -210,5 +245,6 @@ public class LoadingManager {
       return title;
     }
   }
+
 
 }

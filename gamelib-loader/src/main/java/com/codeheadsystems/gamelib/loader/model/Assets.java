@@ -27,6 +27,7 @@ public class Assets {
 
   private HashMap<String, ArrayList<String>> assetsToLoad;
   private ArrayList<Loader> loaders;
+  private String screenProvider;
 
   /**
    * Gets assets to load.
@@ -44,6 +45,17 @@ public class Assets {
    */
   public ArrayList<Loader> loaders() {
     return loaders;
+  }
+
+  /**
+   * This is the name of the provider that creates the first screen of your game.
+   * We will show this after everything is loaded.
+   * It must implement @ScreenProvider
+   *
+   * @return the name of the provider.
+   */
+  public String getScreenProvider() {
+    return screenProvider;
   }
 
 }

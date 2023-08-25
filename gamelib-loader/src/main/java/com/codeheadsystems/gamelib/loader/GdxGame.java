@@ -23,6 +23,7 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
 import com.codeheadsystems.gamelib.loader.manager.ListenerManager;
+import com.codeheadsystems.gamelib.loader.model.GameInfrastructure;
 
 /**
  * The type Gdx game.
@@ -46,23 +47,36 @@ public class GdxGame implements ApplicationListener {
    * The Resizable listener manager.
    */
   protected final ListenerManager<Resizable> resizableListenerManager;
+  /**
+   * The Pausable listener manager.
+   */
+  protected final ListenerManager<Pausable> pausableListenerManager;
+  /**
+   * The Resumable listener manager.
+   */
+  protected final ListenerManager<Resumable> resumableListenerManager;
 
   /**
    * The Screen.
    */
   protected Screen screen;
+  protected GameInfrastructure gameInfrastructure;
 
   /**
    * Instantiates a new Gdx game.
    */
   protected GdxGame() {
+    // we cannot use the logger yet since this occurs before the GDX infrastructure is setup.
+    System.out.println("GdxGame()");
     disposableListeners = new ListenerManager<>();
     renderableListenerManager = new ListenerManager<>();
     resizableListenerManager = new ListenerManager<>();
+    pausableListenerManager = new ListenerManager<>();
+    resumableListenerManager = new ListenerManager<>();
   }
 
   /**
-   * Instance gdx game.
+   * Instance gdx game. This can be called anywhere. It's effectively the container.
    *
    * @return the gdx game
    */
@@ -79,23 +93,30 @@ public class GdxGame implements ApplicationListener {
 
   @Override
   public void create() {
+    LOGGER.info("create()");
+    gameInfrastructure = GameInfrastructure.build();
 
   }
 
   @Override
   public void dispose() {
+    LOGGER.info("dispose()");
     if (screen != null) screen.hide();
     disposableListeners.forEach(Disposable::dispose);
   }
 
   @Override
   public void pause() {
+    LOGGER.info("pause()");
     if (screen != null) screen.pause();
+    pausableListenerManager.forEach(Pausable::pause);
   }
 
   @Override
   public void resume() {
+    LOGGER.info("resume()");
     if (screen != null) screen.resume();
+    resumableListenerManager.forEach(Resumable::resume);
   }
 
   @Override
@@ -108,6 +129,7 @@ public class GdxGame implements ApplicationListener {
 
   @Override
   public void resize(int width, int height) {
+    LOGGER.info("resize(" + width + "," + height + ")");
     if (screen != null) screen.resize(width, height);
     resizableListenerManager.forEach(r -> r.resize(width, height));
   }
@@ -128,6 +150,7 @@ public class GdxGame implements ApplicationListener {
    * @param screen may be {@code null}
    */
   public void setScreen(Screen screen) {
+    LOGGER.info("setScreen(" + screen + ")");
     if (this.screen != null) this.screen.hide();
     this.screen = screen;
     if (this.screen != null) {
@@ -162,4 +185,27 @@ public class GdxGame implements ApplicationListener {
      */
     void resize(int width, int height);
   }
+
+  /**
+   * The interface Pausable.
+   */
+  @FunctionalInterface
+  public interface Pausable {
+    /**
+     * Pause.
+     */
+    void pause();
+  }
+
+  /**
+   * The interface Resumable.
+   */
+  @FunctionalInterface
+  public interface Resumable {
+    /**
+     * Resume.
+     */
+    void resume();
+  }
+
 }
