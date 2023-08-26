@@ -107,7 +107,7 @@ public class GdxGame implements ApplicationListener {
   void create(Infrastructure infrastructure) {
     LOGGER.info("create(" + infrastructure + ")");
     this.infrastructure = infrastructure;
-    setScreen(new LoadingScreen(infrastructure));
+    setScreen(new LoadingScreen());
   }
 
   @Override
