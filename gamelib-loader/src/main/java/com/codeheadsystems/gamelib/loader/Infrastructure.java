@@ -15,7 +15,7 @@
  *
  */
 
-package com.codeheadsystems.gamelib.loader.model;
+package com.codeheadsystems.gamelib.loader;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
@@ -27,15 +27,15 @@ import com.badlogic.gdx.utils.Logger;
 /**
  * The type Game infrastructure.
  */
-public class GameInfrastructure {
+public class Infrastructure {
 
   private final AssetManager assetManager;
   private final Json json;
   private final FileHandleResolver fileHandleResolver;
 
-  private GameInfrastructure(final AssetManager assetManager,
-                             final Json json,
-                             final FileHandleResolver fileHandleResolver) {
+  private Infrastructure(final AssetManager assetManager,
+                         final Json json,
+                         final FileHandleResolver fileHandleResolver) {
     this.assetManager = assetManager;
     this.json = json;
     this.fileHandleResolver = fileHandleResolver;
@@ -46,11 +46,28 @@ public class GameInfrastructure {
    *
    * @return the game infrastructure
    */
-  public static GameInfrastructure build() {
-    return new GameInfrastructure(
+  public static Infrastructure build() {
+    return build(
         new AssetManager(),
         new Json(),
         new DefaultFileHandleResolver());
+  }
+
+  /**
+   * Build infrastructure.
+   *
+   * @param assetManager       the asset manager
+   * @param json               the json
+   * @param fileHandleResolver the file handle resolver
+   * @return the infrastructure
+   */
+  public static Infrastructure build(final AssetManager assetManager,
+                                     final Json json,
+                                     final FileHandleResolver fileHandleResolver) {
+    return new Infrastructure(
+        assetManager,
+        json,
+        fileHandleResolver);
   }
 
   /**
@@ -80,9 +97,12 @@ public class GameInfrastructure {
     return fileHandleResolver;
   }
 
-  private static class DefaultFileHandleResolver implements FileHandleResolver {
+  /**
+   * The type Default file handle resolver.
+   */
+  public static class DefaultFileHandleResolver implements FileHandleResolver {
 
-    private static final Logger LOGGER = new Logger(GameInfrastructure.class.getSimpleName(), Logger.DEBUG);
+    private static final Logger LOGGER = new Logger(Infrastructure.class.getSimpleName(), Logger.DEBUG);
 
     @Override
     public FileHandle resolve(final String fileName) {

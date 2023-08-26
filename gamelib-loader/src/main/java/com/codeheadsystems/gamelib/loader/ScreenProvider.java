@@ -18,7 +18,6 @@
 package com.codeheadsystems.gamelib.loader;
 
 import com.badlogic.gdx.Screen;
-import com.codeheadsystems.gamelib.loader.model.GameInfrastructure;
 
 /**
  * The interface Screen provider.
@@ -32,6 +31,6 @@ public interface ScreenProvider {
    * @param gameInfrastructure the game infrastructure
    * @return the screen
    */
-  Screen screen(GameInfrastructure gameInfrastructure);
+  Screen screen(Infrastructure gameInfrastructure);
 
 }

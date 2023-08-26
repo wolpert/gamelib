@@ -23,7 +23,6 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Logger;
 import com.codeheadsystems.gamelib.loader.manager.ListenerManager;
-import com.codeheadsystems.gamelib.loader.model.GameInfrastructure;
 import com.codeheadsystems.gamelib.loader.screen.LoadingScreen;
 
 /**
@@ -61,7 +60,10 @@ public class GdxGame implements ApplicationListener {
    * The Screen.
    */
   protected Screen screen;
-  protected GameInfrastructure gameInfrastructure;
+  /**
+   * The Infrastructure.
+   */
+  protected Infrastructure infrastructure;
 
   /**
    * Instantiates a new Gdx game.
@@ -94,9 +96,18 @@ public class GdxGame implements ApplicationListener {
 
   @Override
   public void create() {
-    LOGGER.info("create()");
-    gameInfrastructure = GameInfrastructure.build();
-    setScreen(new LoadingScreen(gameInfrastructure));
+    create(Infrastructure.build());
+  }
+
+  /**
+   * Package protected so we can use this for testing.
+   *
+   * @param infrastructure the infrastructure
+   */
+  void create(Infrastructure infrastructure) {
+    LOGGER.info("create(" + infrastructure + ")");
+    this.infrastructure = infrastructure;
+    setScreen(new LoadingScreen(infrastructure));
   }
 
   @Override
@@ -158,6 +169,15 @@ public class GdxGame implements ApplicationListener {
       this.screen.show();
       this.screen.resize(Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
     }
+  }
+
+  /**
+   * Gets infrastructure.
+   *
+   * @return the infrastructure
+   */
+  public Infrastructure getInfrastructure() {
+    return infrastructure;
   }
 
   /**

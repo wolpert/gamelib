@@ -24,18 +24,17 @@ import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
-import com.badlogic.gdx.maps.tiled.TiledMap;
-import com.badlogic.gdx.maps.tiled.TmxMapLoader;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
 import com.codeheadsystems.gamelib.loader.GdxGame;
 import com.codeheadsystems.gamelib.loader.ScreenProvider;
 import com.codeheadsystems.gamelib.loader.model.Assets;
-import com.codeheadsystems.gamelib.loader.model.GameInfrastructure;
+import com.codeheadsystems.gamelib.loader.Infrastructure;
 import com.codeheadsystems.gamelib.loader.model.Loader;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
+import java.util.Optional;
 
 /**
  * Minimal loading screen needed for the base game. Note, he does not use the asset manager... rather
@@ -45,14 +44,19 @@ public class LoadingScreen extends ScreenAdapter {
 
   private static final Logger LOGGER = new Logger(LoadingScreen.class.getSimpleName(), Logger.DEBUG);
   private static final String ASSETS_FILE_NAME = "assets.json";
-  private final GameInfrastructure gameInfrastructure;
+  private final Infrastructure gameInfrastructure;
   private final AssetManager assetManager;
   private final FileHandleResolver fileHandleResolver;
   private final Json json;
   private LoadingStage currentStage;
   private Assets assets;
 
-  public LoadingScreen(final GameInfrastructure infrastructure) {
+  /**
+   * Instantiates a new Loading screen.
+   *
+   * @param infrastructure the infrastructure
+   */
+  public LoadingScreen(final Infrastructure infrastructure) {
     LOGGER.info("LoadingScreen()");
     this.gameInfrastructure = infrastructure;
     this.assetManager = infrastructure.getAssetManager();
@@ -62,78 +66,82 @@ public class LoadingScreen extends ScreenAdapter {
   }
 
   @Override
-  public void show() {
+  public void render(float delta) {
+    generate().ifPresentOrElse(
+        screen -> GdxGame.instance().setScreen(screen),
+        this::renderLoadingScreen);
   }
 
-  @Override
-  public void render(float delta) {
-    if (!update()) {
-      // render the loading screen
-      //loadingBar.render(loadingManager.getProgress());
-    }
+  private void renderLoadingScreen() {
+    // TODO: Make this a real loading screen.
   }
 
   /**
-   * Returns false if no more updates are needed.
+   * Returns screen when its build.
    *
    * @return boolean if we are done updating.
    */
-  public boolean update() {
+  private Optional<Screen> generate() {
     LOGGER.info("Update() : " + currentStage);
-    switch (currentStage) {
-      case INIT -> {
-        setAssets(json.fromJson(
-            Assets.class,
-            fileHandleResolver.resolve(ASSETS_FILE_NAME)));
-        setCurrentStage(LoadingStage.ASSET_LOADERS);
-        return false;
-      }
-      case ASSET_LOADERS -> {
-        setCurrentStage(LoadingStage.QUEUE_ASSETS);
-        assetManager.setLoader(TiledMap.class, ".tmx", new TmxMapLoader(fileHandleResolver));
-        // Loop through the loaders.
-        assets.loaders().forEach(this::buildLoader);
-        return false;
-      }
-      case QUEUE_ASSETS -> {
-        for (Map.Entry<String, ArrayList<String>> entry : assets.getAssetsToLoad().entrySet()) {
-          final String clazzName = entry.getKey();
-          try {
-            final Class<?> clazz = Class.forName(clazzName);
-            for (String filename : entry.getValue()) {
-              LOGGER.info("Queueing " + clazz.getSimpleName() + ":" + filename);
-              assetManager.load(filename, clazz);
-            }
-          } catch (ClassNotFoundException e) {
-            throw new IllegalStateException(e);
-          }
+    return switch (currentStage) {
+      case INIT -> processInit();
+      case ASSET_LOADERS -> processAssetLoaders();
+      case QUEUE_ASSETS -> processQueueAssets();
+      case LOAD_ASSETS -> processLoadAssets();
+      case GENERATE_SCREEN -> processGenerateScreen();
+      default -> Optional.empty();
+    };
+  }
+
+  private Optional<Screen> processInit() {
+    setAssets(json.fromJson(
+        Assets.class,
+        fileHandleResolver.resolve(ASSETS_FILE_NAME)));
+    setCurrentStage(LoadingStage.ASSET_LOADERS);
+    return Optional.empty();
+  }
+
+  private Optional<Screen> processAssetLoaders() {
+    setCurrentStage(LoadingStage.QUEUE_ASSETS);
+    assets.loaders().forEach(this::buildLoader);
+    return Optional.empty();
+  }
+
+  private Optional<Screen> processQueueAssets() {
+    for (Map.Entry<String, ArrayList<String>> entry : assets.getAssetsToLoad().entrySet()) {
+      final String clazzName = entry.getKey();
+      try {
+        final Class<?> clazz = Class.forName(clazzName);
+        for (String filename : entry.getValue()) {
+          LOGGER.info("Queueing " + clazz.getSimpleName() + ":" + filename);
+          assetManager.load(filename, clazz);
         }
-        setCurrentStage(LoadingStage.LOAD_ASSETS);
-        return false;
+      } catch (ClassNotFoundException e) {
+        throw new IllegalStateException(e);
       }
-      case LOAD_ASSETS -> {
-        if (assetManager.update()) {
-          setCurrentStage(LoadingStage.GENERATE_SCREEN);
-        }
-        return false;
-      }
-      case GENERATE_SCREEN -> {
-        try {
-          final ScreenProvider screenProvider = Class.forName(assets.getScreenProvider())
-              .asSubclass(ScreenProvider.class)
-              .getConstructor()
-              .newInstance();
-          final Screen mainScreen = screenProvider.screen(gameInfrastructure);
-          GdxGame.instance().setScreen(mainScreen); // This should end this screen being used.
-        } catch (Exception e) {
-          throw new IllegalStateException(e);
-        }
-        setCurrentStage(LoadingStage.DONE);
-        return false;
-      }
-      default -> {
-        return true;
-      }
+    }
+    setCurrentStage(LoadingStage.LOAD_ASSETS);
+    return Optional.empty();
+  }
+
+  private Optional<Screen> processLoadAssets() {
+    if (assetManager.update()) {
+      setCurrentStage(LoadingStage.GENERATE_SCREEN);
+    }
+    return Optional.empty();
+  }
+
+  private Optional<Screen> processGenerateScreen() {
+    try {
+      final ScreenProvider screenProvider = Class.forName(assets.getScreenProvider())
+          .asSubclass(ScreenProvider.class)
+          .getConstructor()
+          .newInstance();
+      final Screen mainScreen = screenProvider.screen(gameInfrastructure);
+      setCurrentStage(LoadingStage.DONE);
+      return Optional.of(mainScreen);
+    } catch (Exception e) {
+      throw new IllegalStateException(e);
     }
   }
 
