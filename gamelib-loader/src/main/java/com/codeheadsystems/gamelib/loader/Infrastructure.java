@@ -21,6 +21,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
+import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
 
@@ -32,13 +33,16 @@ public class Infrastructure {
   private final AssetManager assetManager;
   private final Json json;
   private final FileHandleResolver fileHandleResolver;
+  private final SpriteBatch spriteBatch;
 
   private Infrastructure(final AssetManager assetManager,
                          final Json json,
-                         final FileHandleResolver fileHandleResolver) {
+                         final FileHandleResolver fileHandleResolver,
+                         final SpriteBatch spriteBatch) {
     this.assetManager = assetManager;
     this.json = json;
     this.fileHandleResolver = fileHandleResolver;
+    this.spriteBatch = spriteBatch;
   }
 
   /**
@@ -50,7 +54,8 @@ public class Infrastructure {
     return build(
         new AssetManager(),
         new Json(),
-        new DefaultFileHandleResolver());
+        new DefaultFileHandleResolver(),
+        new SpriteBatch());
   }
 
   /**
@@ -59,15 +64,18 @@ public class Infrastructure {
    * @param assetManager       the asset manager
    * @param json               the json
    * @param fileHandleResolver the file handle resolver
+   * @param spriteBatch        the sprite batch
    * @return the infrastructure
    */
   public static Infrastructure build(final AssetManager assetManager,
                                      final Json json,
-                                     final FileHandleResolver fileHandleResolver) {
+                                     final FileHandleResolver fileHandleResolver,
+                                     final SpriteBatch spriteBatch) {
     return new Infrastructure(
         assetManager,
         json,
-        fileHandleResolver);
+        fileHandleResolver,
+        spriteBatch);
   }
 
   /**
@@ -95,6 +103,15 @@ public class Infrastructure {
    */
   public FileHandleResolver getFileHandleResolver() {
     return fileHandleResolver;
+  }
+
+  /**
+   * Gets sprite batch.
+   *
+   * @return the sprite batch
+   */
+  public SpriteBatch getSpriteBatch() {
+    return spriteBatch;
   }
 
   /**
