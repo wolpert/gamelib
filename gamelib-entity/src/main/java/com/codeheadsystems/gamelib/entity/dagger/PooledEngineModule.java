@@ -17,6 +17,7 @@
 
 package com.codeheadsystems.gamelib.entity.dagger;
 
+import com.badlogic.ashley.core.Entity;
 import com.badlogic.ashley.core.PooledEngine;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
@@ -24,12 +25,14 @@ import com.badlogic.gdx.utils.Json;
 import com.codeheadsystems.gamelib.entity.configuration.AshleyGameConfiguration;
 import dagger.Module;
 import dagger.Provides;
+import dagger.multibindings.Multibinds;
+import java.util.Set;
 import javax.inject.Singleton;
 
 /**
  * Purpose: Provides entity systems.
  */
-@Module
+@Module(includes = {PooledEngineModule.Binder.class})
 public class PooledEngineModule {
 
   /**
@@ -67,6 +70,19 @@ public class PooledEngineModule {
                                                          final Json json) {
     final FileHandle fileHandle = fileHandleResolver.resolve(CONFIGURATION_JSON);
     return json.fromJson(AshleyGameConfiguration.class, fileHandle);
+  }
+
+  @Module
+  interface Binder {
+
+    /**
+     * Entities that should be created when the screen is shown are placed here.
+     * Note, hiding the screen and showing it again can result in fun!
+     *
+     * @return set of entity generators.
+     */
+    @Multibinds
+    Set<Entity> entites();
   }
 
 }

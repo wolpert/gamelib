@@ -140,6 +140,7 @@ public class GameLibEntityModule {
      */
     @Multibinds
     Set<EntityGenerator> entityGenerators();
+
   }
 
 }
