@@ -45,13 +45,9 @@ import javax.inject.Singleton;
 /**
  * Purpose: Provides entity systems.
  */
-@Module(includes = {GameLibEntityModule.Binder.class})
+@Module(includes = {PooledEngineModule.class,GameLibEntityModule.Binder.class})
 public class GameLibEntityModule {
 
-  /**
-   * The constant CONFIGURATION_JSON.
-   */
-  public static final String CONFIGURATION_JSON = "ashleyGameConfiguration.json";
   /**
    * The constant ENTITY_SCREEN_SHOW_CONSUMER.
    */
@@ -99,38 +95,6 @@ public class GameLibEntityModule {
   @Singleton
   public EntitySystem cameraEntitySystem(final CameraEntitySystem entitySystem) {
     return entitySystem;
-  }
-
-  /**
-   * Pooled engine pooled engine.
-   *
-   * @param configuration the configuration
-   * @return the pooled engine
-   */
-  @Provides
-  @Singleton
-  public PooledEngine pooledEngine(final AshleyGameConfiguration configuration) {
-    final PooledEngine pooledEngine = new PooledEngine(
-        configuration.entityPoolInitialSize,
-        configuration.entityPoolMaxSize,
-        configuration.componentPoolInitialSize,
-        configuration.componentPoolMaxSize);
-    return pooledEngine;
-  }
-
-  /**
-   * Ashley game configuration ashley game configuration.
-   *
-   * @param fileHandleResolver the file handle resolver
-   * @param json               the json
-   * @return the ashley game configuration
-   */
-  @Provides
-  @Singleton
-  public AshleyGameConfiguration ashleyGameConfiguration(final FileHandleResolver fileHandleResolver,
-                                                         final Json json) {
-    final FileHandle fileHandle = fileHandleResolver.resolve(CONFIGURATION_JSON);
-    return json.fromJson(AshleyGameConfiguration.class, fileHandle);
   }
 
   /**

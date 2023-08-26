@@ -82,7 +82,7 @@ public class LoadingScreen extends ScreenAdapter {
    * @return boolean if we are done updating.
    */
   private Optional<Screen> generate() {
-    LOGGER.info("Update() : " + currentStage);
+    LOGGER.info("Update() :" + getProgress() + ":" + currentStage);
     return switch (currentStage) {
       case INIT -> processInit();
       case ASSET_LOADERS -> processAssetLoaders();
