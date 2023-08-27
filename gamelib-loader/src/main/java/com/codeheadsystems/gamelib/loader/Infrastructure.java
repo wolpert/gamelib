@@ -51,10 +51,11 @@ public class Infrastructure {
    * @return the game infrastructure
    */
   public static Infrastructure build() {
+    final FileHandleResolver resolver = new DefaultFileHandleResolver();
     return build(
-        new AssetManager(),
+        new AssetManager(resolver),
         new Json(),
-        new DefaultFileHandleResolver(),
+        resolver,
         new SpriteBatch());
   }
 

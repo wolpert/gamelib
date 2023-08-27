@@ -17,43 +17,21 @@
 
 package com.codeheadsystems.gamelib.loader.model;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
 /**
- * Contains assets to load.
+ * The type Loading screen.
  */
-public class Assets {
+public class LoadingScreen {
 
-  private HashMap<String, ArrayList<String>> assetsToLoad;
-  private ArrayList<Loader> loaders;
-  private LoadingScreen loadingScreen;
+  private String screenProvider;
 
   /**
-   * Gets assets to load.
+   * This is the name of the provider that creates the first screen of your game.
+   * We will show this after everything is loaded.
+   * It must implement @ScreenProvider
    *
-   * @return the assets to load
+   * @return the name of the provider.
    */
-  public HashMap<String, ArrayList<String>> getAssetsToLoad() {
-    return assetsToLoad;
+  public String getScreenProvider() {
+    return screenProvider;
   }
-
-  /**
-   * Loaders array list.
-   *
-   * @return the array list
-   */
-  public ArrayList<Loader> loaders() {
-    return loaders;
-  }
-
-  /**
-   * Details about the loading screen.
-   *
-   * @return the loading screen
-   */
-  public LoadingScreen getLoadingScreen() {
-    return loadingScreen;
-  }
-
 }

@@ -117,7 +117,7 @@ public class LoadingManager {
 
   private Optional<Screen> processGenerateScreen() {
     try {
-      final ScreenProvider screenProvider = Class.forName(assets.getScreenProvider())
+      final ScreenProvider screenProvider = Class.forName(assets.getLoadingScreen().getScreenProvider())
           .asSubclass(ScreenProvider.class)
           .getConstructor()
           .newInstance();
