@@ -20,7 +20,7 @@ package com.codeheadsystems.gamelib.loader.model;
 /**
  * The type Loading screen.
  */
-public class LoadingScreen {
+public class LoadingScreenConfiguration {
 
   private String screenProvider;
 

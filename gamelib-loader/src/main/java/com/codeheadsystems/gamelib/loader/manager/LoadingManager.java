@@ -68,16 +68,16 @@ public class LoadingManager {
   public Optional<Screen> generate() {
     LOGGER.info("Progress :" + getProgress());
     return switch (loadingStage) {
-      case INIT -> processInit();
-      case ASSET_LOADERS -> processAssetLoaders();
-      case QUEUE_ASSETS -> processQueueAssets();
-      case LOAD_ASSETS -> processLoadAssets();
-      case GENERATE_SCREEN -> processGenerateScreen();
+      case INIT -> init();
+      case ASSET_LOADERS -> assetLoaders();
+      case QUEUE_ASSETS -> queueAssets();
+      case LOAD_ASSETS -> loadAssets();
+      case GENERATE_SCREEN -> generateScreen();
       default -> Optional.empty();
     };
   }
 
-  private Optional<Screen> processInit() {
+  private Optional<Screen> init() {
     setAssets(json.fromJson(
         Assets.class,
         fileHandleResolver.resolve(ASSETS_FILE_NAME)));
@@ -85,13 +85,13 @@ public class LoadingManager {
     return Optional.empty();
   }
 
-  private Optional<Screen> processAssetLoaders() {
+  private Optional<Screen> assetLoaders() {
     setLoadingStage(LoadingStage.QUEUE_ASSETS);
     assets.loaders().forEach(this::buildLoader);
     return Optional.empty();
   }
 
-  private Optional<Screen> processQueueAssets() {
+  private Optional<Screen> queueAssets() {
     for (Map.Entry<String, ArrayList<String>> entry : assets.getAssetsToLoad().entrySet()) {
       final String clazzName = entry.getKey();
       try {
@@ -108,16 +108,16 @@ public class LoadingManager {
     return Optional.empty();
   }
 
-  private Optional<Screen> processLoadAssets() {
+  private Optional<Screen> loadAssets() {
     if (assetManager.update()) {
       setLoadingStage(LoadingStage.GENERATE_SCREEN);
     }
     return Optional.empty();
   }
 
-  private Optional<Screen> processGenerateScreen() {
+  private Optional<Screen> generateScreen() {
     try {
-      final ScreenProvider screenProvider = Class.forName(assets.getLoadingScreen().getScreenProvider())
+      final ScreenProvider screenProvider = Class.forName(assets.getLoadingScreenConfiguration().getScreenProvider())
           .asSubclass(ScreenProvider.class)
           .getConstructor()
           .newInstance();

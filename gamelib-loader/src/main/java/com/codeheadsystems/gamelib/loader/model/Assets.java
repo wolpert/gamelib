@@ -27,7 +27,7 @@ public class Assets {
 
   private HashMap<String, ArrayList<String>> assetsToLoad;
   private ArrayList<Loader> loaders;
-  private LoadingScreen loadingScreen;
+  private LoadingScreenConfiguration loadingScreenConfiguration;
 
   /**
    * Gets assets to load.
@@ -52,8 +52,8 @@ public class Assets {
    *
    * @return the loading screen
    */
-  public LoadingScreen getLoadingScreen() {
-    return loadingScreen;
+  public LoadingScreenConfiguration getLoadingScreenConfiguration() {
+    return loadingScreenConfiguration;
   }
 
 }

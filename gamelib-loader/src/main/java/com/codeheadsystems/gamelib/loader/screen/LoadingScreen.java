@@ -53,7 +53,7 @@ public class LoadingScreen extends ScreenAdapter {
    * Instantiates a new Loading screen.
    */
   public LoadingScreen() {
-    LOGGER.info("LoadingScreen()");
+    LOGGER.info("LoadingScreenConfiguration()");
   }
 
   @Override
