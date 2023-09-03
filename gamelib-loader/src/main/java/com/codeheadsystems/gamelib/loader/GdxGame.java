@@ -40,10 +40,6 @@ public class GdxGame implements ApplicationListener {
    */
   protected final ListenerManager<Disposable> disposableListeners;
   /**
-   * The Renderable listener manager.
-   */
-  protected final ListenerManager<Renderable> renderableListenerManager;
-  /**
    * The Resizable listener manager.
    */
   protected final ListenerManager<Resizable> resizableListenerManager;
@@ -72,7 +68,6 @@ public class GdxGame implements ApplicationListener {
     // we cannot use the logger yet since this occurs before the GDX infrastructure is setup.
     System.out.println("GdxGame()");
     disposableListeners = new ListenerManager<>();
-    renderableListenerManager = new ListenerManager<>();
     resizableListenerManager = new ListenerManager<>();
     pausableListenerManager = new ListenerManager<>();
     resumableListenerManager = new ListenerManager<>();
@@ -113,7 +108,8 @@ public class GdxGame implements ApplicationListener {
   @Override
   public void dispose() {
     LOGGER.info("dispose()");
-    if (screen != null) screen.hide();
+    if (screen != null) screen.dispose();
+    if (infrastructure != null) infrastructure.dispose();
     disposableListeners.forEach(Disposable::dispose);
   }
 
@@ -135,7 +131,6 @@ public class GdxGame implements ApplicationListener {
   public void render() {
     final float deltaTime = Gdx.graphics.getDeltaTime();
     if (screen != null) screen.render(deltaTime);
-    renderableListenerManager.forEach(r -> r.render(deltaTime));
   }
 
 
@@ -178,19 +173,6 @@ public class GdxGame implements ApplicationListener {
    */
   public Infrastructure getInfrastructure() {
     return infrastructure;
-  }
-
-  /**
-   * The interface Renderable.
-   */
-  @FunctionalInterface
-  public interface Renderable {
-    /**
-     * Render.
-     *
-     * @param deltaTime the delta time
-     */
-    void render(float deltaTime);
   }
 
   /**

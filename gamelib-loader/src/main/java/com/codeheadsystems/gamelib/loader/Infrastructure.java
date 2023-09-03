@@ -22,13 +22,15 @@ import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
 import com.badlogic.gdx.files.FileHandle;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.Disposable;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
 
 /**
  * The type Game infrastructure.
  */
-public class Infrastructure {
+public class Infrastructure implements Disposable {
+  private static final Logger LOGGER = new Logger(Infrastructure.class.getSimpleName(), Logger.DEBUG);
 
   private final AssetManager assetManager;
   private final Json json;
@@ -115,12 +117,18 @@ public class Infrastructure {
     return spriteBatch;
   }
 
+  @Override
+  public void dispose() {
+    LOGGER.info("dispose()");
+    assetManager.dispose();
+    spriteBatch.dispose();
+  }
+
+
   /**
    * The type Default file handle resolver.
    */
   public static class DefaultFileHandleResolver implements FileHandleResolver {
-
-    private static final Logger LOGGER = new Logger(Infrastructure.class.getSimpleName(), Logger.DEBUG);
 
     @Override
     public FileHandle resolve(final String fileName) {
