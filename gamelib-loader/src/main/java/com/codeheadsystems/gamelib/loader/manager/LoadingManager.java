@@ -1,18 +1,5 @@
 /*
- *   Copyright (c) 2023. Ned Wolpert <ned.wolpert@gmail.com>
- *
- *    Licensed under the Apache License, Version 2.0 (the "License");
- *    you may not use this file except in compliance with the License.
- *    You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- *    Unless required by applicable law or agreed to in writing, software
- *    distributed under the License is distributed on an "AS IS" BASIS,
- *    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *    See the License for the specific language governing permissions and
- *    limitations under the License.
- *
+ * Copyright (c) 2023. Ned Wolpert
  */
 
 package com.codeheadsystems.gamelib.loader.manager;
@@ -22,6 +9,10 @@ import com.badlogic.gdx.assets.AssetLoaderParameters;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.AsynchronousAssetLoader;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.graphics.g2d.BitmapFont;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGenerator;
+import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
+import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.utils.Json;
 import com.badlogic.gdx.utils.Logger;
 import com.codeheadsystems.gamelib.loader.Infrastructure;
@@ -32,6 +23,7 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Map;
 import java.util.Optional;
+import java.util.function.Consumer;
 
 /**
  * The type Loading manager.
@@ -87,11 +79,21 @@ public class LoadingManager {
 
   private Optional<Screen> assetLoaders() {
     setLoadingStage(LoadingStage.QUEUE_ASSETS);
+    if (!assets.getFonts().isEmpty()) {
+      assetManager.setLoader(FreeTypeFontGenerator.class, new FreeTypeFontGeneratorLoader(fileHandleResolver));
+      assetManager.setLoader(BitmapFont.class, ".ttf", new FreetypeFontLoader(fileHandleResolver));
+    }
     assets.loaders().forEach(this::buildLoader);
     return Optional.empty();
   }
 
   private Optional<Screen> queueAssets() {
+    assetManagerConsumer(assets.getLoadingScreenConfiguration().getPreQueueAssetsHook())
+        .ifPresent(consumer -> consumer.accept(assetManager));
+    for (Map.Entry<String, FreetypeFontLoader.FreeTypeFontLoaderParameter> entry : assets.getFonts().entrySet()) {
+      LOGGER.info("Queueing font: " + entry.getKey());
+      assetManager.load(entry.getKey(), BitmapFont.class, entry.getValue());
+    }
     for (Map.Entry<String, ArrayList<String>> entry : assets.getAssetsToLoad().entrySet()) {
       final String clazzName = entry.getKey();
       try {
@@ -104,8 +106,43 @@ public class LoadingManager {
         throw new IllegalStateException(e);
       }
     }
+    assetManagerConsumer(assets.getLoadingScreenConfiguration().getPostQueueAssetsHook())
+        .ifPresent(consumer -> consumer.accept(assetManager));
     setLoadingStage(LoadingStage.LOAD_ASSETS);
     return Optional.empty();
+  }
+
+  private Optional<Consumer<AssetManager>> assetManagerConsumer(final String name) {
+    if (name == null) {
+      return Optional.empty();
+    }
+    try {
+      final Class<?> clazz = Class.forName(name);
+      final Object instance = clazz.getConstructor().newInstance();
+      if (instance instanceof Consumer consumer) {
+        return Optional.of((Consumer<AssetManager>) instance);
+      } else {
+        throw new IllegalStateException("Post queue assets hook must be a consumer");
+      }
+    } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
+             InvocationTargetException e) {
+      throw new IllegalStateException(e);
+    }
+  }
+
+  private void handlePostQueueAssetsHook(final String postQueueAssetsHook) {
+    try {
+      final Class<?> clazz = Class.forName(postQueueAssetsHook);
+      final Object instance = clazz.getConstructor().newInstance();
+      if (instance instanceof Consumer consumer) {
+        consumer.accept(assetManager);
+      } else {
+        throw new IllegalStateException("Post queue assets hook must be a consumer");
+      }
+    } catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException |
+             InvocationTargetException e) {
+      throw new IllegalStateException(e);
+    }
   }
 
   private Optional<Screen> loadAssets() {
