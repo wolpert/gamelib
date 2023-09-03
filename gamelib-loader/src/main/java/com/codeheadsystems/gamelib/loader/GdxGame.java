@@ -89,6 +89,78 @@ public class GdxGame implements ApplicationListener {
     return INSTANCE;
   }
 
+  /**
+   * Add disposable listener.
+   *
+   * @param disposable the disposable
+   */
+  public void addDisposableListener(Disposable disposable) {
+    disposableListeners.addListener(disposable);
+  }
+
+  /**
+   * Remove disposable listener.
+   *
+   * @param disposable the disposable
+   */
+  public void removeDisposableListener(Disposable disposable) {
+    disposableListeners.removeListener(disposable);
+  }
+
+  /**
+   * Add resizable listener.
+   *
+   * @param resizable the resizable
+   */
+  public void addResizableListener(Resizable resizable) {
+    resizableListenerManager.addListener(resizable);
+  }
+
+  /**
+   * Remove resizable listener.
+   *
+   * @param resizable the resizable
+   */
+  public void removeResizableListener(Resizable resizable) {
+    resizableListenerManager.removeListener(resizable);
+  }
+
+  /**
+   * Add pausable listener.
+   *
+   * @param pausable the pausable
+   */
+  public void addPausableListener(Pausable pausable) {
+    pausableListenerManager.addListener(pausable);
+  }
+
+  /**
+   * Remove pausable listener.
+   *
+   * @param pausable the pausable
+   */
+  public void removePausableListener(Pausable pausable) {
+    pausableListenerManager.removeListener(pausable);
+  }
+
+  /**
+   * Add resumable listener.
+   *
+   * @param resumable the resumable
+   */
+  public void addResumableListener(Resumable resumable) {
+    resumableListenerManager.addListener(resumable);
+  }
+
+  /**
+   * Remove resumable listener.
+   *
+   * @param resumable the resumable
+   */
+  public void removeResumableListener(Resumable resumable) {
+    resumableListenerManager.removeListener(resumable);
+  }
+
   @Override
   public void create() {
     create(Infrastructure.build());
