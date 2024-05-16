@@ -19,8 +19,6 @@ dependencies {
     implementation project(':gamelib-net-common')
     api(libs.commons.io)
     implementation libs.netty.all
-    implementation libs.bcprov
-    implementation libs.bcpkix
     implementation libs.slf4j.api
 
     implementation(libs.jackson.core)

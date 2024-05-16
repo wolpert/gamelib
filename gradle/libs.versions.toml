@@ -8,7 +8,7 @@ bouncy = '1.78.1'
 codehead-test = "1.0.7"
 commons-io = "2.16.1"
 dagger = "2.51.1"
-gdx='1.12.1'
+gdx = '1.12.1'
 immutables = '2.10.1'
 jackson = '2.17.1'
 junit-jupiter = "5.10.2"
@@ -19,7 +19,7 @@ logback = '1.5.6'
 slf4j = '2.0.13'
 
 [libraries]
-ashley = { module = "com.badlogicgames.ashley:ashley" , version.ref = "ashley" }
+ashley = { module = "com.badlogicgames.ashley:ashley", version.ref = "ashley" }
 assertj = { module = "org.assertj:assertj-core", version.ref = "assertj" }
 bcpkix =  { module = "org.bouncycastle:bcpkix-jdk18on", version.ref ="bouncy" }
 bcprov =  { module = "org.bouncycastle:bcprov-jdk18on", version.ref ="bouncy" }
@@ -27,12 +27,12 @@ codehead-test = { module = "com.codeheadsystems:codehead-test", version.ref = "c
 commons-io = { module = "commons-io:commons-io", version.ref = "commons-io" }
 dagger = { module = "com.google.dagger:dagger", version.ref = "dagger" }
 dagger-compiler = { module = "com.google.dagger:dagger-compiler", version.ref = "dagger" }
-gdx= { module = "com.badlogicgames.gdx:gdx", version.ref = "gdx" }
-gdx-backend-headless= { module = "com.badlogicgames.gdx:gdx-backend-headless", version.ref = "gdx" }
-gdx-backend-lwjgl3= { module = "com.badlogicgames.gdx:gdx-backend-lwjgl3", version.ref = "gdx" }
-gdx-box2d= { module = "com.badlogicgames.gdx:gdx-box2d", version.ref = "gdx" }
-gdx-freetype= { module = "com.badlogicgames.gdx:gdx-freetype", version.ref = "gdx" }
-gdx-freetype-platform= { module = "com.badlogicgames.gdx:gdx-freetype-platform", version.ref = "gdx" }
+gdx = { module = "com.badlogicgames.gdx:gdx", version.ref = "gdx" }
+gdx-backend-headless = { module = "com.badlogicgames.gdx:gdx-backend-headless", version.ref = "gdx" }
+gdx-backend-lwjgl3 = { module = "com.badlogicgames.gdx:gdx-backend-lwjgl3", version.ref = "gdx" }
+gdx-box2d = { module = "com.badlogicgames.gdx:gdx-box2d", version.ref = "gdx" }
+gdx-freetype = { module = "com.badlogicgames.gdx:gdx-freetype", version.ref = "gdx" }
+gdx-freetype-platform = { module = "com.badlogicgames.gdx:gdx-freetype-platform", version.ref = "gdx" }
 immutables-value = { module = "org.immutables:value", version.ref = "immutables" }
 immutables-value-annotations = { module = "org.immutables:value-annotations", version.ref = "immutables" }
 jackson-core = { module = "com.fasterxml.jackson.core:jackson-core", version.ref = "jackson" }
@@ -48,7 +48,7 @@ logback-classic = { module = "ch.qos.logback:logback-classic", version.ref = "lo
 logback-core = { module = "ch.qos.logback:logback-core", version.ref = "logback" }
 mockito-core = { module = "org.mockito:mockito-core", version.ref = "mokito" }
 mockito-junit-jupiter = { module = "org.mockito:mockito-junit-jupiter", version.ref = "mokito" }
-netty-all = {module ="io.netty:netty-all", version.ref = "netty" }
+netty-all = { module = "io.netty:netty-all", version.ref = "netty" }
 slf4j-api = { module = "org.slf4j:slf4j-api", version.ref = "slf4j" }
 slf4j-log4j12 = { module = "org.slf4j:slf4j-log4j12", version.ref = "slf4j" }
 
