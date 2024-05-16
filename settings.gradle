@@ -12,9 +12,4 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { url "https://oss.sonatype.org/content/repositories/snapshots/" }
     }
-    versionCatalogs {
-        libs {
-            from("com.codeheadsystems:dependencies:1.0.4-SNAPSHOT")
-        }
-    }
 }

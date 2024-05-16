@@ -24,7 +24,7 @@ dependencies {
     implementation libs.dagger // Common files for runtime
     annotationProcessor libs.dagger.compiler
 
-    testImplementation(libs.assertj.core)
+    testImplementation(libs.assertj)
     testImplementation(libs.junit.jupiter.engine)
     testImplementation(libs.junit.jupiter.api)
     testImplementation(libs.junit.jupiter.params)
@@ -36,7 +36,7 @@ dependencies {
 
     testImplementation(libs.log4j.api)
     testImplementation(libs.log4j.core)
-    testImplementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+    testImplementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-desktop"
 }
 publishing {
     publications {

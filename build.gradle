@@ -22,11 +22,6 @@ buildscript {
     }
 }
 
-ext {
-    codeheadTestVersion = '1.0.4'
-    gdxVersion = '1.12.0' // https://mvnrepository.com/artifact/com.badlogicgames.gdx/gdx
-}
-
 allprojects {
     group 'com.codeheadsystems'
     version '1.0.4-SNAPSHOT'
@@ -67,14 +62,14 @@ allprojects {
             test {
                 useJUnitJupiter()
                 dependencies {
-                    implementation libs.assertj.core
+                    implementation libs.assertj
                     implementation libs.junit.jupiter.engine
                     implementation libs.junit.jupiter.api
                     implementation libs.junit.jupiter.params
                     implementation libs.mockito.junit.jupiter
                     implementation libs.mockito.core
                     implementation libs.gdx.backend.lwjgl3
-                    implementation "com.badlogicgames.gdx:gdx-platform:$gdxVersion:natives-desktop"
+                    implementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-desktop"
 
                     implementation libs.gdx.backend.headless
                     implementation libs.commons.io
@@ -86,7 +81,7 @@ allprojects {
                     implementation libs.dagger // Common files for runtime
                     annotationProcessor libs.dagger.compiler
 
-                    implementation("com.codeheadsystems:codehead-test:${codeheadTestVersion}")
+                    implementation(libs.codehead.test)
 
                 }
             }
