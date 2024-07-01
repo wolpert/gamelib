@@ -3,6 +3,18 @@
  * Ned Wolpert <ned.wolpert@codeheadsystems.com>
  */
 
+apply plugin: "base"
+apply plugin: "jvm-test-suite"
+apply plugin: "java-library"
+apply plugin: "idea"
+apply plugin: 'signing'
+apply plugin: 'maven-publish'
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+    withJavadocJar()
+    withSourcesJar()
+}
 ext {
     appName = "gamelib-box2d"
 }
@@ -13,12 +25,47 @@ base {
 }
 
 dependencies {
+    api libs.gdx
+
+    // Dagger
+    implementation libs.dagger
+    annotationProcessor libs.dagger.compiler
     implementation project(":gamelib-core")
     implementation project(":gamelib-entity")
     api libs.ashley
     api libs.gdx.box2d
 }
 
+testing {
+    suites {
+        test {
+            useJUnitJupiter()
+            dependencies {
+                implementation libs.assertj
+                implementation libs.junit.jupiter.engine
+                implementation libs.junit.jupiter.api
+                implementation libs.junit.jupiter.params
+                implementation libs.mockito.junit.jupiter
+                implementation libs.mockito.core
+                implementation libs.gdx.backend.lwjgl3
+                implementation "com.badlogicgames.gdx:gdx-platform:1.12.1:natives-desktop"
+
+                implementation libs.gdx.backend.headless
+                implementation libs.commons.io
+                implementation libs.slf4j.log4j12
+                implementation libs.log4j.api
+                implementation libs.log4j.core
+                implementation libs.logback.classic
+                implementation libs.logback.core
+                implementation libs.dagger // Common files for runtime
+                annotationProcessor libs.dagger.compiler
+
+                implementation(libs.codehead.test)
+
+            }
+        }
+    }
+}
 publishing {
     publications {
         mavenJava(MavenPublication) {
@@ -70,4 +117,9 @@ publishing {
 signing {
     useGpgCmd()
     sign publishing.publications.mavenJava
+}
+javadoc {
+    if(JavaVersion.current().isJava9Compatible()) {
+        options.addBooleanOption('html5', true)
+    }
 }
