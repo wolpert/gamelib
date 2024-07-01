@@ -19,12 +19,11 @@ it's due. See the LICENSE file for details.
 Here are the full sets of libraries available.
 
 *WARNING* gamelib-net-client and gamelib-net-server are preliminary only.
-They are only available as `1.0.1-SNAPSHOT` versions
 
 ```groovy
 
 ext {
-    gamelibVersion = '1.0.4'
+    gamelibVersion = '1.0.5'
 }
 dependencies {
     implementation "com.codeheadsystems:gamelib-core:${gamelibVersion}"
@@ -32,8 +31,8 @@ dependencies {
     implementation "com.codeheadsystems:gamelib-box2d:${gamelibVersion}"
     implementation "com.codeheadsystems:gamelib-entity:${gamelibVersion}"
     implementation "com.codeheadsystems:gamelib-hex:${gamelibVersion}"
-    implementation "com.codeheadsystems:gamelib-net-client:1.0.1-SNAPSHOT"
-    implementation "com.codeheadsystems:gamelib-net-server:1.0.1-SNAPSHOT"
+    implementation "com.codeheadsystems:gamelib-net-client:${gamelibVersion}"
+    implementation "com.codeheadsystems:gamelib-net-server:${gamelibVersion}"
 }
 ```
 

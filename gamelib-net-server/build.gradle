@@ -13,8 +13,6 @@ base {
     version = "${version}"
 }
 
-//jacocoTestReport.finalizedBy jacocoTestCoverageVerification
-
 dependencies {
     implementation project(':gamelib-net-common')
     api(libs.commons.io)

@@ -17,7 +17,6 @@ dependencies {
     api libs.gdx.freetype
     api libs.gdx.freetype.platform
 }
-//jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 
 publishing {
     publications {

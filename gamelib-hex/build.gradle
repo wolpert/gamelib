@@ -11,8 +11,6 @@ base {
     archivesName = "${appName}"
     version = "${version}"
 }
-// Testing report disabled for now
-//jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 
 dependencies {
     implementation project(":gamelib-core")

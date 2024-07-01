@@ -12,8 +12,6 @@ base {
     version = "${version}"
 }
 
-//jacocoTestReport.finalizedBy jacocoTestCoverageVerification
-
 publishing {
     publications {
         mavenJava(MavenPublication) {

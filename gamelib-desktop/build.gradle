@@ -16,7 +16,6 @@ dependencies {
     api libs.gdx.backend.lwjgl3
     implementation project(":gamelib-core")
 }
-//jacocoTestReport.finalizedBy jacocoTestCoverageVerification
 
 publishing {
     publications {

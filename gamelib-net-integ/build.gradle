@@ -12,8 +12,6 @@ base {
     version = "${version}"
 }
 
-//jacocoTestReport.finalizedBy jacocoTestCoverageVerification
-
 dependencies {
     implementation project(':gamelib-net-common')
     implementation project(':gamelib-net-server')
