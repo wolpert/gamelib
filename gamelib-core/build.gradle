@@ -3,12 +3,14 @@
  * Ned Wolpert <ned.wolpert@codeheadsystems.com>
  */
 
-apply plugin: "base"
-apply plugin: "jvm-test-suite"
-apply plugin: "java-library"
-apply plugin: "idea"
-apply plugin: 'signing'
-apply plugin: 'maven-publish'
+plugins {
+    id("base")
+    id("jvm-test-suite")
+    id("java-library")
+    id("idea")
+    id('signing')
+    id('maven-publish')
+}
 java {
     sourceCompatibility = JavaVersion.VERSION_17
     targetCompatibility = JavaVersion.VERSION_17
