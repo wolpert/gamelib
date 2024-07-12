@@ -3,14 +3,14 @@
 
 [versions]
 ashley = '1.7.4'
-assertj = "3.26.0"
+assertj = "3.26.3"
 bouncy = '1.78.1'
 codehead-test = "1.0.9"
 commons-io = "2.16.1"
 dagger = "2.51.1"
 gdx = '1.12.1'
 immutables = '2.10.1'
-jackson = '2.17.1'
+jackson = '2.17.2'
 junit-jupiter = "5.10.3"
 log4j = '2.23.1'
 mokito = '5.12.0'
