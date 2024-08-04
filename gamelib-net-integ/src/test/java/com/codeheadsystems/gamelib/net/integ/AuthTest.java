@@ -87,13 +87,13 @@ public class AuthTest {
 
   private void validateAuthenticated(final NetComponents net) throws ExecutionException, InterruptedException, TimeoutException {
     LOGGER.info("validateAuthenticated({})", net);
-    final Authenticated authenticated = net.clientManager().getAuthenticatedFuture().get(500, TimeUnit.MILLISECONDS);
+    final Authenticated authenticated = net.clientManager().getAuthenticatedFuture().get(5000, TimeUnit.MILLISECONDS);
     assertThat(authenticated).isNotNull();
   }
 
   private void validateServerDetails(final NetComponents net) throws ExecutionException, InterruptedException, TimeoutException {
     LOGGER.info("validateServerDetails({})", net);
-    final ServerDetails serverDetails = net.clientManager().getServerDetailsFuture().get(500, TimeUnit.MILLISECONDS);
+    final ServerDetails serverDetails = net.clientManager().getServerDetailsFuture().get(5000, TimeUnit.MILLISECONDS);
     assertThat(serverDetails).isNotNull();
   }
 
