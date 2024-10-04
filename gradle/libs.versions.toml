@@ -12,9 +12,9 @@ gdx = '1.12.1'
 immutables = '2.10.1'
 jackson = '2.18.0'
 junit-jupiter = "5.11.1"
-log4j = '2.24.0'
-mokito = '5.13.0'
-netty = "4.1.113.Final"
+log4j = '2.24.1'
+mokito = '5.14.1'
+netty = "4.1.114.Final"
 logback = '1.5.8'
 slf4j = '2.0.16'
 
