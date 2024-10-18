@@ -8,14 +8,14 @@ bouncy = '1.78.1'
 codehead-test = "1.0.10"
 commons-io = "2.17.0"
 dagger = "2.52"
-gdx = '1.12.1'
+gdx = '1.13.0'
 immutables = '2.10.1'
 jackson = '2.18.0'
 junit-jupiter = "5.11.2"
 log4j = '2.24.1'
-mokito = '5.14.1'
+mokito = '5.14.2'
 netty = "4.1.114.Final"
-logback = '1.5.9'
+logback = '1.5.11'
 slf4j = '2.0.16'
 
 [libraries]
