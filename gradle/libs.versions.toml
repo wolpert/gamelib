@@ -14,7 +14,7 @@ jackson = '2.18.1'
 junit-jupiter = "5.11.3"
 log4j = '2.24.1'
 mokito = '5.14.2'
-netty = "4.1.114.Final"
+netty = "4.1.115.Final"
 logback = '1.5.12'
 slf4j = '2.0.16'
 
