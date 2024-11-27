@@ -5,14 +5,14 @@
 ashley = '1.7.4'
 assertj = "3.26.3"
 bouncy = '1.79'
-codehead-test = "1.0.10"
+codehead-test = "1.0.11"
 commons-io = "2.18.0"
 dagger = "2.52"
 gdx = '1.13.0'
 immutables = '2.10.1'
 jackson = '2.18.1'
 junit-jupiter = "5.11.3"
-log4j = '2.24.1'
+log4j = '2.24.2'
 mokito = '5.14.2'
 netty = "4.1.115.Final"
 logback = '1.5.12'
