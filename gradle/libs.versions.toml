@@ -11,10 +11,10 @@ dagger = "2.53.1"
 gdx = '1.13.0'
 immutables = '2.10.1'
 jackson = '2.18.2'
-junit-jupiter = "5.11.3"
-log4j = '2.24.2'
+junit-jupiter = "5.11.4"
+log4j = '2.24.3'
 mokito = '5.14.2'
-netty = "4.1.115.Final"
+netty = "4.1.116.Final"
 logback = '1.5.12'
 slf4j = '2.0.16'
 
