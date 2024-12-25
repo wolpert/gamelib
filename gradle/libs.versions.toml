@@ -3,11 +3,11 @@
 
 [versions]
 ashley = '1.7.4'
-assertj = "3.26.3"
+assertj = "3.27.0"
 bouncy = '1.79'
 codehead-test = "1.0.11"
 commons-io = "2.18.0"
-dagger = "2.53.1"
+dagger = "2.54"
 gdx = '1.13.0'
 immutables = '2.10.1'
 jackson = '2.18.2'
