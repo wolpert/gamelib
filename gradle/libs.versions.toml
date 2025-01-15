@@ -4,17 +4,17 @@
 [versions]
 ashley = '1.7.4'
 assertj = "3.27.2"
-bouncy = '1.79'
+bouncy = '1.80'
 codehead-test = "1.0.11"
 commons-io = "2.18.0"
-dagger = "2.54"
+dagger = "2.55"
 gdx = '1.13.1'
 immutables = '2.10.1'
 jackson = '2.18.2'
 junit-jupiter = "5.11.4"
 log4j = '2.24.3'
 mokito = '5.15.2'
-netty = "4.1.116.Final"
+netty = "4.1.117.Final"
 logback = '1.5.16'
 slf4j = '2.0.16'
 
