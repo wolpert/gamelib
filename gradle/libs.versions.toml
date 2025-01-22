@@ -3,7 +3,7 @@
 
 [versions]
 ashley = '1.7.4'
-assertj = "3.27.2"
+assertj = "3.27.3"
 bouncy = '1.80'
 codehead-test = "1.0.11"
 commons-io = "2.18.0"
