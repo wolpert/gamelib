@@ -5,9 +5,9 @@
 ashley = '1.7.4'
 assertj = "3.27.3"
 bouncy = '1.80'
-codehead-test = "3.0.1"
+codehead-test = "3.0.2"
 commons-io = "2.18.0"
-dagger = "2.55"
+dagger = "2.56.1"
 gdx = '1.13.1'
 immutables = '2.10.1'
 jackson = '2.18.3'
