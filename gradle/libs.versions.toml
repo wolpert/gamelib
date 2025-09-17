@@ -4,7 +4,7 @@
 [versions]
 ashley = '1.7.4'
 assertj = "3.27.4"
-bouncy = '1.81'
+bouncy = '1.82'
 codehead-test = "3.0.5"
 commons-io = "2.20.0"
 dagger = "2.57.1"
