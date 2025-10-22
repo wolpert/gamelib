@@ -8,7 +8,7 @@ bouncy = '1.82'
 codehead-test = "3.0.5"
 commons-io = "2.20.0"
 dagger = "2.57.2"
-gdx = '1.13.5'
+gdx = '1.14.0'
 immutables = '2.11.6'
 jackson = '2.20.0'
 jackson_annotations = '2.20'
@@ -16,7 +16,7 @@ junit-jupiter = "6.0.0"
 log4j = '2.25.2'
 mokito = '5.20.0'
 netty = "4.2.7.Final"
-logback = '1.5.19'
+logback = '1.5.20'
 slf4j = '2.0.17'
 
 [libraries]
