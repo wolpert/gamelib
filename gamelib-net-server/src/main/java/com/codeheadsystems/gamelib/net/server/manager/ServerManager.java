@@ -76,16 +76,17 @@ public class ServerManager {
    * @return the boolean
    */
   public boolean waitOnClose() {
-    if (state.equals(State.RUNNING)) {
-      try {
-        serverConnection.channel().closeFuture().sync();
-      } catch (InterruptedException e) {
-        throw new RuntimeException(e);
-      }
-      return true;
-    } else {
+    if (serverConnection == null) {
       return false;
     }
+    try {
+      serverConnection.channel().closeFuture().sync();
+      serverConnection.bossGroup().shutdownGracefully().sync();
+      serverConnection.workerGroup().shutdownGracefully().sync();
+    } catch (InterruptedException e) {
+      throw new RuntimeException(e);
+    }
+    return true;
   }
 
   /**
