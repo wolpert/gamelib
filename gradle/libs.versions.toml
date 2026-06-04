@@ -10,13 +10,13 @@ commons-io = "2.22.0"
 dagger = "2.59.2"
 gdx = '1.14.1'
 immutables = '2.12.2'
-jackson = '2.21.3'
-jackson_annotations = '2.21'
+jackson = '2.22.0'
+jackson_annotations = '2.22'
 junit-jupiter = "6.1.0"
 log4j = '2.26.0'
 mokito = '5.23.0'
-netty = "4.2.14.Final"
-logback = '1.5.32'
+netty = "4.2.15.Final"
+logback = '1.5.34'
 slf4j = '2.0.18'
 
 [libraries]
