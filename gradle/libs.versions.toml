@@ -16,7 +16,7 @@ junit-jupiter = "6.1.1"
 log4j = '2.26.1'
 mokito = '5.23.0'
 netty = "4.2.16.Final"
-logback = '1.5.37'
+logback = '1.5.38'
 slf4j = '2.0.18'
 
 [libraries]
