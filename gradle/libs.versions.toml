@@ -17,7 +17,7 @@ log4j = '2.26.1'
 mokito = '5.23.0'
 netty = "4.2.17.Final"
 logback = '1.6.3'
-slf4j = '2.0.18'
+slf4j = '2.0.19'
 
 [libraries]
 ashley = { module = "com.badlogicgames.ashley:ashley", version.ref = "ashley" }
